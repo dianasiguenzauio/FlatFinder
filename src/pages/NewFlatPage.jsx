@@ -1,5 +1,4 @@
 //Pagina para crear un nuevo flat
-import Alert from "@mui/material/Alert";
 import { useEffect, useRef, useState } from "react";
 import { createFlats, getFlats } from "../services/firebase";
 
@@ -11,6 +10,7 @@ function NewFlatPage() {
   const [areasizeError, setAreasizeError] = useState("");
   const [yearbuiltError, setYearbuiltError] = useState("");
   const [rentpriceError, setRentpriceError] = useState("");
+  const [emptyFieldsError, setEmptyFieldsError] = useState("");
 
   const cityRef = useRef();
   const streetnameRef = useRef();
@@ -29,6 +29,23 @@ function NewFlatPage() {
   const handleCreateFlats = async () => {
     let valid = true;
 
+    // Validación de campos vacíos
+    if (
+      !cityRef.current.value ||
+      !streetnameRef.current.value ||
+      !streetnumberRef.current.value ||
+      !areasizeRef.current.value ||
+      !yearbuiltRef.current.value ||
+      !rentpriceRef.current.value ||
+      !dateavaliableRef.current.value
+    ) {
+      setEmptyFieldsError("Por favor, complete todos los campos.");
+      valid = false;
+    } else {
+      setEmptyFieldsError(""); // Limpiar el mensaje de error si no hay campos vacíos
+    }
+
+    // Validación de números
     if (isNaN(Number(streetnumberRef.current.value))) {
       setStreetnumberError("Solo se permite ingresar números.");
       valid = false;
@@ -130,6 +147,7 @@ function NewFlatPage() {
         />
         <br />
         {areasizeError && <p style={{ color: "red" }}>{areasizeError}</p>}
+        <br />
         <input type="checkbox" ref={hasacRef} /> aire acondicionado?
         <br />
         <h3> Ingrese año de construccion :</h3>
@@ -157,8 +175,9 @@ function NewFlatPage() {
           ref={dateavaliableRef}
         />
         <br />
+        {emptyFieldsError && <p style={{ color: "red" }}>{emptyFieldsError}</p>}
         <br />
-        <button onClick={handleCreateFlats}>Registrar Propiedad </button>
+        <button onClick={handleCreateFlats}>Registrar Propiedad</button>
       </div>
       <ul>
         {flats.map((flat, index) => (
