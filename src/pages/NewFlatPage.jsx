@@ -1,6 +1,7 @@
 //Pagina para crear un nuevo flat
 import { useEffect, useRef, useState } from "react";
 import { createFlats, getFlats } from "../services/firebase";
+import { useNavigate } from "react-router-dom";
 
 function NewFlatPage() {
   const [flats, setFlats] = useState([]);
@@ -20,6 +21,8 @@ function NewFlatPage() {
   const yearbuiltRef = useRef();
   const rentpriceRef = useRef();
   const dateavaliableRef = useRef();
+
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     const flats = await getFlats();
@@ -79,6 +82,7 @@ function NewFlatPage() {
       dateavaliable: dateavaliableRef.current.value,
     });
     await fetchData();
+    navigate("/HomePage");
   };
 
   const handleTextChange = (e, setError) => {
@@ -107,7 +111,7 @@ function NewFlatPage() {
 
   return (
     <>
-      <h1>Propiedad</h1>
+      <h2>Propiedad</h2>
       <div>
         <h3> Ingrese la ciudad:</h3>
         <input
