@@ -7,6 +7,7 @@ import MyFlatsPage from "./pages/MyFlatsPage";
 import NewFlatPage from "./pages/NewFlatPage";
 import FavouritesPage from "./pages/FavouritesPage";
 import ProfilePage from "./pages/ProfilePage";
+import NewFlat from "./components/Flats/FlatForm";
 
 import {
   createUser,
