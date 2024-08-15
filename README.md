@@ -15,3 +15,5 @@ Para levantar el proyecto por favor ejecutar los siguientes comandos:
 - npm install
   Si no se conecta con la bdd Desarrollo ejecutar el comando:
 - npm i firebase
+
+prueba
