@@ -1,6 +1,5 @@
 //Componente para crear y editar un flat
 import { useEffect, useRef, useState } from "react";
-
 import { useNavigate } from "react-router-dom";
 import { createFlats, getFlats } from "../../services/firebase";
 //import NewFlat from "../components/Flats/FlatForm";
@@ -187,7 +186,16 @@ function NewFlat() {
       </div>
       <ul>
         {flats.map((flat, index) => (
-          <li key={index}>{flat.name}</li>
+          <li key={index}>
+            {flat.city}
+            {flat.streetname}
+            {flat.streetnumber}
+            {flat.areasize}
+            {flat.hasac}
+            {flat.yearbuilt}
+            {flat.rentprice}
+            {flat.dateavaliable}
+          </li>
         ))}
       </ul>
     </>
