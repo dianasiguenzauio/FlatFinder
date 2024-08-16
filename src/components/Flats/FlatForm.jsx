@@ -2,7 +2,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createFlats, getFlats } from "../../services/firebase";
-//import NewFlat from "../components/Flats/FlatForm";
 
 function NewFlat() {
   const [flats, setFlats] = useState([]);
@@ -184,20 +183,6 @@ function NewFlat() {
         <br />
         <button onClick={handleCreateFlats}>Registrar Propiedad</button>
       </div>
-      <ul>
-        {flats.map((flat, index) => (
-          <li key={index}>
-            {flat.city}
-            {flat.streetname}
-            {flat.streetnumber}
-            {flat.areasize}
-            {flat.hasac}
-            {flat.yearbuilt}
-            {flat.rentprice}
-            {flat.dateavaliable}
-          </li>
-        ))}
-      </ul>
     </>
   );
 }
