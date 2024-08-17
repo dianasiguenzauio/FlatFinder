@@ -13,13 +13,13 @@ function App() {
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/HomePage" element={<HomePage />} />
+
       <Route path="/NewFlatPage" element={<NewFlatPage />} />
       <Route path="/FavouritesPage" element={<FavouritesPage />} />
       <Route path="/MyFlatsPage" element={<MyFlatsPage />} />
       <Route path="/ProfilePage" element={<ProfilePage />} />
       <Route element={<PrivateRoute />}>
-        <Route path="/protected" element={<ProtectedPage />} />
+        <Route path="/" element={<HomePage />} />
       </Route>
     </Routes>
   );

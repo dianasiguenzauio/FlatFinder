@@ -34,7 +34,7 @@ const Navbar = () => {
   return (
     <NavbarContainer>
       <Logo src="tu-logo.png" alt="Tu Logotipo" /> {/*logotipo */}
-      <NavLink to="/HomePage">Inicio</NavLink>
+      <NavLink to="/">Inicio</NavLink>
       <NavLink to="/NewFlatPage">Nuevo Flat</NavLink>
       <NavLink to="/FavouritesPage">Mis Favoritos</NavLink>
       <NavLink to="/MyFlatsPage">Mis Flats</NavLink>

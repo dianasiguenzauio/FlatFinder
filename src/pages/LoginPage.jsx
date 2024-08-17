@@ -22,7 +22,7 @@ function LoginPage() {
       //hacer login
       login(JSON.stringify(user));
       alert("Ingreso exitoso");
-      navigate("/HomePage");
+      navigate("/");
     } else {
       alert("Usuario o contraseña incorrecta");
     }
