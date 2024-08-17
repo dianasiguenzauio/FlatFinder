@@ -8,6 +8,7 @@ import NewFlatPage from "./pages/NewFlatPage";
 import FavouritesPage from "./pages/FavouritesPage";
 import MyFlatsPage from "./pages/MyFlatsPage";
 import ProfilePage from "./pages/ProfilePage";
+import RegistrerPage from "./pages/RegistrerPage";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Route path="/FavouritesPage" element={<FavouritesPage />} />
       <Route path="/MyFlatsPage" element={<MyFlatsPage />} />
       <Route path="/ProfilePage" element={<ProfilePage />} />
+      <Route path="/RegistrerPage" element={<RegistrerPage />} />
       <Route element={<PrivateRoute />}>
         <Route path="/" element={<HomePage />} />
       </Route>

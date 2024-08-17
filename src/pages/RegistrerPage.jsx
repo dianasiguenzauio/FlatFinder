@@ -1,4 +1,3 @@
-import React from "react";
 import NewUser from "../components/Users/UserForm";
 
 const RegisterPage = () => {
@@ -16,18 +15,3 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
-
-/*
-  return (
-    <div>
-      {isSubmitted ? (
-        <MessageForm message="Cuenta creada exitosamente" />
-      ) : (
-        <UserForm onSubmit={handleFormSubmit} />
-      )}
-    </div>
-  );
-};
-
-export default RegisterPage;
-*/

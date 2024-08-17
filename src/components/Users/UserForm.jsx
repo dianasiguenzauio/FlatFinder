@@ -1,67 +1,12 @@
 //Componente para registrar el usuario o para actualizar el perfil
-/*import React, { useState } from 'react';
 
-
-
-const UserForm = ({ onSubmit }) => {
-  const [name, setName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [birthDate, setBirthDate] = useState('');
-  const [email, setEmail] = useState(''); 
-
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
- 
- = useState('');
-  const [termsAccepted, setTermsAccepted] = useState(false); 
-
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Aquí puedes agregar la lógica para validar los datos antes de enviarlos
-    // Por ejemplo, verificar que la contraseña tenga al menos 8 caracteres,
-    // que coincida con la confirmación, etc.
-
-    if (password === confirmPassword && termsAccepted) {
-      onSubmit({
-        name,
-        lastName,
-        birthDate,
-        email,
-        username,
-        password,
-      });
-    } else {
-      // Mostrar un mensaje de error si la validación falla
-      console.error('Error: Contraseñas no coinciden o términos no aceptados.');
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      { Inputs para nombre, apellido, fecha de nacimiento, email, username, password, confirmPassword y checkbox para términos y condiciones }
-      <button type="submit">Crear Cuenta</button>
-    </form>
-  );
-};
-
-export default UserForm;
-*/
-
-//Pagina para crear un nuevo flat
 import { useEffect, useRef, useState } from "react";
 import { createUser, getUsers } from "../../services/firebase";
+import { useNavigate } from "react-router-dom";
 
 function NewUser() {
   const [users, setUsers] = useState([]);
-
-  /*const [firstname, setName] = useState('');
-  const [lastname, setLastName] = useState('');
-  const [birthdate, setBirthDate] = useState('');
-  const [email, setEmail] = useState(''); 
-  const [password, setPassword] = useState('');
-  */
-
+  const navigate = useNavigate();
   const firstnameRef = useRef();
   const lastnameRef = useRef();
   const birthdateRef = useRef();
@@ -82,6 +27,7 @@ function NewUser() {
       password: passwordRef.current.value,
     });
     await fetchData();
+    navigate("/login");
   };
 
   useEffect(() => {
@@ -90,7 +36,6 @@ function NewUser() {
 
   return (
     <>
-      <h1>Propiedad</h1>
       <div>
         <h3> Ingrese su nombre:</h3>
         <input type="text" placeholder="Ingrese su nombre" ref={firstnameRef} />
@@ -127,24 +72,8 @@ function NewUser() {
 
         <button onClick={handleCreateUsers}>Crear cuenta</button>
       </div>
-      <ul>
-        {users.map((flat, index) => (
-          <li key={index}>{flat.name}</li>
-        ))}
-      </ul>
     </>
   );
 }
 
-/*const NewFlatPage = () => {
-  // Contenido del componente
-  return (
-    <>
-      <div>
-        <h1>NewFlatPage</h1>
-      </div>
-    </>
-  );
-};
-*/
 export default NewUser;

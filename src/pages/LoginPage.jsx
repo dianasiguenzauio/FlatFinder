@@ -17,6 +17,7 @@ function LoginPage() {
     //bcrypt dependencia
 
     //....llamar a las bd de firebase
+    navigate("/RegistrerPage");
 
     if (user.username === "admin" && user.password === "1234") {
       //hacer login
@@ -44,6 +45,7 @@ function LoginPage() {
       />
 
       <button>Login</button>
+      <button>Crear cuenta</button>
     </form>
   );
 }
