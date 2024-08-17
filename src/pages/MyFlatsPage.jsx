@@ -10,7 +10,6 @@ function MyFlatsPage() {
         <NavbarContainer />
         <h1>MyFlatsPage</h1>
       </div>
-      <FlatList>Flatlist</FlatList>
     </>
   );
 }
