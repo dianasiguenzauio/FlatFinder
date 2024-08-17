@@ -1,14 +1,15 @@
 //Pagina para ver el perfil del usuario
 
-import React from "react";
+import NavbarContainer from "../components/Commons/Navbar";
 
-const ProfilePage = () => {
-  // Contenido del componente
+function ProfilePage() {
   return (
-    <div>
-      <h1>Profile Page</h1>
-    </div>
+    <>
+      <div>
+        <NavbarContainer />
+        <h1>ProfilePage</h1>
+      </div>
+    </>
   );
-};
-
+}
 export default ProfilePage;

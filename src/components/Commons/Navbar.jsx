@@ -34,11 +34,11 @@ const Navbar = () => {
   return (
     <NavbarContainer>
       <Logo src="tu-logo.png" alt="Tu Logotipo" /> {/*logotipo */}
-      <NavLink to="/">Inicio</NavLink>
-      <NavLink to="/nuevo">Nuevo Flat</NavLink>
-      <NavLink to="/favoritos">Mis Favoritos</NavLink>
-      <NavLink to="/mis-flats">Mis Flats</NavLink>
-      <NavLink to="/mi-perfil">Mi Perfil</NavLink>
+      <NavLink to="/HomePage">Inicio</NavLink>
+      <NavLink to="/NewFlatPage">Nuevo Flat</NavLink>
+      <NavLink to="/FavouritesPage">Mis Favoritos</NavLink>
+      <NavLink to="/MyFlatsPage">Mis Flats</NavLink>
+      <NavLink to="/ProfilePage">Mi Perfil</NavLink>
     </NavbarContainer>
   );
 };
