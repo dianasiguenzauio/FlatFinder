@@ -1,13 +1,16 @@
 //Pagina principal donde vamos a mostrar los flats
 import React from "react";
+import NavbarContainer from "../components/Commons/Navbar";
 
-const HomePage = () => {
-  // Contenido del componente
+function HomePage() {
   return (
-    <div>
-      <h1>Home Page</h1>
-    </div>
+    <>
+      <div>
+        <NavbarContainer />
+        <h1>HomePage</h1>
+      </div>
+    </>
   );
-};
+}
 
 export default HomePage;

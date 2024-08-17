@@ -1,33 +1,27 @@
-import react from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
-import Navbar from "./components/Commons/Navbar";
+import LoginPage from "./pages/LoginPage";
+import ProtectedPage from "./pages/ProtectedPage";
+import PrivateRoute from "./components/PrivateRoute";
 import HomePage from "./pages/HomePage";
-import MyFlatsPage from "./pages/MyFlatsPage";
 import NewFlatPage from "./pages/NewFlatPage";
 import FavouritesPage from "./pages/FavouritesPage";
+import MyFlatsPage from "./pages/MyFlatsPage";
 import ProfilePage from "./pages/ProfilePage";
-
-import {
-  createUser,
-  getUsers,
-  updateUser,
-  getUserById,
-  deleteUser,
-} from "./services/firebase";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/mis-flats" element={<MyFlatsPage />} />
-        <Route path="/nuevo" element={<NewFlatPage />} />
-        <Route path="/favoritos" element={<FavouritesPage />} />
-        <Route path="/perfil" element={<ProfilePage />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/HomePage" element={<HomePage />} />
+      <Route path="/NewFlatPage" element={<NewFlatPage />} />
+      <Route path="/FavouritesPage" element={<FavouritesPage />} />
+      <Route path="/MyFlatsPage" element={<MyFlatsPage />} />
+      <Route path="/ProfilePage" element={<ProfilePage />} />
+      <Route element={<PrivateRoute />}>
+        <Route path="/protected" element={<ProtectedPage />} />
+      </Route>
+    </Routes>
   );
 }
 

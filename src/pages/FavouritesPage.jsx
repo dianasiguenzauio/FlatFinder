@@ -1,13 +1,13 @@
-//Pagina para ver el listado de flats favoritos
-import React from "react";
+import NavbarContainer from "../components/Commons/Navbar";
 
-const FavouritesPage = () => {
-  // Contenido del componente
+function FavouritesPage() {
   return (
-    <div>
-      <h1>Mis favoritos</h1>
-    </div>
+    <>
+      <div>
+        <NavbarContainer />
+        <h1>FavouritesPage</h1>
+      </div>
+    </>
   );
-};
-
+}
 export default FavouritesPage;

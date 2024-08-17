@@ -1,14 +1,18 @@
 //Pagina para ver el listado de flats del usuario
 
-import React from "react";
+import NavbarContainer from "../components/Commons/Navbar";
+import FlatList from "../components/Flats/FlatList";
 
-const MyFlatsPage = () => {
-  // Contenido del componente
+function MyFlatsPage() {
   return (
-    <div>
-      <h1>MyFlatsPage</h1>
-    </div>
+    <>
+      <div>
+        <NavbarContainer />
+        <h1>MyFlatsPage</h1>
+      </div>
+      <FlatList>Flatlist</FlatList>
+    </>
   );
-};
+}
 
 export default MyFlatsPage;
