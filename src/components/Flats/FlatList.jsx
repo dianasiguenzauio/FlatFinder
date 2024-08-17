@@ -18,20 +18,34 @@ const FlatList = () => {
   return (
     <div>
       <h2>Lista de Flats</h2>
-      <ul>
-        {flats.map((flat) => (
-          <li key={flat.id}>
-            Ciudad: {flat.city} <br />
-            Calle: {flat.streetname} <br />
-            Número: {flat.streetnumber} <br />
-            Área: {flat.areasize} m² <br />
-            Aire Acondicionado: {flat.hasac ? "Sí" : "No"} <br />
-            Año de Construcción: {flat.yearbuilt} <br />
-            Precio de Renta: ${flat.rentprice} <br />
-            Fecha Disponible: {flat.dateavaliable} <br />
-          </li>
-        ))}
-      </ul>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Ciudad</th>
+            <th>Calle</th>
+            <th>Número</th>
+            <th>Área (m²)</th>
+            <th>Aire Acondicionado</th>
+            <th>Año de Construcción</th>
+            <th>Precio de Renta</th>
+            <th>Fecha Disponible</th>
+          </tr>
+        </thead>
+        <tbody>
+          {flats.map((flat) => (
+            <tr key={flat.id}>
+              <td> {flat.city}</td>
+              <td>{flat.streetname} </td>
+              <td>{flat.streetnumber} </td>
+              <td>{flat.areasize} m² </td>
+              <td>{flat.hasac ? "Sí" : "No"} </td>
+              <td> {flat.yearbuilt} </td>
+              <td>{flat.rentprice} </td>
+              <td> {flat.dateavaliable} </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
