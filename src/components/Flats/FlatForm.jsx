@@ -31,6 +31,22 @@ function NewFlat() {
   };
 
   const handleCreateFlats = async () => {
+    const storedUser = JSON.parse(localStorage.getItem("authToken"));
+    if (!storedUser) {
+      console.error("El usuario no está logueado");
+      return;
+    }
+    // Verificar si el usuario está logueado
+    if (!storedUser || !storedUser.email) {
+      console.error(
+        "El usuario no está logueado o falta información del usuario"
+      );
+      alert("No estás logueado. Por favor, inicia sesión para continuar.");
+      navigate("/"); // Redirigir a la página de login
+      return;
+    }
+
+    const { email } = storedUser;
     let valid = true;
 
     // Validación de campos vacíos
@@ -81,6 +97,7 @@ function NewFlat() {
       yearbuilt: Number(yearbuiltRef.current.value),
       rentprice: Number(rentpriceRef.current.value),
       dateavaliable: dateavaliableRef.current.value,
+      userEmail: email,
     });
     await fetchData();
     navigate("/HomePage");
