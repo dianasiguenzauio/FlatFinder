@@ -100,7 +100,7 @@ function NewFlat() {
       userEmail: email,
     });
     await fetchData();
-    navigate("/HomePage");
+    navigate("/");
   };
 
   const handleTextChange = (e, setError) => {
