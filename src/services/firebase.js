@@ -7,7 +7,9 @@ import {
   doc,
   getDoc,
   getDocs,
+  query,
   updateDoc,
+  where,
 } from "firebase/firestore";
 import { db } from "../config/firebase";
 
@@ -64,4 +66,15 @@ export const getFlats = async () => {
 //Vamos a definir la funcion de creacion de datos
 export const createFlats = async (flat) => {
   await addDoc(flatsCollectionRef, flat);
+};
+
+export const getUserByEmail = async (email) => {
+  //dos cosas, query y el segundo es where
+  const queryData = query(usersCollectionRef, where("email", "==", email));
+  const querySnapshot = await getDocs(queryData);
+  const users = querySnapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+  return users;
 };

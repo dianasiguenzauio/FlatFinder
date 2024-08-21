@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import AuthContext from "../context/authContext";
 import { useNavigate } from "react-router-dom";
+import { getUserByEmail } from "../services/firebase";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -8,18 +9,18 @@ function LoginPage() {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const user = { username, password };
+    if (!username || !password) {
+      alert("Para iniciar sesión por favor ingresa los datos solicitados");
+      return; // En caso de no ingresar usuario y contraseña
+    }
 
-    //Implementar logica para obtener el usuario por username de firebase
-    //bcrypt dependencia
+    const user = await getUserByEmail(username);
+    console.log(user);
 
-    //....llamar a las bd de firebase
-    navigate("/RegistrerPage");
-
-    if (user.username === "admin" && user.password === "1234") {
+    if (user[0].password === password) {
       //hacer login
       login(JSON.stringify(user));
       alert("Ingreso exitoso");
@@ -27,6 +28,10 @@ function LoginPage() {
     } else {
       alert("Usuario o contraseña incorrecta");
     }
+  };
+
+  const handleUserForm = () => {
+    navigate("/RegistrerPage");
   };
 
   return (
@@ -44,8 +49,8 @@ function LoginPage() {
         placeholder="Password"
       />
 
-      <button>Login</button>
-      <button>Crear cuenta</button>
+      <button type="submit">Login</button>
+      <button onClick={handleUserForm}>Crear cuenta</button>
     </form>
   );
 }
