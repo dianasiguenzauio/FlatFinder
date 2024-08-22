@@ -1,33 +1,56 @@
-//Componente para registrar el usuario o para actualizar el perfil
-
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createUser, getUsers } from "../../services/firebase";
 import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+
+const validationSchema = Yup.object().shape({
+  firstname: Yup.string().required("El nombre es requerido"),
+  lastname: Yup.string().required("El apellido es requerido"),
+  email: Yup.string()
+
+    .email("Ingrese un correo electrónico válido")
+    .required("El correo electrónico es requerido"),
+
+  birthdate: Yup.date().required("La fecha de nacimiento es requerida"),
+  password: Yup.string()
+    .required("La contraseña es requerida")
+    .min(8, "La contraseña debe tener al menos 8 caracteres")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+
+      "La contraseña debe contener al menos una mayúscula, una minúscula, un número y un carácter especial"
+    ),
+});
 
 function NewUser() {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
-  const firstnameRef = useRef();
-  const lastnameRef = useRef();
-  const birthdateRef = useRef();
-  const emailRef = useRef();
-  const passwordRef = useRef();
 
-  const fetchData = async () => {
-    const flats = await getUsers();
-    setUsers(flats);
+  const initialValues = {
+    firstname: "",
+    lastname: "",
+    email: "",
+    birthdate: "",
+    password: "",
   };
 
-  const handleCreateUsers = async () => {
-    await createUser({
-      firstname: firstnameRef.current.value,
-      lastname: lastnameRef.current.value,
-      email: emailRef.current.value,
-      birthdate: birthdateRef.current.value,
-      password: passwordRef.current.value,
-    });
-    await fetchData();
-    navigate("/login");
+  const handleCreateUsers = async (values, { setSubmitting }) => {
+    try {
+      await createUser(values);
+      await fetchData();
+      navigate("/login");
+    } catch (error) {
+      console.error(error);
+      alert("Error al crear la cuenta. Por favor, intenta nuevamente.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const fetchData = async () => {
+    const flats = await getUsers(); // Consider changing 'flats' to a more descriptive name
+    setUsers(flats);
   };
 
   useEffect(() => {
@@ -35,44 +58,56 @@ function NewUser() {
   }, []);
 
   return (
-    <>
-      <div>
-        <h3> Ingrese su nombre:</h3>
-        <input type="text" placeholder="Ingrese su nombre" ref={firstnameRef} />
-        <br />
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={handleCreateUsers}
+    >
+      {({ errors, touched }) => (
+        <Form>
+          <Field type="text" name="firstname" placeholder="Ingrese su nombre" />
+          {errors.firstname && touched.firstname ? (
+            <div>{errors.firstname}</div>
+          ) : null}
 
-        <h3> Ingrese su apellido:</h3>
-        <input
-          type="text"
-          placeholder="Ingrese su apellido"
-          ref={lastnameRef}
-        />
-        <br />
+          <Field
+            type="text"
+            name="lastname"
+            placeholder="Ingrese su apellido"
+          />
+          {errors.lastname && touched.lastname ? (
+            <div>{errors.lastname}</div>
+          ) : null}
 
-        <h3> email:</h3>
-        <input type="text" placeholder="Ingrese su email" ref={emailRef} />
-        <br />
+          <Field
+            type="email"
+            name="email"
+            placeholder="Ingrese su correo electrónico"
+          />
+          {errors.email && touched.email ? <div>{errors.email}</div> : null}
 
-        <h3> Fecha de nacimiento :</h3>
-        <input
-          type="date"
-          placeholder="Fecha de nacimiento"
-          ref={birthdateRef}
-        />
+          <Field
+            type="date"
+            name="birthdate"
+            placeholder="Ingrese su fecha de nacimiento"
+          />
+          {errors.birthdate && touched.birthdate ? (
+            <div>{errors.birthdate}</div>
+          ) : null}
 
-        <br />
+          <Field
+            type="password"
+            name="password"
+            placeholder="Ingrese su contraseña"
+          />
+          {errors.password && touched.password ? (
+            <div>{errors.password}</div>
+          ) : null}
 
-        <h3> password:</h3>
-        <input
-          type="text"
-          placeholder="Ingrese su password"
-          ref={passwordRef}
-        />
-        <br />
-
-        <button onClick={handleCreateUsers}>Crear cuenta</button>
-      </div>
-    </>
+          <button type="submit">Crear cuenta</button>
+        </Form>
+      )}
+    </Formik>
   );
 }
 

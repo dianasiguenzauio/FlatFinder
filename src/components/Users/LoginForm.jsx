@@ -15,6 +15,10 @@ const Login = () => {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
+  const handleUserForm = () => {
+    navigate("/RegistrerPage");
+  };
+
   const handleLogin = async (e) => {
     const user = { email, password };
     e.preventDefault();
@@ -73,8 +77,7 @@ const Login = () => {
         {error && <p style={{ color: "red" }}>{error}</p>}
         <button type="submit">Ingresar</button>
         <button onClick={handleUserForm}>Crear cuenta</button>
-
-      
+      </form>
     </div>
   );
 };

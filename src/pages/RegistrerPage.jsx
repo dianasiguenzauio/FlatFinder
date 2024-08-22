@@ -1,6 +1,6 @@
 import NewUser from "../components/Users/UserForm";
 
-const RegisterPage = () => {
+const RegistrerPage = () => {
   // Aquí puedes enviar los datos a un servidor para crear la cuenta
   // Simularemos que la cuenta se creó exitosamente
 
@@ -14,4 +14,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default RegistrerPage;
