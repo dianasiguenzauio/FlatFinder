@@ -72,7 +72,9 @@ const Login = () => {
         </div>
         {error && <p style={{ color: "red" }}>{error}</p>}
         <button type="submit">Ingresar</button>
-      </form>
+        <button onClick={handleUserForm}>Crear cuenta</button>
+
+      
     </div>
   );
 };
