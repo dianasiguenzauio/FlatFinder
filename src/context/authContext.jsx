@@ -4,6 +4,7 @@
 //Sirve para manejar el estado de autenticación de manera global
 import { createContext, useState } from "react";
 import {
+  getToken,
   isAuthenticaded,
   removeToken,
   setToken,
@@ -11,12 +12,14 @@ import {
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = useState(null);
+  const [auth, setAuth] = useState(isAuthenticaded());
+  const [user, setUser] = useState(JSON.parse(getToken()));
 
   const login = (token) => {
     setToken(token);
     setAuth(true);
   };
+
   const logout = () => {
     removeToken();
     setAuth(false);
@@ -26,6 +29,7 @@ const AuthProvider = ({ children }) => {
     auth,
     login,
     logout,
+    user,
   };
 
   return (
