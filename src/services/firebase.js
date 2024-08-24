@@ -77,3 +77,8 @@ export const getUserByEmail = async (email) => {
   }));
   return users;
 };
+
+export const deleteFlat = async (flatId) => {
+  const flatRef = doc(db, collectionFlats, flatId);
+  await deleteDoc(flatRef);
+};
