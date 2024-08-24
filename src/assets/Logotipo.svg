@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 136 110">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-2, .cls-3 {
+        fill: #7c83cb;
+        font-family: RalewayRoman-Black, Raleway;
+        font-variation-settings: 'wght' 900;
+        font-weight: 800;
+      }
+
+      .cls-4 {
+        fill: url(#linear-gradient);
+      }
+
+      .cls-5 {
+        clip-path: url(#clippath);
+      }
+
+      .cls-6 {
+        mask: url(#mask);
+      }
+
+      .cls-7 {
+        fill: #6aa9bb;
+        font-family: RalewayRoman-Regular, Raleway;
+        font-variation-settings: 'wght' 400;
+      }
+
+      .cls-8 {
+        fill: url(#linear-gradient-3);
+      }
+
+      .cls-9 {
+        fill: url(#linear-gradient-4);
+      }
+
+      .cls-10 {
+        fill: url(#linear-gradient-2);
+      }
+
+      .cls-11 {
+        fill: url(#linear-gradient-5);
+      }
+
+      .cls-12 {
+        font-size: 21.32px;
+      }
+
+      .cls-13 {
+        fill: #5e17a9;
+        fill-rule: evenodd;
+      }
+
+      .cls-3 {
+        letter-spacing: -.07em;
+      }
+
+      .cls-14 {
+        mask: url(#mask-3);
+      }
+
+      .cls-15 {
+        mask: url(#mask-2);
+      }
+
+      .cls-16 {
+        mask: url(#mask-1);
+      }
+    </style>
+    <clipPath id="clippath">
+      <path id="SVGID" class="cls-1" d="m6.59,2.23v77.82h22.01v-31.91h22.15v-15.01h-22.15v-15.01h64.16c7.34,0,11.12,2.56,11.12,7.45s-3.78,7.56-11.12,7.56h-36.91v15.23h40.24c7.56,0,11.56,2.56,11.56,7.89s-4,7.89-11.56,7.89h-40.24v15.9h42.02c20.9,0,32.02-7.89,32.02-21.35,0-9.45-5.45-16.12-14.23-19.23,6.67-3.45,10.45-9.45,10.45-16.9,0-12.01-10-20.34-30.46-20.34H6.59Z"/>
+    </clipPath>
+    <linearGradient id="linear-gradient" x1="-42.13" y1="66.02" x2="167.94" y2="18.67" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#c835f8"/>
+      <stop offset="1" stop-color="#16ea9e"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="-755.25" y1="355.35" x2="-880.27" y2="472.78" gradientTransform="translate(851.74 -365.36)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset="1" stop-color="#000"/>
+    </linearGradient>
+    <mask id="mask" x="6.59" y="48.15" width="22.01" height="31.91" maskUnits="userSpaceOnUse">
+      <rect class="cls-10" x="6.59" y="48.15" width="22.01" height="31.91"/>
+    </mask>
+    <linearGradient id="linear-gradient-3" x1="-756.55" y1="368.9" x2="-875.68" y2="454.21" gradientTransform="translate(851.74 -398.83)" xlink:href="#linear-gradient-2"/>
+    <mask id="mask-1" x="6.59" y="18.13" width="22.01" height="15.01" maskUnits="userSpaceOnUse">
+      <rect class="cls-8" x="6.59" y="18.13" width="22.01" height="15.01"/>
+    </mask>
+    <linearGradient id="linear-gradient-4" x1="-895.44" y1="338.41" x2="-784.48" y2="462.68" gradientTransform="translate(924 -376.7)" xlink:href="#linear-gradient-2"/>
+    <mask id="mask-2" x="96.09" y="48.37" width="33.8" height="15.79" maskUnits="userSpaceOnUse">
+      <rect class="cls-9" x="96.09" y="48.37" width="33.8" height="15.79"/>
+    </mask>
+    <linearGradient id="linear-gradient-5" x1="-943.04" y1="293.61" x2="-779.63" y2="457.02" gradientTransform="translate(921.62 -398.83)" xlink:href="#linear-gradient-2"/>
+    <mask id="mask-3" x="92.76" y="18.13" width="33.35" height="15.01" maskUnits="userSpaceOnUse">
+      <rect class="cls-11" x="92.76" y="18.13" width="33.35" height="15.01"/>
+    </mask>
+  </defs>
+  <g>
+    <g class="cls-5">
+      <rect class="cls-4" x="6.59" y="2.23" width="123.3" height="77.82"/>
+    </g>
+    <g class="cls-6">
+      <path class="cls-13" d="m28.6,48.15H6.59v31.91h22.01v-31.91"/>
+    </g>
+    <g class="cls-16">
+      <path class="cls-13" d="m6.59,33.14h22.01v-15.01H6.59v15.01Z"/>
+    </g>
+    <g class="cls-15">
+      <path class="cls-13" d="m96.09,48.37c7.56,0,11.56,2.56,11.56,7.89s-4,7.89-11.56,7.89h33.11c.45-1.7.68-3.51.68-5.45,0-3.95-.95-7.42-2.7-10.34h-31.09Z"/>
+    </g>
+    <g class="cls-14">
+      <path class="cls-13" d="m92.76,18.13c7.34,0,11.12,2.56,11.12,7.45s-3.78,7.56-11.12,7.56h30.23c2.03-2.99,3.12-6.57,3.12-10.56,0-1.55-.17-3.03-.5-4.45h-32.85Z"/>
+    </g>
+  </g>
+  <text class="cls-12" transform="translate(4.45 103.01)"><tspan class="cls-2" x="0" y="0">FL</tspan><tspan class="cls-3" x="24.48" y="0">A</tspan><tspan class="cls-2" x="37.32" y="0">T</tspan><tspan class="cls-7" x="50.62" y="0">FINDER</tspan></text>
+</svg>

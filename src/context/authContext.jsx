@@ -11,7 +11,7 @@ import {
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = useState(isAuthenticaded());
+  const [auth, setAuth] = useState(null);
 
   const login = (token) => {
     setToken(token);
