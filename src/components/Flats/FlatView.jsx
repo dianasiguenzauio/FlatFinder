@@ -3,11 +3,25 @@
 import { useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../config/firebase"; // Ajusta la ruta según tu estructura de carpetas
+import { deleteFlat } from "../../services/firebase";
 
 function MyFlats() {
   const [flats, setFlats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  //Eliminar flat
+  const handleDeleteFlat = async (flatId) => {
+    try {
+      await deleteFlat(flatId);
+      const updatedFlats = flats.filter((flat) => flat.id !== flatId);
+      setFlats(updatedFlats);
+      alert("¿Estás seguro que quieres eliminar el flat?");
+    } catch (error) {
+      console.error("Error al eliminar la propiedad: ", error);
+      alert("Error al eliminar la propiedad. Inténtalo nuevamente.");
+    }
+  };
 
   // Recuperar el usuario del localStorage
   const storedUser = JSON.parse(localStorage.getItem("authToken"));
@@ -80,6 +94,11 @@ function MyFlats() {
                 <td>{flat.yearbuilt}</td>
                 <td>{flat.rentprice}</td>
                 <td>{flat.dateavaliable}</td>
+                <td>
+                  <button onClick={() => handleDeleteFlat(flat.id)}>
+                    Eliminar
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>

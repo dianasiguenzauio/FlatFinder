@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./context/authContext"; // Envuelve tu app con el proveedor de autenticación
 
 import LoginPage from "./pages/LoginPage";
 import ProtectedPage from "./pages/ProtectedPage";
@@ -13,19 +14,22 @@ import FlatDetailsPage from "./pages/FlatDetailsPage";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/login" element={<LoginPage />} />
+    <AuthProvider>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/RegistrerPage" element={<RegistrerPage />} />
 
-      <Route path="/NewFlatPage" element={<NewFlatPage />} />
-      <Route path="/FavouritesPage" element={<FavouritesPage />} />
-      <Route path="/MyFlatsPage" element={<MyFlatsPage />} />
-      <Route path="/ProfilePage" element={<ProfilePage />} />
-      <Route path="/RegistrerPage" element={<RegistrerPage />} />
-      <Route path="/FlatDetailsPage/:flatId" element={<FlatDetailsPage />} />
-      <Route element={<PrivateRoute />}>
-        <Route path="/" element={<HomePage />} />
-      </Route>
-    </Routes>
+        <Route path="/NewFlatPage" element={<NewFlatPage />} />
+        <Route path="/FavouritesPage" element={<FavouritesPage />} />
+        <Route path="/MyFlatsPage" element={<MyFlatsPage />} />
+        <Route path="/ProfilePage" element={<ProfilePage />} />
+        <Route path="/RegistrerPage" element={<RegistrerPage />} />
+        <Route path="/FlatDetailsPage/:flatId" element={<FlatDetailsPage />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/" element={<HomePage />} />
+        </Route>
+      </Routes>
+    </AuthProvider>
   );
 }
 

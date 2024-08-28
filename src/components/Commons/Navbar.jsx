@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import AuthContext, { AuthProvider } from "../../context/authContext";
+import LogoImage from "../../assets/Logotipo.svg";
 
 const NavbarContainer = styled.nav`
   position: fixed;
@@ -31,14 +33,20 @@ const NavLink = styled(Link)`
 `;
 
 const Navbar = () => {
+  const { logout } = useContext(AuthContext);
+
   return (
     <NavbarContainer>
-      <Logo src="tu-logo.png" alt="Tu Logotipo" /> {/*logotipo */}
+      <Logo src={LogoImage} alt="Tu Logotipo" /> {/*logotipo */}
       <NavLink to="/">Inicio</NavLink>
       <NavLink to="/NewFlatPage">Nuevo Flat</NavLink>
       <NavLink to="/FavouritesPage">Mis Favoritos</NavLink>
       <NavLink to="/MyFlatsPage">Mis Flats</NavLink>
       <NavLink to="/ProfilePage">Mi Perfil</NavLink>
+      <NavLink to="/login" onClick={logout}>
+        {" "}
+        Cerrar Sesión{" "}
+      </NavLink>
     </NavbarContainer>
   );
 };
