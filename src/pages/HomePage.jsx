@@ -5,6 +5,7 @@ import { getFlats } from "../services/firebase";
 
 function HomePage() {
   const [flats, setFlats] = useState([]);
+  const [initialFlats, setInitialFlats] = useState([]); // Store initial fetched flats
 
   const [searchQuery, setSearchQuery] = useState({
     city: "",
@@ -23,6 +24,7 @@ function HomePage() {
   const fetchFlats = async () => {
     const flats = await getFlats();
     setFlats(flats);
+    setInitialFlats(flats); // Store initial data for reset
   };
 
   useEffect(() => {
@@ -31,8 +33,7 @@ function HomePage() {
 
   const handleSearchSubmit = async (event) => {
     event.preventDefault();
-    const allFlats = await getFlats();
-    const filteredFlats = allFlats.filter((flat) => {
+    const filteredFlats = initialFlats.filter((flat) => {
       return (
         (!searchQuery.city ||
           flat.city.toLowerCase().includes(searchQuery.city.toLowerCase())) &&
@@ -43,6 +44,11 @@ function HomePage() {
     setFlats(filteredFlats);
 
     console.log(searchQuery);
+  };
+
+  const handleClearSearch = () => {
+    setSearchQuery({ city: "", areasize: "", minPrice: "" }); // Reset search state
+    setFlats(initialFlats); // Reset flats to initial data
   };
 
   return (
@@ -79,6 +85,9 @@ function HomePage() {
           />
 
           <button type="submit">Buscar</button>
+          <button type="button" onClick={handleClearSearch}>
+            Borrar Búsqueda
+          </button>
         </form>
       </div>
       <FlatList flats={flats} />
