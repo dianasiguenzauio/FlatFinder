@@ -55,7 +55,7 @@ function MyFlats() {
     };
 
     fetchFlats();
-  }, [storedUser]);
+  }, []);
 
   if (loading) {
     return <p>Cargando...</p>;
