@@ -114,7 +114,14 @@ function FlatsFavorites() {
 export default FlatsFavorites;
 */
 import { useEffect, useState } from "react";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  updateDoc,
+  doc,
+} from "firebase/firestore";
 import { db } from "../config/firebase";
 import NavbarContainer from "../components/Commons/Navbar";
 
@@ -162,6 +169,28 @@ function FlatsFavorites() {
     fetchFavoriteFlats();
   }, [storedUser]);
 
+  // Función para eliminar un flat de los favoritos
+  const handleRemoveFavorite = async (flatId) => {
+    try {
+      // Obtener referencia al documento del flat
+      const flatDocRef = doc(db, "flats", flatId);
+
+      // Actualizar el campo 'userFavorite' para dejarlo vacío y marcar 'favorite' como false
+      await updateDoc(flatDocRef, {
+        userFavorite: "",
+        favorite: false,
+      });
+
+      // Actualizar el estado local para reflejar los cambios
+      setFlats((prevFlats) => prevFlats.filter((flat) => flat.id !== flatId));
+    } catch (err) {
+      console.error("Error al eliminar de favoritos: ", err);
+      setError(
+        "Error al eliminar de favoritos. Por favor, intenta nuevamente."
+      );
+    }
+  };
+
   if (loading) {
     return <p>Cargando...</p>;
   }
@@ -186,7 +215,7 @@ function FlatsFavorites() {
               <th>Año de Construcción</th>
               <th>Precio de Renta</th>
               <th>Fecha Disponible</th>
-              <th>Favorito</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -200,7 +229,11 @@ function FlatsFavorites() {
                 <td>{flat.yearbuilt}</td>
                 <td>{flat.rentprice}</td>
                 <td>{flat.dateavaliable}</td>
-                <td>{flat.favorite ? "Sí" : "No"}</td>
+                <td>
+                  <button onClick={() => handleRemoveFavorite(flat.id)}>
+                    Eliminar de favoritos
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
