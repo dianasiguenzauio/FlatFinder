@@ -3,6 +3,7 @@ import NavbarContainer from "../components/Commons/Navbar";
 import AllFlats from "../components/Flats/FlatList";
 
 function HomePage() {
+  /*
   const [flats, setFlats] = useState([]);
 
   const [searchQuery, setSearchQuery] = useState({
@@ -40,46 +41,12 @@ function HomePage() {
       );
     });
     setFlats(filteredFlats);
-
-    console.log(searchQuery);
-  };
+*/
+  // console.log(searchQuery);
 
   return (
     <>
-      <div>
-        <NavbarContainer />
-        <h1>HomePage</h1>
-        <form onSubmit={handleSearchSubmit}>
-          <label htmlFor="city">Ciudad:</label>
-          <input
-            type="text"
-            id="city"
-            name="city"
-            value={searchQuery.city}
-            onChange={handleInputChange}
-          />
-
-          <label htmlFor="areasize">Area mayor a:</label>
-          <input
-            type="number"
-            id="areasize"
-            name="areasize"
-            value={searchQuery.areasize}
-            onChange={handleInputChange}
-          />
-
-          <label htmlFor="minPrice">Precio mayor a:</label>
-          <input
-            type="number"
-            id="minPrice"
-            name="minPrice"
-            value={searchQuery.minPrice}
-            onChange={handleInputChange}
-          />
-
-          <button type="submit">Buscar</button>
-        </form>
-      </div>
+      <NavbarContainer></NavbarContainer>
       <AllFlats>Flatlist</AllFlats>
     </>
   );
