@@ -8,7 +8,7 @@ function MyFlatsPage() {
     <>
       <div>
         <NavbarContainer />
-        <h1>MyFlatsPage</h1>
+
         <MyFlats></MyFlats>
       </div>
     </>

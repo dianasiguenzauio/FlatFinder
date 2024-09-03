@@ -3,15 +3,16 @@
 import React from "react";
 import NavbarContainer from "../components/Commons/Navbar";
 import ProfileView from "../components/Users/ProfileView";
+import UserProfile from "../components/Users/ProfileView";
 
 function ProfilePage() {
   return (
     <>
       <div>
         <NavbarContainer />
-        <h1>ProfilePage</h1>
+
+        <UserProfile> </UserProfile>
       </div>
-      <ProfileView>Componente NewFlat</ProfileView>
     </>
   );
 }
