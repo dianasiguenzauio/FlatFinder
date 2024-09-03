@@ -312,7 +312,7 @@ function MyFlats() {
     };
 
     fetchFlats();
-  }, [storedUser]);
+  }, []);
 
   const handleEditClick = (flat) => {
     setEditingFlat(flat); // Establecer el flat que se está editando

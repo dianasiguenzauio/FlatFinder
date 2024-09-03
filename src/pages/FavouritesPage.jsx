@@ -167,7 +167,7 @@ function FlatsFavorites() {
     };
 
     fetchFavoriteFlats();
-  }, [storedUser]);
+  }, []);
 
   // Función para eliminar un flat de los favoritos
   const handleRemoveFavorite = async (flatId) => {

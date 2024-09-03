@@ -326,7 +326,6 @@ function AllFlats() {
   const [flats, setFlats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
   // Obtener usuario almacenado en el localStorage
   const storedUser = JSON.parse(localStorage.getItem("authToken"));
@@ -359,7 +358,7 @@ function AllFlats() {
     };
 
     fetchFlats();
-  }, [storedUser]);
+  }, []);
 
   // Función para manejar el cambio de estado de favorito
   const handleFavoriteToggle = async (flat) => {
