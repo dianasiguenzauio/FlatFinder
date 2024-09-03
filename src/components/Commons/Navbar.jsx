@@ -33,21 +33,25 @@ const NavLink = styled(Link)`
 `;
 
 const Navbar = () => {
-  const { logout } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
+  console.log(user);
 
   return (
-    <NavbarContainer>
-      <Logo src={LogoImage} alt="Tu Logotipo" /> {/*logotipo */}
-      <NavLink to="/">Inicio</NavLink>
-      <NavLink to="/NewFlatPage">Nuevo Flat</NavLink>
-      <NavLink to="/FavouritesPage">Mis Favoritos</NavLink>
-      <NavLink to="/MyFlatsPage">Mis Flats</NavLink>
-      <NavLink to="/ProfilePage">Mi Perfil</NavLink>
-      <NavLink to="/login" onClick={logout}>
-        {" "}
-        Cerrar Sesión{" "}
-      </NavLink>
-    </NavbarContainer>
+    <>
+      <NavbarContainer>
+        <Logo src={LogoImage} alt="Tu Logotipo" /> {/*logotipo */}
+        {user && <h2>{user.firstname}</h2>} {/* Mostrar el firstname */}
+        <NavLink to="/">Inicio</NavLink>
+        <NavLink to="/NewFlatPage">Nuevo Flat</NavLink>
+        <NavLink to="/FavouritesPage">Mis Favoritos</NavLink>
+        <NavLink to="/MyFlatsPage">Mis Flats</NavLink>
+        <NavLink to="/ProfilePage">Mi Perfil</NavLink>
+        <NavLink to="/login" onClick={logout}>
+          {" "}
+          Cerrar Sesión{" "}
+        </NavLink>
+      </NavbarContainer>
+    </>
   );
 };
 
