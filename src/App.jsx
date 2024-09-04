@@ -11,6 +11,7 @@ import MyFlatsPage from "./pages/MyFlatsPage";
 import ProfilePage from "./pages/ProfilePage";
 import RegistrerPage from "./pages/RegistrerPage";
 import FlatDetailsPage from "./pages/FlatDetailsPage";
+import MessagePage from "./pages/MessagePage";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/MyFlatsPage" element={<MyFlatsPage />} />
         <Route path="/ProfilePage" element={<ProfilePage />} />
         <Route path="/RegistrerPage" element={<RegistrerPage />} />
+        <Route path="/MessagePage" element={<MessagePage />} />
         <Route path="/FlatDetailsPage/:flatId" element={<FlatDetailsPage />} />
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<HomePage />} />

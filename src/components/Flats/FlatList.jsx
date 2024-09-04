@@ -420,7 +420,7 @@ function AllFlats() {
               <th>Año de Construcción</th>
               <th>Precio de Renta</th>
               <th>Fecha Disponible</th>
-              <th>Favorito</th>
+              <th>Usuario Propietario</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -434,14 +434,13 @@ function AllFlats() {
                 <td>{flat.yearbuilt}</td>
                 <td>{flat.rentprice}</td>
                 <td>{flat.dateavaliable}</td>
+                <td>{flat.userEmail}</td>
                 <td>
                   <button onClick={() => handleFavoriteToggle(flat)}>
                     {flat.favorite
                       ? "Quitar de favoritos"
                       : "Marcar como favorito"}
                   </button>
-                </td>
-                <td>
                   <button onClick={() => handleViewDetails(flat.id)}>
                     Ver Flat
                   </button>

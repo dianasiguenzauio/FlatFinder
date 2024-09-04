@@ -46,6 +46,7 @@ const Navbar = () => {
         <NavLink to="/FavouritesPage">Mis Favoritos</NavLink>
         <NavLink to="/MyFlatsPage">Mis Flats</NavLink>
         <NavLink to="/ProfilePage">Mi Perfil</NavLink>
+        <NavLink to="/MessagePage">Mensajes</NavLink>
         <NavLink to="/login" onClick={logout}>
           {" "}
           Cerrar Sesión{" "}
