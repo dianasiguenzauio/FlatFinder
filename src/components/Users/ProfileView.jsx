@@ -1,5 +1,4 @@
 //Componente para mostrar el perfil o datos del usuario
-
 import React, { useEffect, useState } from "react";
 import {
   collection,
@@ -9,7 +8,8 @@ import {
   updateDoc,
   doc,
 } from "firebase/firestore";
-import { db } from "../../config/firebase";
+import { db } from "../../config/firebase"; // Importar auth si es necesario
+import { useNavigate } from "react-router-dom"; // Para la redirección
 
 function UserProfile() {
   const [userData, setUserData] = useState(null);
@@ -18,15 +18,23 @@ function UserProfile() {
   const [editData, setEditData] = useState({
     firstname: "",
     lastname: "",
-    password: "",
     birthdate: "",
   });
   const [fieldErrors, setFieldErrors] = useState({
     firstname: "",
     lastname: "",
-    password: "",
     birthdate: "",
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
   });
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isPasswordChangeEnabled, setIsPasswordChangeEnabled] = useState(false); // Para habilitar los campos de nueva contraseña
+  const [isCurrentPasswordCorrect, setIsCurrentPasswordCorrect] =
+    useState(false); // Para saber si la contraseña actual es correcta
+  const navigate = useNavigate(); // Hook para redirigir
 
   // Obtener usuario almacenado en el localStorage
   const storedUser = JSON.parse(localStorage.getItem("authToken"));
@@ -71,7 +79,7 @@ function UserProfile() {
     };
 
     fetchUserData();
-  }, []); // Eliminar 'storedUser' de las dependencias para que solo se ejecute una vez al montarse el componente
+  }, []); // Se ejecuta una vez cuando el componente se monta
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -82,38 +90,68 @@ function UserProfile() {
     validateField(name, value);
   };
 
-  const validateField = (name, value) => {
-    let errorMsg = "";
-    const nameRegex = /^[A-Za-z]*$/; // Solo letras
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/; // Contraseña con al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial
+  const handlePasswordChange = (e) => {
+    const { name, value } = e.target;
 
-    if (name === "firstname" || name === "lastname") {
-      if (!nameRegex.test(value)) {
-        errorMsg = "El campo solo debe contener letras.";
-      }
+    if (name === "newPassword") {
+      setNewPassword(value);
+      validatePassword("newPassword", value);
+    } else if (name === "confirmPassword") {
+      setConfirmPassword(value);
+      validatePassword("confirmPassword", value);
+    } else if (name === "currentPassword") {
+      setCurrentPassword(value);
+      validateCurrentPassword(value); // Verificar contraseña actual en tiempo real
     }
+  };
 
-    if (name === "password") {
+  const validatePassword = (name, value) => {
+    let errorMsg = "";
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+    if (name === "newPassword") {
       if (!passwordRegex.test(value)) {
         errorMsg =
           "La contraseña debe tener al menos 8 caracteres, incluyendo una letra mayúscula, una minúscula, un número y un carácter especial.";
       }
     }
 
-    if (name === "birthdate") {
-      const today = new Date();
-      const birthDate = new Date(value);
-      const age = today.getFullYear() - birthDate.getFullYear();
-      const monthDiff = today.getMonth() - birthDate.getMonth();
-      if (
-        monthDiff < 0 ||
-        (monthDiff === 0 && today.getDate() < birthDate.getDate())
-      ) {
-        age--;
+    if (name === "confirmPassword") {
+      if (value !== newPassword) {
+        errorMsg = "Las contraseñas no coinciden.";
       }
+    }
 
-      if (age < 18) {
-        errorMsg = "Debes tener al menos 18 años.";
+    setFieldErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: errorMsg,
+    }));
+  };
+
+  const validateCurrentPassword = (password) => {
+    let errorMsg = "";
+
+    // Verificamos si la contraseña ingresada coincide con la almacenada
+    if (password !== userData.password) {
+      errorMsg = "La contraseña actual no es correcta.";
+      setIsCurrentPasswordCorrect(false);
+    } else {
+      setIsCurrentPasswordCorrect(true); // Si la contraseña es correcta
+    }
+
+    setFieldErrors((prevErrors) => ({
+      ...prevErrors,
+      currentPassword: errorMsg,
+    }));
+  };
+
+  const validateField = (name, value) => {
+    let errorMsg = "";
+    const nameRegex = /^[A-Za-z]*$/;
+
+    if (name === "firstname" || name === "lastname") {
+      if (!nameRegex.test(value)) {
+        errorMsg = "El campo solo debe contener letras.";
       }
     }
 
@@ -125,30 +163,48 @@ function UserProfile() {
 
   const handleUpdate = async () => {
     if (!validateForm()) {
-      return; // Si la validación falla, no continuar
+      return;
     }
 
-    try {
-      const userDocRef = doc(db, "users", userData.id);
-      await updateDoc(userDocRef, {
-        firstname: editData.firstname,
-        lastname: editData.lastname,
-        password: editData.password,
-        birthdate: editData.birthdate,
-      });
+    // Verificar si el usuario ingresó una nueva contraseña
+    if (newPassword !== "" && newPassword === confirmPassword) {
+      try {
+        // Actualizar la contraseña y otros datos en Firestore
+        const userDocRef = doc(db, "users", userData.id);
+        await updateDoc(userDocRef, {
+          password: newPassword,
+          firstname: editData.firstname,
+          lastname: editData.lastname,
+          birthdate: editData.birthdate,
+        });
 
-      setUserData(editData); // Actualiza el estado de `userData` con los datos editados
-      alert("Datos actualizados con éxito.");
-    } catch (err) {
-      console.error("Error al actualizar los datos del usuario: ", err);
-      setError(
-        "Error al actualizar los datos del usuario. Por favor, intenta nuevamente."
-      );
+        alert(
+          "Datos actualizados con éxito. Por favor, inicia sesión nuevamente."
+        );
+        navigate("/login"); // Redirige a la página de inicio
+      } catch (error) {
+        setError("Error al actualizar los datos.");
+      }
+    } else {
+      try {
+        // Actualizar solo los datos personales
+        const userDocRef = doc(db, "users", userData.id);
+        await updateDoc(userDocRef, {
+          firstname: editData.firstname,
+          lastname: editData.lastname,
+          birthdate: editData.birthdate,
+        });
+
+        alert("Datos actualizados con éxito.");
+        navigate("/login"); // Redirige a la página de login
+      } catch (error) {
+        setError("Error al actualizar los datos.");
+      }
     }
   };
 
   const validateForm = () => {
-    // Recorremos cada campo para validar que no haya errores
+    // Validar los campos editados
     for (let key in editData) {
       if (editData.hasOwnProperty(key)) {
         validateField(key, editData[key]);
@@ -157,7 +213,20 @@ function UserProfile() {
         }
       }
     }
+
+    // Validar las contraseñas si el usuario desea cambiarlas
+    if (
+      isPasswordChangeEnabled &&
+      (fieldErrors.newPassword || fieldErrors.confirmPassword)
+    ) {
+      return false;
+    }
+
     return true;
+  };
+
+  const togglePasswordChange = () => {
+    setIsPasswordChangeEnabled(!isPasswordChangeEnabled);
   };
 
   if (loading) {
@@ -205,18 +274,6 @@ function UserProfile() {
             )}
           </div>
           <div>
-            <label>Contraseña:</label>
-            <input
-              type="password"
-              name="password"
-              value={editData.password}
-              onChange={handleInputChange}
-            />
-            {fieldErrors.password && (
-              <p style={{ color: "red" }}>{fieldErrors.password}</p>
-            )}
-          </div>
-          <div>
             <label>Fecha de Nacimiento:</label>
             <input
               type="date"
@@ -228,6 +285,69 @@ function UserProfile() {
               <p style={{ color: "red" }}>{fieldErrors.birthdate}</p>
             )}
           </div>
+
+          {/* Checkbox para habilitar el cambio de contraseña */}
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                checked={isPasswordChangeEnabled}
+                onChange={togglePasswordChange}
+              />
+              Cambiar contraseña
+            </label>
+          </div>
+
+          {/* Mostrar campo de contraseña actual solo si se selecciona el checkbox */}
+          {isPasswordChangeEnabled && (
+            <>
+              <div>
+                <label>Contraseña Actual:</label>
+                <input
+                  type="password"
+                  name="currentPassword"
+                  value={currentPassword}
+                  onChange={handlePasswordChange}
+                />
+                {fieldErrors.currentPassword && (
+                  <p style={{ color: "red" }}>{fieldErrors.currentPassword}</p>
+                )}
+              </div>
+
+              {/* Mostrar campos de nueva contraseña solo si la contraseña actual es correcta */}
+              {isCurrentPasswordCorrect && (
+                <>
+                  <div>
+                    <label>Nueva Contraseña:</label>
+                    <input
+                      type="password"
+                      name="newPassword"
+                      value={newPassword}
+                      onChange={handlePasswordChange}
+                    />
+                    {fieldErrors.newPassword && (
+                      <p style={{ color: "red" }}>{fieldErrors.newPassword}</p>
+                    )}
+                  </div>
+                  <div>
+                    <label>Confirmar Nueva Contraseña:</label>
+                    <input
+                      type="password"
+                      name="confirmPassword"
+                      value={confirmPassword}
+                      onChange={handlePasswordChange}
+                    />
+                    {fieldErrors.confirmPassword && (
+                      <p style={{ color: "red" }}>
+                        {fieldErrors.confirmPassword}
+                      </p>
+                    )}
+                  </div>
+                </>
+              )}
+            </>
+          )}
+
           <button type="button" onClick={handleUpdate}>
             Actualizar Datos
           </button>
