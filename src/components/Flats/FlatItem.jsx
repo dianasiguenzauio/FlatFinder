@@ -70,9 +70,6 @@ function VerDetallePage() {
           <p>
             <strong>Fecha Disponible:</strong> {flat.dateavaliable}
           </p>
-          <p>
-            <strong>Favorito:</strong> {flat.favorite ? "Sí" : "No"}
-          </p>
         </div>
       ) : (
         <p>No hay detalles disponibles para este flat.</p>
