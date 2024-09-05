@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import NavbarContainer from "../components/Commons/Navbar";
 import FlatList from "../components/Flats/FlatList";
 import { getFlats } from "../services/firebase";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import { Button } from "@mui/material";
 
 function HomePage() {
   const [flats, setFlats] = useState([]);
@@ -57,37 +60,47 @@ function HomePage() {
         <NavbarContainer />
         <h1>HomePage</h1>
         <form onSubmit={handleSearchSubmit}>
-          <label htmlFor="city">Ciudad:</label>
-          <input
-            type="text"
-            id="city"
-            name="city"
-            value={searchQuery.city}
-            onChange={handleInputChange}
-          />
+          <Box
+            component="form"
+            sx={{ "& .MuiTextField-root": { m: 1, width: "25ch" } }}
+            noValidate
+            autoComplete="off"
+          >
+            <div>
+              <TextField
+                label="Ciudad"
+                id="outlined-size-small"
+                value={searchQuery.city}
+                onChange={handleInputChange}
+              />
 
-          <label htmlFor="areasize">Area mayor a:</label>
-          <input
-            type="number"
-            id="areasize"
-            name="areasize"
-            value={searchQuery.areasize}
-            onChange={handleInputChange}
-          />
+              <TextField
+                label="Área mayor a"
+                type="number"
+                id="filled-size-small"
+                value={searchQuery.areasize}
+                onChange={handleInputChange}
+              />
 
-          <label htmlFor="minPrice">Precio mayor a:</label>
-          <input
-            type="number"
-            id="minPrice"
-            name="minPrice"
-            value={searchQuery.minPrice}
-            onChange={handleInputChange}
-          />
-
-          <button type="submit">Buscar</button>
-          <button type="button" onClick={handleClearSearch}>
-            Borrar Búsqueda
-          </button>
+              <TextField
+                label="Precio mayor a"
+                type="number"
+                id="standard-size-small"
+                value={searchQuery.minPrice}
+                onChange={handleInputChange}
+              />
+              <button type="submit" variant="contained">
+                Buscar
+              </button>
+              <button
+                type="button"
+                variant="outlined"
+                onClick={handleClearSearch}
+              >
+                Borrar Búsqueda
+              </button>
+            </div>
+          </Box>
         </form>
       </div>
       <FlatList flats={flats} />

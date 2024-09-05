@@ -1,12 +1,11 @@
-//Componente de formulario de login
-// src/components/Login.js
-
 import React, { useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { db } from "./../././../config/firebase"; // Asegúrate de que la ruta sea correcta
+import { db } from "./../././../config/firebase";
+// Asegúrate de que la ruta sea correcta
 import { useNavigate } from "react-router-dom";
 import AuthContext from "./.././../context/authContext";
 import { useContext } from "react";
+import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -53,32 +52,45 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h2>Iniciar Sesión</h2>
+    <Box component="section">
+      <Typography variant="h2">Iniciar Sesión</Typography>
       <form onSubmit={handleLogin}>
         <div>
-          <label>Email:</label>
-          <input
-            type="email"
+          <Typography variant="body1">Email:</Typography>
+          <TextField
+            fullWidth
+            label="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
         </div>
         <div>
-          <label>Contraseña:</label>
-          <input
+          <Typography variant="body1">Contraseña:</Typography>
+          <TextField
+            fullWidth
+            label="Contraseña"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
         </div>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        <button type="submit">Ingresar</button>
-        <button onClick={handleUserForm}>Crear cuenta</button>
+        {error && (
+          <Typography sx={{ color: "red" }} variant="body2">
+            {error}
+          </Typography>
+        )}
+        <div>
+          <Button variant="contained" type="submit">
+            Ingresar
+          </Button>
+          <Button variant="outlined" onClick={handleUserForm}>
+            Crear cuenta
+          </Button>
+        </div>
       </form>
-    </div>
+    </Box>
   );
 };
 
