@@ -10,6 +10,8 @@ import FavouritesPage from "./pages/FavouritesPage";
 import MyFlatsPage from "./pages/MyFlatsPage";
 import ProfilePage from "./pages/ProfilePage";
 import RegistrerPage from "./pages/RegistrerPage";
+import FlatDetailsPage from "./pages/FlatDetailsPage";
+import MessagePage from "./pages/MessagePage";
 
 function App() {
   return (
@@ -18,12 +20,15 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/RegistrerPage" element={<RegistrerPage />} />
 
+        <Route path="/NewFlatPage" element={<NewFlatPage />} />
+        <Route path="/FavouritesPage" element={<FavouritesPage />} />
+        <Route path="/MyFlatsPage" element={<MyFlatsPage />} />
+        <Route path="/ProfilePage" element={<ProfilePage />} />
+        <Route path="/RegistrerPage" element={<RegistrerPage />} />
+        <Route path="/MessagePage" element={<MessagePage />} />
+        <Route path="/FlatDetailsPage/:flatId" element={<FlatDetailsPage />} />
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<HomePage />} />
-          <Route path="/NewFlatPage" element={<NewFlatPage />} />
-          <Route path="/FavouritesPage" element={<FavouritesPage />} />
-          <Route path="/MyFlatsPage" element={<MyFlatsPage />} />
-          <Route path="/ProfilePage" element={<ProfilePage />} />
         </Route>
       </Routes>
     </AuthProvider>

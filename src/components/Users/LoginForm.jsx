@@ -1,12 +1,17 @@
 //Componente de formulario de login
-// src/components/Login.js
 
-import React, { useState } from "react";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { db } from "./../././../config/firebase"; // Asegúrate de que la ruta sea correcta
+import React, { useState, useContext } from "react";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  updateDoc,
+  doc,
+} from "firebase/firestore";
+import { db } from "./../././../config/firebase";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "./.././../context/authContext";
-import { useContext } from "react";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -20,7 +25,6 @@ const Login = () => {
   };
 
   const handleLogin = async (e) => {
-    const user = { email, password };
     e.preventDefault();
     setError("");
 
@@ -41,6 +45,19 @@ const Login = () => {
         const user = { email, password };
         login(JSON.stringify(user));
         alert("Ingreso exitoso");
+
+        // Actualizar todos los flats para que el campo 'favorite' sea false
+        const flatsCollection = collection(db, "flats");
+        const flatsSnapshot = await getDocs(flatsCollection);
+
+        const updatePromises = flatsSnapshot.docs.map((flatDoc) => {
+          const flatRef = doc(db, "flats", flatDoc.id);
+          return updateDoc(flatRef, { favorite: false });
+        });
+
+        // Esperar a que todas las actualizaciones se completen
+        await Promise.all(updatePromises);
+
         navigate("/");
         console.log(user);
       } else {

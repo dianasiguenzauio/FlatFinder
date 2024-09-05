@@ -1,5 +1,4 @@
-//Componente para crear y editar un flat
-//Componente para crear y editar un flat
+//Componente para crear
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createFlats, getFlats } from "../../services/firebase";
@@ -100,6 +99,7 @@ function NewFlat() {
       userEmail: email,
     });
     await fetchData();
+    alert("Propiedad Registrada con exito");
     navigate("/");
   };
 
