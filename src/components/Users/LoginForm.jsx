@@ -9,7 +9,7 @@ import {
   updateDoc,
   doc,
 } from "firebase/firestore";
-import { db } from "./../././../config/firebase"; // Asegúrate de que la ruta sea correcta
+import { db } from "./../././../config/firebase";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "./.././../context/authContext";
 
