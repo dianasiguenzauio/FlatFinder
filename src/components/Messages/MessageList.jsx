@@ -1,8 +1,53 @@
 import { useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../config/firebase";
+import styled from "styled-components";
 
-function MisMessages() {
+// Estilos del contenedor de los mensajes
+const MessagesContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+`;
+
+// Estilos de cada card de mensaje
+const MessageCard = styled.div`
+  background-color: #fff;
+
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+`;
+
+// Título y contenido del mensaje
+const MessageTitle = styled.h3`
+  font-size: 1.2rem;
+  color: #03a5ba;
+  margin-bottom: 10px;
+`;
+
+const MessageContent = styled.p`
+  font-size: 1rem;
+  color: #100126;
+  margin-bottom: 15px;
+`;
+
+const MisMessages = () => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -54,46 +99,33 @@ function MisMessages() {
   }
 
   return (
-    <div>
-      <h2>Mensajes de mis flats</h2>
+    <div style={{ textAlign: "center" }}>
+      <h2>Mis Mensajes</h2>
       {messages.length > 0 ? (
-        <table border="1" cellPadding="10" cellSpacing="0">
-          <thead>
-            <tr>
-              <th>Email Remitente</th>
-              <th>Fecha del mensaje</th>
-              <th>Mensaje</th>
-              <th>Ciudad</th>
-              <th>Calle</th>
-              <th>Numeracion</th>
-              <th>Área de construcción (m²)</th>
-              <th>Fecha disponibilidad</th>
-            </tr>
-          </thead>
-          <tbody>
-            {messages.map((message) => (
-              <tr key={message.id}>
-                <td>{message.email}</td>
-                <td>
-                  {new Date(
-                    message.marcatiempo.seconds * 1000
-                  ).toLocaleString()}
-                </td>
-                <td>{message.message}</td>
-                <td>{message.city}</td>
-                <td>{message.streetname}</td>
-                <td>{message.streetnumber}</td>
-                <td>{message.areasize} m²</td>
-                <td>{message.dateavaliable}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <MessagesContainer>
+          {messages.map((message) => (
+            <MessageCard key={message.id}>
+              <MessageTitle>Email Remitente: {message.email}</MessageTitle>
+              <MessageContent>
+                Fecha del mensaje:{" "}
+                {new Date(message.marcatiempo.seconds * 1000).toLocaleString()}
+              </MessageContent>
+              <MessageContent>Mensaje: {message.message}</MessageContent>
+              <MessageContent>Ciudad: {message.city}</MessageContent>
+              <MessageContent>Calle: {message.streetname}</MessageContent>
+              <MessageContent>Número: {message.streetnumber}</MessageContent>
+              <MessageContent>Área: {message.areasize} m²</MessageContent>
+              <MessageContent>
+                Fecha Disponible: {message.dateavaliable}
+              </MessageContent>
+            </MessageCard>
+          ))}
+        </MessagesContainer>
       ) : (
         <p>No tienes mensajes.</p>
       )}
     </div>
   );
-}
+};
 
 export default MisMessages;

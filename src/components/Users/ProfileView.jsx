@@ -195,7 +195,9 @@ function UserProfile() {
           birthdate: editData.birthdate,
         });
 
-        alert("Datos actualizados con éxito.");
+        alert(
+          "Datos actualizados con éxito. Por favor, inicia sesión nuevamente."
+        );
         navigate("/login"); // Redirige a la página de login
       } catch (error) {
         setError("Error al actualizar los datos.");

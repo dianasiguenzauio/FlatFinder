@@ -7,7 +7,12 @@ function FlatDetailsPage() {
     <>
       <div>
         <NavbarContainer />
-
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
         <MessagePage></MessagePage>
         <MisMessages></MisMessages>
       </div>

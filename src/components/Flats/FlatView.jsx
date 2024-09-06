@@ -1,5 +1,4 @@
-//Componente para ver los detalles del flat
-
+//Componente para ver mis flats
 import { useEffect, useState } from "react";
 import {
   collection,
@@ -11,16 +10,131 @@ import {
   doc,
 } from "firebase/firestore";
 import { db } from "../../config/firebase";
+import styled from "styled-components";
+
+// Estilos del contenedor general, tabla y formulario
+const Container = styled.div`
+  margin-right: 10px;
+  background-color: #353636;
+  display: flex;
+  flex-direction: column; /* Cambia a columna en pantallas pequeñas */
+  align-items: center;
+  padding: 20px;
+  @media (min-width: 768px) {
+    flex-direction: row; /* Cambia a fila en pantallas grandes */
+    justify-content: space-between;
+  }
+`;
+
+const TableWrapper = styled.div`
+  flex: 2;
+  margin-right: 20px;
+  margin-bottom: 40px;
+  background-color: #353636;
+  @media (max-width: 768px) {
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+`;
+
+const FormWrapper = styled.div`
+  padding-top: 10%;
+  background-color: #353636;
+  flex: 1;
+`;
+
+const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 1em;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  background-color: #292828;
+`;
+
+const TableHeader = styled.th`
+  background-color: #5193ce;
+  color: #ffffff;
+  text-align: left;
+  padding: 12px;
+`;
+
+const TableRow = styled.tr`
+  &:nth-of-type(even) {
+    background-color: #3d3d3d;
+  }
+
+  &:hover {
+    background-color: #334452;
+  }
+`;
+
+const TableData = styled.td`
+  padding: 12px;
+`;
+
+const Button = styled.button`
+  background-color: #009879;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    background-color: #2a3330;
+  }
+  margin-right: 10px;
+`;
+
+const FormContainer = styled.div`
+  max-width: 500px;
+  max-height: max-content;
+  margin: 5px auto;
+  padding: 20px;
+  background-color: #334452;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+`;
+
+const FormLabel = styled.label`
+  display: block;
+  margin: 10px 0 5px;
+`;
+
+const FormInput = styled.input`
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #5193ce;
+  border-radius: 5px;
+  padding-top: 1%;
+`;
+
+const FormButton = styled.button`
+  position: flex;
+  max-height: 10%;
+  margin-right: 10px; /* Espacio entre los botones */
+  background-color: #009879;
+  color: white;
+  padding: 4px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  &:hover {
+    background-color: #5193ce;
+  }
+`;
 
 function MyFlats() {
   const [flats, setFlats] = useState([]);
-  const [editingFlat, setEditingFlat] = useState(null); // Estado para el flat en edición
+  const [editingFlat, setEditingFlat] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [successMessage, setSuccessMessage] = useState(""); // Estado para mensaje de éxito
+  const [successMessage, setSuccessMessage] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
 
-  // Obtener usuario almacenado en el localStorage
   const storedUser = JSON.parse(localStorage.getItem("authToken"));
 
   useEffect(() => {
@@ -32,7 +146,6 @@ function MyFlats() {
           return;
         }
 
-        // Consulta para obtener los flats del usuario
         const flatsQuery = query(
           collection(db, "flats"),
           where("userEmail", "==", storedUser.email)
@@ -57,7 +170,7 @@ function MyFlats() {
   }, []);
 
   const handleEditClick = (flat) => {
-    setEditingFlat(flat); // Establecer el flat que se está editando
+    setEditingFlat(flat);
   };
 
   const handleUpdateFlat = async (e) => {
@@ -65,20 +178,18 @@ function MyFlats() {
     if (!editingFlat) return;
 
     try {
-      // Actualizar el documento en Firestore
       const flatRef = doc(db, "flats", editingFlat.id);
       await updateDoc(flatRef, { ...editingFlat });
 
-      // Actualizar la lista de flats en el estado
       setFlats((prevFlats) =>
         prevFlats.map((flat) =>
           flat.id === editingFlat.id ? { ...editingFlat } : flat
         )
       );
 
-      setEditingFlat(null); // Limpiar el estado de edición
-      setSuccessMessage("Flat actualizado."); // Mensaje de éxito
-      setTimeout(() => setSuccessMessage(""), 3000); // Limpiar mensaje de éxito después de 3 segundos
+      setEditingFlat(null);
+      setSuccessMessage("Flat actualizado.");
+      setTimeout(() => setSuccessMessage(""), 3000);
     } catch (err) {
       console.error("Error al actualizar el flat: ", err);
       setError("Error al actualizar el flat. Por favor, intenta nuevamente.");
@@ -90,9 +201,7 @@ function MyFlats() {
 
     let valid = true;
 
-    // Validaciones en tiempo real
     if (name === "city" || name === "streetname") {
-      // Solo permite letras
       if (!/^[a-zA-Z\s]*$/.test(value)) {
         valid = false;
         setFieldErrors((prevErrors) => ({
@@ -113,7 +222,6 @@ function MyFlats() {
       name === "yearbuilt" ||
       name === "rentprice"
     ) {
-      // Solo permite números
       if (!/^\d*$/.test(value)) {
         valid = false;
         setFieldErrors((prevErrors) => ({
@@ -138,13 +246,11 @@ function MyFlats() {
 
   const handleDeleteFlat = async (flatId) => {
     try {
-      // Eliminar el documento en Firestore
       await deleteDoc(doc(db, "flats", flatId));
 
-      // Actualizar la lista de flats en el estado
       setFlats((prevFlats) => prevFlats.filter((flat) => flat.id !== flatId));
-      setSuccessMessage("Flat eliminado."); // Mensaje de éxito
-      setTimeout(() => setSuccessMessage(""), 3000); // Limpiar mensaje de éxito después de 3 segundos
+      setSuccessMessage("Flat eliminado.");
+      setTimeout(() => setSuccessMessage(""), 3000);
     } catch (err) {
       console.error("Error al eliminar el flat: ", err);
       setError("Error al eliminar el flat. Por favor, intenta nuevamente.");
@@ -160,165 +266,171 @@ function MyFlats() {
   }
 
   return (
-    <div>
-      <h2>Mis Propiedades</h2>
-      {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
-      {flats.length > 0 ? (
-        <table border="1" cellPadding="10" cellSpacing="0">
-          <thead>
-            <tr>
-              <th>Ciudad</th>
-              <th>Calle</th>
-              <th>Número</th>
-              <th>Área (m²)</th>
-              <th>Aire Acondicionado</th>
-              <th>Año de Construcción</th>
-              <th>Precio de Renta</th>
-              <th>Fecha Disponible</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {flats.map((flat) => (
-              <tr key={flat.id}>
-                <td>{flat.city}</td>
-                <td>{flat.streetname}</td>
-                <td>{flat.streetnumber}</td>
-                <td>{flat.areasize}</td>
-                <td>{flat.hasac ? "Sí" : "No"}</td>
-                <td>{flat.yearbuilt}</td>
-                <td>{flat.rentprice}</td>
-                <td>{flat.dateavaliable}</td>
-                <td>
-                  <button onClick={() => handleEditClick(flat)}>Editar</button>
-                  <button onClick={() => handleDeleteFlat(flat.id)}>
-                    Eliminar Flat
-                  </button>
-                </td>
+    <Container>
+      <TableWrapper>
+        <h2 style={{ textAlign: "center" }}>Mis Propiedades</h2>
+        {successMessage && (
+          <p style={{ color: "green", textAlign: "center" }}>
+            {successMessage}
+          </p>
+        )}
+        {flats.length > 0 ? (
+          <Table>
+            <thead>
+              <tr>
+                <TableHeader>Ciudad</TableHeader>
+                <TableHeader>Calle</TableHeader>
+                <TableHeader>Número</TableHeader>
+                <TableHeader>Área (m²)</TableHeader>
+                <TableHeader>Aire Acondicionado</TableHeader>
+                <TableHeader>Año de Construcción</TableHeader>
+                <TableHeader>Precio de Renta</TableHeader>
+                <TableHeader>Fecha Disponible</TableHeader>
+                <TableHeader>Acciones</TableHeader>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <p>No tienes flats registrados.</p>
-      )}
+            </thead>
+            <tbody>
+              {flats.map((flat) => (
+                <TableRow key={flat.id}>
+                  <TableData>{flat.city}</TableData>
+                  <TableData>{flat.streetname}</TableData>
+                  <TableData>{flat.streetnumber}</TableData>
+                  <TableData>{flat.areasize}</TableData>
+                  <TableData>{flat.hasac ? "Sí" : "No"}</TableData>
+                  <TableData>{flat.yearbuilt}</TableData>
+                  <TableData>{flat.rentprice}</TableData>
+                  <TableData>{flat.dateavaliable}</TableData>
+                  <TableData>
+                    <Button onClick={() => handleEditClick(flat)}>
+                      Editar
+                    </Button>
+                    <Button onClick={() => handleDeleteFlat(flat.id)}>
+                      Eliminar
+                    </Button>
+                  </TableData>
+                </TableRow>
+              ))}
+            </tbody>
+          </Table>
+        ) : (
+          <p>No tienes flats registrados.</p>
+        )}
+      </TableWrapper>
 
-      {/* Formulario de Edición */}
       {editingFlat && (
-        <div>
-          <h3>Editar Propiedad</h3>
-          <form onSubmit={handleUpdateFlat}>
-            <label>
-              Ciudad:
-              <input
-                type="text"
-                name="city"
-                value={editingFlat.city}
-                onChange={handleChange}
-              />
-              {fieldErrors.city && (
-                <p style={{ color: "red" }}>{fieldErrors.city}</p>
-              )}
-            </label>
-            <br />
-            <label>
-              Calle:
-              <input
-                type="text"
-                name="streetname"
-                value={editingFlat.streetname}
-                onChange={handleChange}
-              />
-              {fieldErrors.streetname && (
-                <p style={{ color: "red" }}>{fieldErrors.streetname}</p>
-              )}
-            </label>
-            <br />
-            <label>
-              Número:
-              <input
-                type="number"
-                name="streetnumber"
-                value={editingFlat.streetnumber}
-                onChange={handleChange}
-              />
-              {fieldErrors.streetnumber && (
-                <p style={{ color: "red" }}>{fieldErrors.streetnumber}</p>
-              )}
-            </label>
-            <br />
-            <label>
-              Área (m²):
-              <input
-                type="number"
-                name="areasize"
-                value={editingFlat.areasize}
-                onChange={handleChange}
-              />
-              {fieldErrors.areasize && (
-                <p style={{ color: "red" }}>{fieldErrors.areasize}</p>
-              )}
-            </label>
-            <br />
-            <label>
-              Aire Acondicionado:
-              <input
-                type="checkbox"
-                name="hasac"
-                checked={editingFlat.hasac}
-                onChange={(e) =>
-                  setEditingFlat((prevFlat) => ({
-                    ...prevFlat,
-                    hasac: e.target.checked,
-                  }))
-                }
-              />
-            </label>
-            <br />
-            <label>
-              Año de Construcción:
-              <input
-                type="number"
-                name="yearbuilt"
-                value={editingFlat.yearbuilt}
-                onChange={handleChange}
-              />
-              {fieldErrors.yearbuilt && (
-                <p style={{ color: "red" }}>{fieldErrors.yearbuilt}</p>
-              )}
-            </label>
-            <br />
-            <label>
-              Precio de Renta:
-              <input
-                type="number"
-                name="rentprice"
-                value={editingFlat.rentprice}
-                onChange={handleChange}
-              />
-              {fieldErrors.rentprice && (
-                <p style={{ color: "red" }}>{fieldErrors.rentprice}</p>
-              )}
-            </label>
-            <br />
-            <label>
-              Fecha Disponible:
-              <input
-                type="date"
-                name="dateavaliable"
-                value={editingFlat.dateavaliable}
-                onChange={handleChange}
-              />
-            </label>
-            <br />
-            <button type="submit">Actualizar Flat</button>
-            <button type="button" onClick={() => setEditingFlat(null)}>
-              Cancelar
-            </button>
-          </form>
-        </div>
+        <FormWrapper>
+          <FormContainer>
+            <h2>Editar Flat</h2>
+            <form onSubmit={handleUpdateFlat}>
+              <FormLabel>
+                Ciudad:
+                <FormInput
+                  type="text"
+                  name="city"
+                  value={editingFlat.city}
+                  onChange={handleChange}
+                />
+                {fieldErrors.city && (
+                  <p style={{ color: "red" }}>{fieldErrors.city}</p>
+                )}
+              </FormLabel>
+              <FormLabel>
+                Calle:
+                <FormInput
+                  type="text"
+                  name="streetname"
+                  value={editingFlat.streetname}
+                  onChange={handleChange}
+                />
+                {fieldErrors.streetname && (
+                  <p style={{ color: "red" }}>{fieldErrors.streetname}</p>
+                )}
+              </FormLabel>
+              <FormLabel>
+                Número:
+                <FormInput
+                  type="number"
+                  name="streetnumber"
+                  value={editingFlat.streetnumber}
+                  onChange={handleChange}
+                />
+                {fieldErrors.streetnumber && (
+                  <p style={{ color: "red" }}>{fieldErrors.streetnumber}</p>
+                )}
+              </FormLabel>
+              <FormLabel>
+                Área (m²):
+                <FormInput
+                  type="number"
+                  name="areasize"
+                  value={editingFlat.areasize}
+                  onChange={handleChange}
+                />
+                {fieldErrors.areasize && (
+                  <p style={{ color: "red" }}>{fieldErrors.areasize}</p>
+                )}
+              </FormLabel>
+              <FormLabel>
+                Aire Acondicionado:
+                <input
+                  type="checkbox"
+                  name="hasac"
+                  checked={editingFlat.hasac}
+                  onChange={(e) =>
+                    setEditingFlat((prevFlat) => ({
+                      ...prevFlat,
+                      hasac: e.target.checked,
+                    }))
+                  }
+                />
+              </FormLabel>
+              <FormLabel>
+                Año de Construcción:
+                <FormInput
+                  type="number"
+                  name="yearbuilt"
+                  value={editingFlat.yearbuilt}
+                  onChange={handleChange}
+                />
+                {fieldErrors.yearbuilt && (
+                  <p style={{ color: "red" }}>{fieldErrors.yearbuilt}</p>
+                )}
+              </FormLabel>
+              <FormLabel>
+                Precio de Renta:
+                <FormInput
+                  type="number"
+                  name="rentprice"
+                  value={editingFlat.rentprice}
+                  onChange={handleChange}
+                />
+                {fieldErrors.rentprice && (
+                  <p style={{ color: "red" }}>{fieldErrors.rentprice}</p>
+                )}
+              </FormLabel>
+              <FormLabel>
+                Fecha Disponible:
+                <FormInput
+                  type="date"
+                  name="dateavaliable"
+                  value={editingFlat.dateavaliable}
+                  onChange={handleChange}
+                />
+              </FormLabel>
+              <FormButton type="submit">Actualizar Flat</FormButton>
+
+              <FormButton
+                type="button"
+                style={{ backgroundColor: "#aa0101", color: "#ffffff" }}
+                onClick={() => setEditingFlat(null)}
+              >
+                Cancelar
+              </FormButton>
+            </form>
+          </FormContainer>
+        </FormWrapper>
       )}
-    </div>
+    </Container>
   );
 }
 

@@ -9,6 +9,86 @@ import {
 } from "firebase/firestore";
 import { db } from "../config/firebase";
 import NavbarContainer from "../components/Commons/Navbar";
+import styled from "styled-components";
+
+// Estilos para el contenedor de flats favoritos centrado
+const FlatsContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  padding-top: 2%;
+  max-width: 1300px;
+  margin: 0 auto;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    padding: 10px;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    padding: 5px;
+  }
+`;
+
+const FlatCard = styled.div`
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+`;
+
+const FlatTitle = styled.h3`
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+  }
+`;
+
+const FlatDetails = styled.p`
+  font-size: 1rem;
+  color: #666;
+  margin: 5px 0;
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+  }
+`;
+
+const ActionButton = styled.button`
+  background-color: #007bff;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
 
 function FlatsFavorites() {
   const [flats, setFlats] = useState([]);
@@ -86,46 +166,32 @@ function FlatsFavorites() {
 
   return (
     <div>
-      <NavbarContainer></NavbarContainer>
-      <h2>Flats Favoritos</h2>
-      {flats.length > 0 ? (
-        <table border="1" cellPadding="10" cellSpacing="0">
-          <thead>
-            <tr>
-              <th>Ciudad</th>
-              <th>Calle</th>
-              <th>Número</th>
-              <th>Área (m²)</th>
-              <th>Aire Acondicionado</th>
-              <th>Año de Construcción</th>
-              <th>Precio de Renta</th>
-              <th>Fecha Disponible</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {flats.map((flat) => (
-              <tr key={flat.id}>
-                <td>{flat.city}</td>
-                <td>{flat.streetname}</td>
-                <td>{flat.streetnumber}</td>
-                <td>{flat.areasize}</td>
-                <td>{flat.hasac ? "Sí" : "No"}</td>
-                <td>{flat.yearbuilt}</td>
-                <td>{flat.rentprice}</td>
-                <td>{flat.dateavaliable}</td>
-                <td>
-                  <button onClick={() => handleRemoveFavorite(flat.id)}>
-                    Eliminar de favoritos
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <p>No tienes flats favoritos.</p>
-      )}
+      <NavbarContainer />
+
+      <FlatsContainer>
+        {flats.length > 0 ? (
+          flats.map((flat) => (
+            <FlatCard key={flat.id}>
+              <FlatTitle>{flat.city}</FlatTitle>
+              <FlatDetails>Calle: {flat.streetname}</FlatDetails>
+              <FlatDetails>Número: {flat.streetnumber}</FlatDetails>
+              <FlatDetails>Área: {flat.areasize} m²</FlatDetails>
+              <FlatDetails>
+                Aire Acondicionado: {flat.hasac ? "Sí" : "No"}
+              </FlatDetails>
+              <FlatDetails>Año de Construcción: {flat.yearbuilt}</FlatDetails>
+              <FlatDetails>Precio de Renta: ${flat.rentprice}</FlatDetails>
+              <FlatDetails>Disponible desde: {flat.dateavaliable}</FlatDetails>
+              <FlatDetails>Propietario: {flat.userEmail}</FlatDetails>
+              <ActionButton onClick={() => handleRemoveFavorite(flat.id)}>
+                Eliminar de favoritos
+              </ActionButton>
+            </FlatCard>
+          ))
+        ) : (
+          <p>No tienes flats favoritos.</p>
+        )}
+      </FlatsContainer>
     </div>
   );
 }
