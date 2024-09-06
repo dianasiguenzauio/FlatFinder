@@ -75,7 +75,7 @@ const TableData = styled.td`
 `;
 
 const Button = styled.button`
-  background-color: #009879;
+  background-color: #4caf50;
   color: white;
   padding: 5px 10px;
   border: none;
@@ -115,7 +115,7 @@ const FormButton = styled.button`
   position: flex;
   max-height: 10%;
   margin-right: 10px; /* Espacio entre los botones */
-  background-color: #009879;
+  background-color: #4caf50;
   color: white;
   padding: 4px;
   border: none;
