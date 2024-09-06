@@ -7,15 +7,21 @@ import { db } from "../../config/firebase";
 // Estilos
 const FlatsContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 20px;
   padding: 20px;
-  padding-top: 5%;
-  max-width: 1200px;
+  padding-top: 2%;
+  max-width: 1400px;
   margin: 0 auto;
 
   @media (max-width: 768px) {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    padding: 10px;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    padding: 5px;
   }
 `;
 
@@ -23,7 +29,7 @@ const FlatCard = styled.div`
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  padding: 15px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -32,18 +38,45 @@ const FlatCard = styled.div`
   &:hover {
     transform: translateY(-5px);
   }
+
+  @media (max-width: 768px) {
+    padding: 10px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 5px;
+  }
 `;
 
 const FlatTitle = styled.h3`
   font-size: 1.5rem;
   color: #333;
   margin-bottom: 10px;
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+  }
 `;
 
 const FlatDetails = styled.p`
   font-size: 1rem;
   color: #666;
   margin: 5px 0;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+  }
+  @media (max-width: 1800px) {
+    max-width: 100%;
+  }
 `;
 
 const ActionButton = styled.button`
@@ -54,21 +87,38 @@ const ActionButton = styled.button`
   border-radius: 5px;
   font-size: 1rem;
   cursor: pointer;
-  margin-right: 0.5rem;
+  margin: 0.4rem 0;
   transition: background-color 0.3s;
 
   &:hover {
     background-color: #0056b3;
   }
+
+  @media (max-width: 768px) {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+  }
 `;
 
 const FilterContainer = styled.div`
-  padding-top: 15%;
-
+  padding-top: 10%;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 30px;
+
+  @media (max-width: 768px) {
+    padding-top: 15%;
+  }
+
+  @media (max-width: 480px) {
+    padding-top: 20%;
+  }
 `;
 
 const FilterForm = styled.form`
@@ -76,13 +126,23 @@ const FilterForm = styled.form`
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
-  max-width: 800px;
+  max-width: 100%;
   margin: 0 auto;
+
+  @media (max-width: 768px) {
+    gap: 15px;
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: 10px;
+  }
 `;
 
 const FilterInput = styled.input`
   padding: 10px;
-  width: 200px;
+  width: 100%;
+  max-width: 220px;
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 1rem;
@@ -91,11 +151,20 @@ const FilterInput = styled.input`
     outline: none;
     border-color: #007bff;
   }
+
+  @media (max-width: 768px) {
+    max-width: 180px;
+  }
+
+  @media (max-width: 480px) {
+    max-width: 100%;
+  }
 `;
 
 const FilterSelect = styled.select`
   padding: 10px;
-  width: 220px;
+  width: 100%;
+  max-width: 220px;
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 1rem;
@@ -103,6 +172,14 @@ const FilterSelect = styled.select`
   &:focus {
     outline: none;
     border-color: #007bff;
+  }
+
+  @media (max-width: 768px) {
+    max-width: 180px;
+  }
+
+  @media (max-width: 480px) {
+    max-width: 100%;
   }
 `;
 

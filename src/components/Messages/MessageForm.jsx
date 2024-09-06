@@ -1,8 +1,8 @@
 //Componente para enviar el mensaje
-import { useEffect, useState } from "react";
+
+import { useEffect, useState, useRef } from "react";
 import { collection, getDocs, query, where, addDoc } from "firebase/firestore";
 import { db } from "../../config/firebase";
-import NavbarContainer from "../../components/Commons/Navbar";
 
 function MessagePage() {
   const [flats, setFlats] = useState([]);
@@ -11,6 +11,73 @@ function MessagePage() {
   const [showMessageForm, setShowMessageForm] = useState(false);
   const [selectedFlat, setSelectedFlat] = useState(null); // Almacena el flat seleccionado
   const [messageContent, setMessageContent] = useState("");
+  const messageFormRef = useRef(null); // Referencia para el formulario de mensajes
+
+  const styles = {
+    gridContainer: {
+      color: "black",
+      maxWidth: "1400px",
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+      gap: "20px",
+      padding: "20px",
+      justifyContent: "center", // Centrar las cards
+      backgroundColor: "#303030",
+    },
+    card: {
+      backgroundColor: "white",
+      border: "1px solid #5193ce",
+      borderRadius: "10px",
+      padding: "20px",
+      boxShadow: "0 4px 8px rgba(10, 10, 10, 0.1)",
+      transition: "transform 0.3s ease",
+      textAlign: "left",
+    },
+    messageForm: {
+      maxWidth: "500px",
+      margin: "20px auto",
+      padding: "20px",
+      border: "1px solid #5193ce",
+      borderRadius: "10px",
+      backgroundColor: "#121439",
+      boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+      textAlign: "left", // Alinea el texto y los elementos a la izquierda
+    },
+    label: {
+      display: "block",
+      marginBottom: "8px",
+      fontWeight: "bold",
+    },
+    textarea: {
+      backgroundColor: "white",
+      color: "black",
+      width: "100%",
+      height: "100px",
+      padding: "5px",
+      borderRadius: "5px",
+      border: "1px solid #ccc",
+    },
+
+    sendMessageButton: {
+      backgroundColor: "#28a745", // Verde para el botón "Enviar Mensaje"
+      color: "white",
+      padding: "10px 20px",
+      border: "none",
+      borderRadius: "5px",
+      cursor: "pointer",
+      marginTop: "10px",
+    },
+
+    submitButton: {
+      backgroundColor: "#4CAF50",
+      color: "white",
+      padding: "10px 20px",
+      border: "none",
+      borderRadius: "5px",
+      cursor: "pointer",
+      marginTop: "10px",
+    },
+  };
 
   // Obtener usuario almacenado en el localStorage
   const storedUser = JSON.parse(localStorage.getItem("authToken"));
@@ -51,6 +118,14 @@ function MessagePage() {
   const handleSendMessageClick = (flat) => {
     setSelectedFlat(flat); // Guardamos toda la información del flat seleccionado
     setShowMessageForm(true);
+
+    // Mover el foco al formulario
+    setTimeout(() => {
+      if (messageFormRef.current) {
+        messageFormRef.current.scrollIntoView({ behavior: "smooth" });
+        messageFormRef.current.focus(); // Mover el foco al formulario
+      }
+    }, 100);
   };
 
   const handleSendMessage = async (e) => {
@@ -97,54 +172,58 @@ function MessagePage() {
   }
 
   return (
-    <div>
-      <NavbarContainer />
+    <div style={{ textAlign: "center" }}>
       <h2>Flats de usuarios</h2>
       {flats.length > 0 ? (
-        <table border="1" cellPadding="10" cellSpacing="0">
-          <thead>
-            <tr>
-              <th>Ciudad</th>
-              <th>Calle</th>
-              <th>Numeracion</th>
-              <th>Área de construccion (m²)</th>
-              <th>Aire Acondicionado</th>
-              <th>Año de Construcción</th>
-              <th>Precio de Renta</th>
-              <th>Fecha Disponible</th>
-              <th>Usuario Propietario</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {flats.map((flat) => (
-              <tr key={flat.id}>
-                <td>{flat.city}</td>
-                <td>{flat.streetname}</td>
-                <td>{flat.streetnumber}</td>
-                <td>{flat.areasize}</td>
-                <td>{flat.hasac ? "Sí" : "No"}</td>
-                <td>{flat.yearbuilt}</td>
-                <td>{flat.rentprice}</td>
-                <td>{flat.dateavaliable}</td>
-                <td>{flat.userEmail}</td>
-                <td>
-                  <button onClick={() => handleSendMessageClick(flat)}>
-                    Enviar Mensaje
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div style={styles.gridContainer}>
+          {flats.map((flat) => (
+            <div key={flat.id} style={styles.card}>
+              <h3>{flat.city}</h3>
+              <p>
+                <strong>Calle:</strong> {flat.streetname}
+              </p>
+              <p>
+                <strong>Número:</strong> {flat.streetnumber}
+              </p>
+              <p>
+                <strong>Área:</strong> {flat.areasize} m²
+              </p>
+              <p>
+                <strong>Aire Acondicionado:</strong> {flat.hasac ? "Sí" : "No"}
+              </p>
+              <p>
+                <strong>Año de Construcción:</strong> {flat.yearbuilt}
+              </p>
+              <p>
+                <strong>Precio de Renta:</strong> {flat.rentprice}
+              </p>
+              <p>
+                <strong>Fecha Disponible:</strong> {flat.dateavaliable}
+              </p>
+              <p>
+                <strong>Propietario:</strong> {flat.userEmail}
+              </p>
+              <button
+                onClick={() => handleSendMessageClick(flat)}
+                style={styles.sendMessageButton} // Aplicar el estilo verde aquí
+              >
+                Enviar Mensaje
+              </button>
+            </div>
+          ))}
+        </div>
       ) : (
         <p>No hay flats registrados.</p>
       )}
 
       {showMessageForm && selectedFlat && (
-        <form onSubmit={handleSendMessage}>
+        <form
+          onSubmit={handleSendMessage}
+          ref={messageFormRef} // Asignamos la referencia
+          style={styles.messageForm}
+        >
           <h3>Enviar Mensaje</h3>
-          <label>
+          <label style={styles.label}>
             Fecha del Mensaje:
             <input
               type="text"
@@ -152,22 +231,22 @@ function MessagePage() {
               disabled
             />
           </label>
-          <br />
-          <label>
+          <label style={styles.label}>
             Email:
             <input type="text" value={storedUser.email} disabled />
           </label>
-          <br />
-          <label>
+          <label style={styles.label}>
             Contenido del Mensaje:
             <textarea
               value={messageContent}
               onChange={(e) => setMessageContent(e.target.value)}
               required
+              style={styles.textarea}
             />
           </label>
-          <br />
-          <button type="submit">Enviar</button>
+          <button type="submit" style={styles.submitButton}>
+            Enviar
+          </button>
         </form>
       )}
     </div>

@@ -70,6 +70,7 @@ function NewUser() {
       // Si el email no existe, crear el usuario
       await createUser(values);
       await fetchData();
+      alert("Usuario Creado con exito.");
       navigate("/login");
     } catch (error) {
       console.error(error);
