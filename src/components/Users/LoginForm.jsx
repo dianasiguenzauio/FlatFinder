@@ -195,14 +195,14 @@ const Login = () => {
       width: "100%",
       padding: "10px",
       margin: "10px 0",
-      backgroundColor: "#4CAF50",
+      backgroundColor: "#6aa9bb",
       color: "white",
       border: "none",
       borderRadius: "5px",
       cursor: "pointer",
     },
     secondaryButton: {
-      backgroundColor: "#f0ad4e",
+      backgroundColor: "#5e17a9",
     },
     errorText: {
       color: "red",
