@@ -992,7 +992,7 @@ function UserProfile() {
         //flexDirection: "column",
         height: "100vh",
         width: "100vw",
-        backgroundColor: "#f5f5f5",
+        backgroundColor: "#ffffff",
         overflow: "hidden",
       }}
     >
@@ -1125,7 +1125,7 @@ function UserProfile() {
             onClick={handleUpdate}
             style={{
               padding: "10px 20px",
-              backgroundColor: "#4CAF50",
+              backgroundColor: "#5e17a9",
               color: "white",
               border: "none",
               borderRadius: "5px",

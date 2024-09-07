@@ -12,6 +12,7 @@ import {
 import { db } from "./../././../config/firebase";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "./.././../context/authContext";
+import logo from "../../assets/Logotipo.svg"; // Replace with your actual logo path
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -111,6 +112,11 @@ const Login = () => {
   return (
     <div style={styles.container}>
       <div style={styles.formContainer}>
+        <img
+          src={logo}
+          alt="Company Logo"
+          style={{ width: "100px", margin: "10px 0" }}
+        />
         <h2>Iniciar Sesión</h2>
         <form onSubmit={handleLogin}>
           <div>
