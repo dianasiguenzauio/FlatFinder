@@ -501,7 +501,7 @@ function NewFlat() {
             onClick={handleCreateFlats}
             style={{
               padding: "10px 20px",
-              backgroundColor: "#4CAF50",
+              backgroundColor: "#5e17a9",
               color: "#fff",
               border: "none",
               borderRadius: "5px",

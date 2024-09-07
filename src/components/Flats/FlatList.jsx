@@ -80,7 +80,7 @@ const FlatDetails = styled.p`
 `;
 
 const ActionButton = styled.button`
-  background-color: #007bff;
+  background-color: #6aa9bb;
   color: white;
   padding: 0.5rem 1rem;
   border: none;
@@ -91,7 +91,7 @@ const ActionButton = styled.button`
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: #6aa9bb;
   }
 
   @media (max-width: 768px) {
@@ -149,7 +149,7 @@ const FilterInput = styled.input`
 
   &:focus {
     outline: none;
-    border-color: #007bff;
+    border-color: #6aa9bb;
   }
 
   @media (max-width: 768px) {
@@ -171,7 +171,7 @@ const FilterSelect = styled.select`
 
   &:focus {
     outline: none;
-    border-color: #007bff;
+    border-color: #6aa9bb;
   }
 
   @media (max-width: 768px) {

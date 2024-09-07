@@ -22,11 +22,11 @@ function MessagePage() {
       gap: "20px",
       padding: "20px",
       justifyContent: "center", // Centrar las cards
-      backgroundColor: "#303030",
+      backgroundColor: "#ffffff",
     },
     card: {
       backgroundColor: "white",
-      border: "1px solid #5193ce",
+
       borderRadius: "10px",
       padding: "20px",
       boxShadow: "0 4px 8px rgba(10, 10, 10, 0.1)",
@@ -37,10 +37,10 @@ function MessagePage() {
       maxWidth: "500px",
       margin: "20px auto",
       padding: "20px",
-      border: "1px solid #5193ce",
+
       borderRadius: "10px",
-      backgroundColor: "#121439",
-      boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+      backgroundColor: "#d7d7d7",
+
       textAlign: "left", // Alinea el texto y los elementos a la izquierda
     },
     label: {
@@ -59,7 +59,7 @@ function MessagePage() {
     },
 
     sendMessageButton: {
-      backgroundColor: "#28a745", // Verde para el botón "Enviar Mensaje"
+      backgroundColor: "#5e17a9", // Verde para el botón "Enviar Mensaje"
       color: "white",
       padding: "10px 20px",
       border: "none",
@@ -69,7 +69,7 @@ function MessagePage() {
     },
 
     submitButton: {
-      backgroundColor: "#4CAF50",
+      backgroundColor: "#5e17a9",
       color: "white",
       padding: "10px 20px",
       border: "none",
