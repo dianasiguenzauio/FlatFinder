@@ -335,12 +335,8 @@ const AllFlats = () => {
   return (
     <div>
       <FilterContainer>
-        <h2>Bienvenido a Flatfinder</h2>
-        <p>
-          {" "}
-          Somos el mejor portafolio web dedicado al servicio de arrendamiento de
-          propiedades a nivel nacional.{" "}
-        </p>
+        <h2></h2>
+
         <h2>Filtrar Flats</h2>
         <FilterForm>
           <FilterInput
