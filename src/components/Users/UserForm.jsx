@@ -389,7 +389,7 @@ function NewUser() {
               style={{
                 width: "100%",
                 padding: "10px",
-                backgroundColor: emailExists ? "#cccccc" : "#4caf50",
+                backgroundColor: emailExists ? "#cccccc" : "#5e17a9",
                 color: "white",
                 border: "none",
                 borderRadius: "4px",

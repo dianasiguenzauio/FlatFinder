@@ -15,7 +15,7 @@ import styled from "styled-components";
 // Estilos del contenedor general, tabla y formulario
 const Container = styled.div`
   margin-right: 10px;
-  background-color: #353636;
+
   display: flex;
   flex-direction: column; /* Cambia a columna en pantallas pequeñas */
   align-items: center;
@@ -30,7 +30,7 @@ const TableWrapper = styled.div`
   flex: 2;
   margin-right: 20px;
   margin-bottom: 40px;
-  background-color: #353636;
+
   @media (max-width: 768px) {
     margin-right: 0;
     margin-bottom: 20px;
@@ -50,11 +50,11 @@ const Table = styled.table`
   font-size: 1em;
   min-width: 400px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  background-color: #292828;
+  background-color: #dddddd;
 `;
 
 const TableHeader = styled.th`
-  background-color: #5193ce;
+  background-color: #6aa9bb;
   color: #ffffff;
   text-align: left;
   padding: 12px;
@@ -62,11 +62,11 @@ const TableHeader = styled.th`
 
 const TableRow = styled.tr`
   &:nth-of-type(even) {
-    background-color: #3d3d3d;
+    background-color: #cecece;
   }
 
   &:hover {
-    background-color: #334452;
+    background-color: #cecece;
   }
 `;
 
@@ -75,14 +75,14 @@ const TableData = styled.td`
 `;
 
 const Button = styled.button`
-  background-color: #4caf50;
+  background-color: #5e17a9;
   color: white;
   padding: 5px 10px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   &:hover {
-    background-color: #2a3330;
+    background-color: #cecece;
   }
   margin-right: 10px;
 `;
@@ -92,8 +92,8 @@ const FormContainer = styled.div`
   max-height: max-content;
   margin: 5px auto;
   padding: 20px;
-  background-color: #334452;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: #cecece;
+
   border-radius: 10px;
 `;
 
