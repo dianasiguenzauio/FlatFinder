@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import AuthContext from "../../context/authContext";
 import LogoImage from "../../assets/Logotipo.svg";
 
 // Estilos para el contenedor del navbar
-const NavbarContainer = styled.nav`
+const HeaderContainer = styled.nav`
   position: fixed;
   top: 0;
   left: 0;
@@ -76,19 +75,19 @@ const UserSection = styled.div`
   }
 `;
 
-const Navbar = () => {
+const Header = () => {
   return (
-    <NavbarContainer>
+    <HeaderContainer>
       <Logo src={LogoImage} alt="Tu Logotipo" />
 
       <NavLinks>
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/FlatFinder">FlatFinder</NavLink>
-        <NavLink to="/Register">Register</NavLink>
-        <NavLink to="/Login">Sign In</NavLink>
+        <NavLink to="/My-Flats">My Flats</NavLink>
+        <NavLink to="/New-Flat">New Flat</NavLink>
+        <NavLink to="/Messages">Messages</NavLink>
+        <NavLink to="/Edit-User">Edit User</NavLink>
       </NavLinks>
-    </NavbarContainer>
+    </HeaderContainer>
   );
 };
 
-export default Navbar;
+export default Header;

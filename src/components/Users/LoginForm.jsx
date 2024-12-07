@@ -44,7 +44,7 @@ const Login = () => {
         setDialogOpen(true); // Mostrar mensaje de bienvenida
         setTimeout(() => {
           setDialogOpen(false);
-          navigate("/"); // Redirigir a la ruta principal
+          navigate("/FlatsList"); // Redirigir a la ruta principal
         }, 2000); // Cerrar el diálogo automáticamente después de 2 segundos
       }
     } catch (error) {
