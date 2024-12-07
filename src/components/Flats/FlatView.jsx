@@ -1,15 +1,5 @@
 //Componente para ver mis flats
 import { useEffect, useState } from "react";
-import {
-  collection,
-  getDocs,
-  query,
-  where,
-  updateDoc,
-  deleteDoc,
-  doc,
-} from "firebase/firestore";
-import { db } from "../../config/firebase";
 import styled from "styled-components";
 
 // Estilos del contenedor general, tabla y formulario

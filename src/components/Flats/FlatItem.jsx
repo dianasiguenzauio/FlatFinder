@@ -3,8 +3,6 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from ".././../config/firebase";
 
 function VerDetallePage() {
   const { flatId } = useParams(); // Obtener el ID del flat desde los parámetros de la URL

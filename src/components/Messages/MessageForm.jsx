@@ -1,8 +1,6 @@
 //Componente para enviar el mensaje
 
 import { useEffect, useState, useRef } from "react";
-import { collection, getDocs, query, where, addDoc } from "firebase/firestore";
-import { db } from "../../config/firebase";
 
 function MessagePage() {
   const [flats, setFlats] = useState([]);

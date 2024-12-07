@@ -7,7 +7,7 @@ import {
   updateDoc,
   doc,
 } from "firebase/firestore";
-import { db } from "../config/firebase";
+
 import NavbarContainer from "../components/Commons/Navbar";
 import styled from "styled-components";
 

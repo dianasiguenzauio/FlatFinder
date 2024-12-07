@@ -1,7 +1,7 @@
-import LoginForm from "../components/Users/LoginForm";
+import RegisterForm from "../components/Users/RegisterForm";
 import NavbarContainer from "../components/Commons/Navbar";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   // Aquí puedes enviar los datos a un servidor para crear la cuenta
   // Simularemos que la cuenta se creó exitosamente
 
@@ -10,10 +10,10 @@ const LoginPage = () => {
       <div>
         <NavbarContainer></NavbarContainer>
         <h1> Nuevo Usuario </h1>
-        <LoginForm />
+        <RegisterForm />
       </div>
     </>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

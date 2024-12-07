@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
+import { useContext, useState } from "react";
+import AuthContext from "../context/authContext";
+import { useNavigate } from "react-router-dom";
 import NavbarContainer from "../components/Commons/Navbar";
-import AllFlats from "../components/Flats/FlatList";
+import Home from "../components/Users/HomeForm";
 
 function HomePage() {
   return (
     <>
-      <NavbarContainer></NavbarContainer>
-      <AllFlats>Flatlist</AllFlats>
+      <div>
+        <NavbarContainer></NavbarContainer>
+        <Home> </Home>
+      </div>
     </>
   );
 }
-
 export default HomePage;

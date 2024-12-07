@@ -1,8 +1,6 @@
 //Componente para listar los flats
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
-import { db } from "../../config/firebase";
 
 // Estilos
 const FlatsContainer = styled.div`

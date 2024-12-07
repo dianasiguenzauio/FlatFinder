@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createFlats, getFlats } from "../../services/firebase";
 
 function NewFlat() {
   const [flats, setFlats] = useState([]);

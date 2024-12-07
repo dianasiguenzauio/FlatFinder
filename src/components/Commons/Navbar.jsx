@@ -77,26 +77,15 @@ const UserSection = styled.div`
 `;
 
 const Navbar = () => {
-  const { user, logout } = useContext(AuthContext);
-
   return (
     <NavbarContainer>
       <Logo src={LogoImage} alt="Tu Logotipo" />
-      {user && (
-        <UserSection>
-          <h3>👤{user.firstname}</h3>
-        </UserSection>
-      )}
+
       <NavLinks>
-        <NavLink to="/">Inicio</NavLink>
-        <NavLink to="/NewFlatPage">Nuevo Flat</NavLink>
-        <NavLink to="/FavouritesPage">Mis Favoritos</NavLink>
-        <NavLink to="/MyFlatsPage">Mis Flats</NavLink>
-        <NavLink to="/ProfilePage">Mi Perfil</NavLink>
-        <NavLink to="/MessagePage">Mensajes</NavLink>
-        <NavLink to="/login" onClick={logout}>
-          Cerrar Sesión
-        </NavLink>
+        <NavLink to="/">Home</NavLink>
+        <NavLink to="/FlatFinder">FlatFinder</NavLink>
+        <NavLink to="/RegisterPage">Register</NavLink>
+        <NavLink to="/Login">Sign In</NavLink>
       </NavLinks>
     </NavbarContainer>
   );

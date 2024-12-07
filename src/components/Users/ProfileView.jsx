@@ -1,15 +1,7 @@
 //Componente para mostrar el perfil o datos del usuario
 
 import React, { useEffect, useState } from "react";
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  updateDoc,
-  doc,
-} from "firebase/firestore";
-import { db } from "../../config/firebase";
+
 import { useNavigate } from "react-router-dom";
 
 function UserProfile() {

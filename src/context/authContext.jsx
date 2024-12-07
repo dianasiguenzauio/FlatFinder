@@ -9,8 +9,7 @@ import {
   removeToken,
   setToken,
 } from "../services/authService";
-import { db } from ".././config/firebase";
-import { query, where, getDocs, collection } from "firebase/firestore";
+
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { db } from "../../config/firebase";
+
 import styled from "styled-components";
 
 // Estilos del contenedor de los mensajes
