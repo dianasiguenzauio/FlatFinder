@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import {
   Dialog,
   DialogActions,
@@ -12,6 +13,7 @@ import {
 } from "@mui/material";
 
 const RegistrationForm = () => {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false); // Estado para controlar el diálogo
 
   // Esquema de validación con Yup
@@ -88,6 +90,12 @@ const RegistrationForm = () => {
     }
   };
 
+  // Manejador para cerrar el diálogo y redirigir
+  const handleDialogClose = () => {
+    setOpen(false);
+    navigate("/login"); // Redirigir a la ruta de inicio de sesión
+  };
+
   return (
     <div>
       <h2>Formulario de Registro</h2>
@@ -156,7 +164,7 @@ const RegistrationForm = () => {
       </Formik>
 
       {/* Diálogo de éxito */}
-      <Dialog open={open} onClose={() => setOpen(false)}>
+      <Dialog open={open} onClose={handleDialogClose}>
         <DialogTitle>Registro Exitoso</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -164,8 +172,8 @@ const RegistrationForm = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpen(false)} color="primary">
-            Cerrar
+          <Button onClick={handleDialogClose} color="primary">
+            Login
           </Button>
         </DialogActions>
       </Dialog>
