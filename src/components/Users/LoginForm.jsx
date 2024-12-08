@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import jwt_decode from "jwt-decode";
+import AuthContext from "../../context/authContext";
 import {
   Dialog,
   DialogTitle,
@@ -10,6 +12,7 @@ import {
 } from "@mui/material";
 
 const Login = () => {
+  const { login } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -37,6 +40,13 @@ const Login = () => {
       const response = await axios.post("http://localhost:8080/users/login", {
         email,
         password,
+      });
+      const { token, firstname } = response.data;
+      const decodedToken = jwt_decode(token);
+      login({
+        token,
+        firstname,
+        isAdmin: decodedToken.isAdmin,
       });
 
       // Manejo del éxito

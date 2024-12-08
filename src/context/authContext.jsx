@@ -1,72 +1,35 @@
-//Este estado se va a encargar de manejar nuestro user a nivel global
-//Van un estado donde puedan guardar el usuario y una funcion para setear el usuario
-
-//Sirve para manejar el estado de autenticación de manera global
-import { createContext, useState, useEffect } from "react";
-import {
-  getToken,
-  isAuthenticaded,
-  removeToken,
-  setToken,
-} from "../services/authService";
+import React, { createContext, useState } from "react";
 
 const AuthContext = createContext();
 
-const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = useState(isAuthenticaded());
-  const [user, setUser] = useState(JSON.parse(getToken()));
+export const AuthProvider = ({ children }) => {
+  const [auth, setAuth] = useState({
+    token: null,
+    firstname: null,
+    isAdmin: false,
+  });
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const tokenData = JSON.parse(getToken());
-      if (tokenData && tokenData.email) {
-        try {
-          const q = query(
-            collection(db, "users"),
-            where("email", "==", tokenData.email)
-          );
-          const querySnapshot = await getDocs(q);
-          if (!querySnapshot.empty) {
-            const userDoc = querySnapshot.docs[0];
-            setUser({
-              email: tokenData.email,
-              firstname: userDoc.data().firstname,
-            });
-          } else {
-            console.error("No se encontró el documento del usuario");
-          }
-        } catch (error) {
-          console.error("Error al obtener los datos del usuario:", error);
-        }
-      }
-    };
-
-    if (auth) {
-      fetchUserData();
-    }
-  }, [auth]);
-
-  const login = (token) => {
-    setToken(token);
-    setAuth(true);
+  const login = (data) => {
+    setAuth({
+      token: data.token,
+      firstname: data.firstname,
+      isAdmin: data.isAdmin,
+    });
   };
 
   const logout = () => {
-    removeToken();
-    setAuth(false);
-  };
-
-  const valueToShare = {
-    auth,
-    login,
-    logout,
-    user,
+    setAuth({
+      token: null,
+      firstname: null,
+      isAdmin: false,
+    });
   };
 
   return (
-    <AuthContext.Provider value={valueToShare}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ auth, login, logout }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 
-export { AuthProvider };
 export default AuthContext;

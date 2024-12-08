@@ -13,6 +13,7 @@ import RegisterPage from "./pages/RegisterPage";
 import FlatDetailsPage from "./pages/FlatDetailsPage";
 import MessagePage from "./pages/MessagePage";
 import FlatListPage from "./pages/FlatListPage";
+import EditUsersPage from "./pages/EditUsersPage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/Login" element={<LoginPage />} />
         <Route path="/Register" element={<RegisterPage />} />
         <Route path="/FlatsList" element={<FlatListPage />} />
+        <Route path="/Edit-Users" element={<EditUsersPage />} />
         <Route path="/NewFlatPage" element={<NewFlatPage />} />
         <Route path="/FavouritesPage" element={<FavouritesPage />} />
         <Route path="/MyFlatsPage" element={<MyFlatsPage />} />

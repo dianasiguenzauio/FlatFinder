@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import LogoImage from "../../assets/Logotipo.svg";
+import AuthContext from "../../context/authContext";
 
-// Estilos para el contenedor del navbar
 const HeaderContainer = styled.nav`
   position: fixed;
   top: 0;
@@ -19,22 +19,20 @@ const HeaderContainer = styled.nav`
   max-width: 1400px;
 
   @media (max-width: 768px) {
-    flex-direction: column; /* Cambia a columna en pantallas pequeñas */
+    flex-direction: column;
     padding: 1rem 0;
   }
 `;
 
-// Estilos para el logo
 const Logo = styled.img`
   width: 150px;
 
   @media (max-width: 768px) {
-    width: 120px; /* Reducir tamaño en pantallas pequeñas */
-    margin-bottom: 1rem; /* Añadir espacio debajo del logo */
+    width: 120px;
+    margin-bottom: 1rem;
   }
 `;
 
-// Estilos para los enlaces del navbar
 const NavLinks = styled.div`
   display: flex;
   justify-content: right;
@@ -44,11 +42,10 @@ const NavLinks = styled.div`
   @media (max-width: 768px) {
     flex-direction: column;
     width: 100%;
-    align-items: center; /* Centra los enlaces en pantallas pequeñas */
+    align-items: center;
   }
 `;
 
-// Estilos individuales de cada enlace
 const NavLink = styled(Link)`
   text-decoration: none;
   color: #b6d5bf;
@@ -60,22 +57,23 @@ const NavLink = styled(Link)`
   }
 
   @media (max-width: 768px) {
-    margin: 0.5rem 0; /* Espacio reducido entre enlaces en pantallas pequeñas */
+    margin: 0.5rem 0;
   }
 `;
 
-// Estilos para el nombre del usuario
 const UserSection = styled.div`
   display: flex;
   align-items: center;
   margin-right: 1rem;
 
   @media (max-width: 768px) {
-    margin-bottom: 1rem; /* Ajusta el espacio entre el nombre del usuario y los enlaces */
+    margin-bottom: 1rem;
   }
 `;
 
 const Header = () => {
+  const { auth } = useContext(AuthContext);
+
   return (
     <HeaderContainer>
       <Logo src={LogoImage} alt="Tu Logotipo" />
@@ -84,8 +82,14 @@ const Header = () => {
         <NavLink to="/My-Flats">My Flats</NavLink>
         <NavLink to="/New-Flat">New Flat</NavLink>
         <NavLink to="/Messages">Messages</NavLink>
-        <NavLink to="/Edit-User">Edit User</NavLink>
+        {auth.isAdmin && <NavLink to="/Edit-Users">Edit Users</NavLink>}
       </NavLinks>
+
+      {auth.firstname && (
+        <UserSection>
+          <span>Hello, {auth.firstname}</span>
+        </UserSection>
+      )}
     </HeaderContainer>
   );
 };
