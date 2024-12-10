@@ -24,6 +24,7 @@ function App() {
         <Route path="/Register" element={<RegisterPage />} />
         <Route path="/FlatsList" element={<FlatListPage />} />
         <Route path="/Edit-Users" element={<EditUsersPage />} />
+        <Route path="/My-Profile" element={<ProfilePage />} />
         <Route path="/NewFlatPage" element={<NewFlatPage />} />
         <Route path="/FavouritesPage" element={<FavouritesPage />} />
         <Route path="/MyFlatsPage" element={<MyFlatsPage />} />

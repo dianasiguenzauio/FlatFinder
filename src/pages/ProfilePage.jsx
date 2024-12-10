@@ -1,16 +1,16 @@
 //Pagina para ver la informacion detallada de un flat
 
 import React from "react";
-import NavbarContainer from "../components/Commons/Navbar";
-import UserProfile from "../components/Users/ProfileView";
+import EditProfile from "../components/Users/ProfileForm";
+import Header from "../components/Commons/Header";
 
 function ProfilePage() {
   return (
     <>
       <div>
-        <NavbarContainer />
+        <Header />
 
-        <UserProfile> </UserProfile>
+        <EditProfile> </EditProfile>
       </div>
     </>
   );

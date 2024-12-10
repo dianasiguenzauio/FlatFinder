@@ -82,6 +82,7 @@ const Header = () => {
         <NavLink to="/My-Flats">My Flats</NavLink>
         <NavLink to="/New-Flat">New Flat</NavLink>
         <NavLink to="/Messages">Messages</NavLink>
+        <NavLink to="/My-Profile">My Perfil</NavLink>
         {auth.isAdmin && <NavLink to="/Edit-Users">Edit Users</NavLink>}
       </NavLinks>
 
