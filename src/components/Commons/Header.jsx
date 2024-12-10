@@ -79,10 +79,11 @@ const Header = () => {
       <Logo src={LogoImage} alt="Tu Logotipo" />
 
       <NavLinks>
+        <NavLink to="/FlatsList">All Flats</NavLink>
         <NavLink to="/My-Flats">My Flats</NavLink>
-        <NavLink to="/New-Flat">New Flat</NavLink>
         <NavLink to="/Messages">Messages</NavLink>
         <NavLink to="/My-Profile">My Perfil</NavLink>
+        <NavLink to="/NewFlatPage">New Flat</NavLink>
         {auth.isAdmin && <NavLink to="/Edit-Users">Edit Users</NavLink>}
       </NavLinks>
 

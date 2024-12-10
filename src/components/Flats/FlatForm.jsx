@@ -1,309 +1,554 @@
-//Componente para crear
+//Componente para crear flat
+/*
+import React, { useState, useContext } from "react";
+import {
+  TextField,
+  Button,
+  Paper,
+  Typography,
+  Grid,
+  Box,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+} from "@mui/material";
+import axios from "axios";
+import AuthContext from "../../context/authContext";
 
-import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+const NewFlat = () => {
+  const { auth } = useContext(AuthContext); // Contexto de autenticación
+  const [formValues, setFormValues] = useState({
+    city: "",
+    streetname: "",
+    streetnumber: "",
+    areaSize: "",
+    hasAc: false,
+    yeartBuilt: "",
+    rentPrice: "",
+    dateAvailable: "",
+  });
 
-function NewFlat() {
-  const [flats, setFlats] = useState([]);
-  const [cityError, setCityError] = useState("");
-  const [streetnameError, setStreetnameError] = useState("");
-  const [streetnumberError, setStreetnumberError] = useState("");
-  const [areasizeError, setAreasizeError] = useState("");
-  const [yearbuiltError, setYearbuiltError] = useState("");
-  const [rentpriceError, setRentpriceError] = useState("");
-  const [emptyFieldsError, setEmptyFieldsError] = useState("");
+  const [formErrors, setFormErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState("");
 
-  const cityRef = useRef();
-  const streetnameRef = useRef();
-  const streetnumberRef = useRef();
-  const areasizeRef = useRef();
-  const hasacRef = useRef();
-  const yearbuiltRef = useRef();
-  const rentpriceRef = useRef();
-  const dateavaliableRef = useRef();
+  const validateForm = () => {
+    const errors = {};
+    const textRegex = /^[a-zA-Z]{1,20}$/;
+    const numberRegex = /^\d{1,8}$/;
+    const yearLimit = 2025;
 
-  const navigate = useNavigate();
-
-  const fetchData = async () => {
-    const flats = await getFlats();
-    setFlats(flats);
-  };
-
-  const handleCreateFlats = async () => {
-    const storedUser = JSON.parse(localStorage.getItem("authToken"));
-    if (!storedUser) {
-      console.error("El usuario no está logueado");
-      return;
+    if (!formValues.city || !textRegex.test(formValues.city)) {
+      errors.city = "Solo letras, máximo 20 caracteres.";
     }
 
-    if (!storedUser || !storedUser.email) {
-      console.error(
-        "El usuario no está logueado o falta información del usuario"
-      );
-      alert("No estás logueado. Por favor, inicia sesión para continuar.");
-      navigate("/"); // Redirigir a la página de login
-      return;
+    if (!formValues.streetname || !textRegex.test(formValues.streetname)) {
+      errors.streetname = "Solo letras, máximo 20 caracteres.";
     }
 
-    const { email } = storedUser;
-    let valid = true;
+    if (!formValues.streetnumber || !textRegex.test(formValues.streetnumber)) {
+      errors.streetnumber = "Solo letras, máximo 20 caracteres.";
+    }
+
+    if (!formValues.areaSize || !numberRegex.test(formValues.areaSize)) {
+      errors.areaSize = "Solo números, máximo 8 caracteres.";
+    }
 
     if (
-      !cityRef.current.value ||
-      !streetnameRef.current.value ||
-      !streetnumberRef.current.value ||
-      !areasizeRef.current.value ||
-      !yearbuiltRef.current.value ||
-      !rentpriceRef.current.value ||
-      !dateavaliableRef.current.value
+      !formValues.yeartBuilt ||
+      new Date(formValues.yeartBuilt).getFullYear() > yearLimit
     ) {
-      setEmptyFieldsError("Por favor, complete todos los campos.");
-      valid = false;
-    } else {
-      setEmptyFieldsError("");
+      errors.yeartBuilt = "El año no puede superar 2025.";
     }
 
-    if (isNaN(Number(streetnumberRef.current.value))) {
-      setStreetnumberError("Solo se permite ingresar números.");
-      valid = false;
+    if (!formValues.rentPrice || isNaN(formValues.rentPrice)) {
+      errors.rentPrice = "Debe ser un número.";
     }
 
-    if (isNaN(Number(areasizeRef.current.value))) {
-      setAreasizeError("Solo se permite ingresar números.");
-      valid = false;
+    if (!formValues.dateAvailable) {
+      errors.dateAvailable = "Este campo es requerido.";
     }
 
-    if (isNaN(Number(yearbuiltRef.current.value))) {
-      setYearbuiltError("Solo se permite ingresar números.");
-      valid = false;
-    }
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
-    if (isNaN(Number(rentpriceRef.current.value))) {
-      setRentpriceError("Solo se permite ingresar números.");
-      valid = false;
-    }
-
-    if (!valid) return;
-
-    await createFlats({
-      city: cityRef.current.value,
-      streetname: streetnameRef.current.value,
-      streetnumber: Number(streetnumberRef.current.value),
-      areasize: Number(areasizeRef.current.value),
-      hasac: hasacRef.current.checked,
-      yearbuilt: Number(yearbuiltRef.current.value),
-      rentprice: Number(rentpriceRef.current.value),
-      dateavaliable: dateavaliableRef.current.value,
-      userEmail: email,
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({
+      ...formValues,
+      [name]: value,
     });
-    await fetchData();
-    alert("Propiedad Registrada con éxito");
-    navigate("/");
   };
 
-  const handleTextChange = (e, setError) => {
-    const regex = /^[a-zA-Z\s]*$/;
-    if (!regex.test(e.target.value)) {
-      setError("Solo se permite ingresar texto.");
-      e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, "");
-    } else {
-      setError("");
+  const handleSave = async () => {
+    if (!validateForm()) return;
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/flats/addFlat",
+        formValues,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.token}`,
+          },
+        }
+      );
+      setSuccessMessage("Flat guardado con éxito.");
+      setTimeout(() => setSuccessMessage(""), 3000);
+      setFormValues({
+        city: "",
+        streetname: "",
+        streetnumber: "",
+        areaSize: "",
+        hasAc: false,
+        yeartBuilt: "",
+        rentPrice: "",
+        dateAvailable: "",
+      });
+    } catch (error) {
+      console.error("Error al guardar el flat:", error.response?.data?.message);
+      setFormErrors({
+        general: "Error al guardar el flat. Intenta de nuevo.",
+      });
     }
   };
 
-  const handleNumberChange = (e, setError) => {
-    const regex = /^[0-9\b]+$/;
-    if (!regex.test(e.target.value)) {
-      setError("Solo se permite ingresar números.");
-      e.target.value = e.target.value.replace(/[^0-9]/g, "");
-    } else {
-      setError("");
-    }
+  const handleReset = () => {
+    setFormValues({
+      city: "",
+      streetname: "",
+      streetnumber: "",
+      areaSize: "",
+      hasAc: false,
+      yeartBuilt: "",
+      rentPrice: "",
+      dateAvailable: "",
+    });
+    setFormErrors({});
   };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        width: "100vw",
-        backgroundColor: "#f5f5f5",
-        overflow: "hidden", // Asegura que no haya desplazamiento
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: "#fff",
-          padding: "20px",
-          borderRadius: "10px",
-          boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-          maxWidth: "600px",
-          width: "100%",
-        }}
-      >
-        <h2 style={{ textAlign: "center" }}>Registrar Propiedad</h2>
-
-        <div style={{ marginBottom: "15px" }}>
-          <label>Ingrese la ciudad:</label>
-          <input
-            type="text"
-            placeholder="Ciudad"
-            ref={cityRef}
-            style={{
-              width: "100%",
-              padding: "10px",
-              marginTop: "5px",
-              borderRadius: "5px",
-              border: "1px solid #ccc",
-            }}
-            onChange={(e) => handleTextChange(e, setCityError)}
-          />
-          {cityError && <p style={{ color: "red" }}>{cityError}</p>}
-        </div>
-
-        <div style={{ marginBottom: "15px" }}>
-          <label>Ingrese la calle:</label>
-          <input
-            type="text"
-            placeholder="Calle"
-            ref={streetnameRef}
-            style={{
-              width: "100%",
-              padding: "10px",
-              marginTop: "5px",
-              borderRadius: "5px",
-              border: "1px solid #ccc",
-            }}
-            onChange={(e) => handleTextChange(e, setStreetnameError)}
-          />
-          {streetnameError && <p style={{ color: "red" }}>{streetnameError}</p>}
-        </div>
-
-        <div style={{ marginBottom: "15px" }}>
-          <label>Ingrese la numeración:</label>
-          <input
-            type="text"
-            placeholder="Numeración"
-            ref={streetnumberRef}
-            style={{
-              width: "100%",
-              padding: "10px",
-              marginTop: "5px",
-              borderRadius: "5px",
-              border: "1px solid #ccc",
-            }}
-            onInput={(e) => handleNumberChange(e, setStreetnumberError)}
-          />
-          {streetnumberError && (
-            <p style={{ color: "red" }}>{streetnumberError}</p>
-          )}
-        </div>
-
-        <div style={{ marginBottom: "15px" }}>
-          <label>Ingrese el área de construcción (m²):</label>
-          <input
-            type="text"
-            placeholder="Área de construcción"
-            ref={areasizeRef}
-            style={{
-              width: "100%",
-              padding: "10px",
-              marginTop: "5px",
-              borderRadius: "5px",
-              border: "1px solid #ccc",
-            }}
-            onInput={(e) => handleNumberChange(e, setAreasizeError)}
-          />
-          {areasizeError && <p style={{ color: "red" }}>{areasizeError}</p>}
-        </div>
-
-        <div style={{ marginBottom: "15px" }}>
-          <label>Aire acondicionado:</label>
-          <input
-            type="checkbox"
-            ref={hasacRef}
-            style={{ marginLeft: "10px" }}
-          />
-        </div>
-
-        <div style={{ marginBottom: "15px" }}>
-          <label>Ingrese el año de construcción:</label>
-          <input
-            type="text"
-            placeholder="Año de construcción"
-            ref={yearbuiltRef}
-            style={{
-              width: "100%",
-              padding: "10px",
-              marginTop: "5px",
-              borderRadius: "5px",
-              border: "1px solid #ccc",
-            }}
-            onInput={(e) => handleNumberChange(e, setYearbuiltError)}
-          />
-          {yearbuiltError && <p style={{ color: "red" }}>{yearbuiltError}</p>}
-        </div>
-
-        <div style={{ marginBottom: "15px" }}>
-          <label>Ingrese el precio de renta:</label>
-          <input
-            type="text"
-            placeholder="Precio de renta"
-            ref={rentpriceRef}
-            style={{
-              width: "100%",
-              padding: "10px",
-              marginTop: "5px",
-              borderRadius: "5px",
-              border: "1px solid #ccc",
-            }}
-            onInput={(e) => handleNumberChange(e, setRentpriceError)}
-          />
-          {rentpriceError && <p style={{ color: "red" }}>{rentpriceError}</p>}
-        </div>
-
-        <div style={{ marginBottom: "15px" }}>
-          <label>Fecha de disponibilidad:</label>
-          <input
-            type="date"
-            ref={dateavaliableRef}
-            style={{
-              width: "100%",
-              padding: "10px",
-              marginTop: "5px",
-              borderRadius: "5px",
-              border: "1px solid #ccc",
-            }}
-          />
-          {emptyFieldsError && (
-            <p style={{ color: "red" }}>{emptyFieldsError}</p>
-          )}
-        </div>
-
-        <div style={{ textAlign: "center" }}>
-          <button
-            onClick={handleCreateFlats}
-            style={{
-              padding: "10px 20px",
-              backgroundColor: "#5e17a9",
-              color: "#fff",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer",
-            }}
-          >
-            Registrar Propiedad
-          </button>
-        </div>
-      </div>
-    </div>
+    <Box sx={{ p: 3 }}>
+      <Paper elevation={3} sx={{ p: 3, maxWidth: 600, mx: "auto" }}>
+        <Typography variant="h4" align="center" gutterBottom>
+          Añadir Nuevo Flat
+        </Typography>
+        {successMessage && (
+          <Typography sx={{ color: "green", textAlign: "center", mb: 2 }}>
+            {successMessage}
+          </Typography>
+        )}
+        {formErrors.general && (
+          <Typography sx={{ color: "red", textAlign: "center", mb: 2 }}>
+            {formErrors.general}
+          </Typography>
+        )}
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              label="Ciudad"
+              name="city"
+              fullWidth
+              value={formValues.city}
+              onChange={handleInputChange}
+              error={!!formErrors.city}
+              helperText={formErrors.city}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Nombre de la Calle"
+              name="streetname"
+              fullWidth
+              value={formValues.streetname}
+              onChange={handleInputChange}
+              error={!!formErrors.streetname}
+              helperText={formErrors.streetname}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Número de Calle"
+              name="streetnumber"
+              fullWidth
+              value={formValues.streetnumber}
+              onChange={handleInputChange}
+              error={!!formErrors.streetnumber}
+              helperText={formErrors.streetnumber}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Área de Construcción (m²)"
+              name="areaSize"
+              fullWidth
+              value={formValues.areaSize}
+              onChange={handleInputChange}
+              error={!!formErrors.areaSize}
+              helperText={formErrors.areaSize}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <FormControl component="fieldset">
+              <Typography>¿Tiene Aire Acondicionado?</Typography>
+              <RadioGroup
+                row
+                name="hasAc"
+                value={String(formValues.hasAc)}
+                onChange={(e) =>
+                  setFormValues({
+                    ...formValues,
+                    hasAc: e.target.value === "true",
+                  })
+                }
+              >
+                <FormControlLabel value="true" control={<Radio />} label="Sí" />
+                <FormControlLabel
+                  value="false"
+                  control={<Radio />}
+                  label="No"
+                />
+              </RadioGroup>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Año de Construcción"
+              name="yeartBuilt"
+              type="date"
+              fullWidth
+              InputLabelProps={{ shrink: true }}
+              value={formValues.yeartBuilt}
+              onChange={handleInputChange}
+              error={!!formErrors.yeartBuilt}
+              helperText={formErrors.yeartBuilt}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Precio de Renta"
+              name="rentPrice"
+              fullWidth
+              value={formValues.rentPrice}
+              onChange={handleInputChange}
+              error={!!formErrors.rentPrice}
+              helperText={formErrors.rentPrice}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Fecha Disponible"
+              name="dateAvailable"
+              type="date"
+              fullWidth
+              InputLabelProps={{ shrink: true }}
+              value={formValues.dateAvailable}
+              onChange={handleInputChange}
+              error={!!formErrors.dateAvailable}
+              helperText={formErrors.dateAvailable}
+            />
+          </Grid>
+          <Grid item xs={12} sx={{ textAlign: "center", mt: 2 }}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSave}
+              sx={{ mx: 1 }}
+            >
+              Guardar
+            </Button>
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={handleReset}
+              sx={{ mx: 1 }}
+            >
+              Limpiar
+            </Button>
+          </Grid>
+        </Grid>
+      </Paper>
+    </Box>
   );
-}
+};
+
+export default NewFlat;
+*/
+import React, { useState, useContext } from "react";
+import {
+  TextField,
+  Button,
+  Paper,
+  Typography,
+  Grid,
+  Box,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+} from "@mui/material";
+import axios from "axios";
+import AuthContext from "../../context/authContext";
+
+const NewFlat = () => {
+  const { auth } = useContext(AuthContext); // Contexto de autenticación
+  const [formValues, setFormValues] = useState({
+    city: "",
+    streetName: "",
+    streetNumber: "",
+    areaSize: "",
+    hasAc: false,
+    yearBuilt: "",
+    rentPrice: "",
+    dateAvailable: "",
+  });
+
+  const [formErrors, setFormErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState("");
+
+  const validateForm = () => {
+    const errors = {};
+    const textRegex = /^[a-zA-Z]{1,20}$/;
+    const alphanumericWithSpacesRegex = /^[a-zA-Z0-9\s]{1,20}$/;
+    const alphanumericRegex = /^[a-zA-Z0-9]{1,20}$/;
+    const numberRegex = /^\d{1,8}$/;
+
+    if (!formValues.city || !textRegex.test(formValues.city)) {
+      errors.city = "Solo letras, máximo 20 caracteres.";
+    }
+
+    if (
+      !formValues.streetName ||
+      !alphanumericWithSpacesRegexx.test(formValues.streetName)
+    ) {
+      errors.streetName = "Solo letras y números, máximo 20 caracteres.";
+    }
+
+    if (
+      !formValues.streetNumber ||
+      !alphanumericWithSpacesRegex.test(formValues.streetNumber)
+    ) {
+      errors.streetNumber = "Solo letras y números, máximo 20 caracteres.";
+    }
+
+    if (!formValues.areaSize || !numberRegex.test(formValues.areaSize)) {
+      errors.areaSize = "Solo números, máximo 8 caracteres.";
+    }
+
+    if (
+      !formValues.yearBuilt ||
+      isNaN(formValues.yearBuilt) ||
+      formValues.yearBuilt > 2025
+    ) {
+      errors.yearBuilt = "Debe ser un número válido, no mayor a 2025.";
+    }
+
+    if (!formValues.rentPrice || isNaN(formValues.rentPrice)) {
+      errors.rentPrice = "Debe ser un número.";
+    }
+
+    if (!formValues.dateAvailable) {
+      errors.dateAvailable = "Este campo es requerido.";
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({
+      ...formValues,
+      [name]: value,
+    });
+  };
+
+  const handleSave = async () => {
+    if (!validateForm()) return;
+
+    try {
+      await axios.post("http://localhost:8080/flats/addFlat", formValues, {
+        headers: {
+          Authorization: `Bearer ${auth.token}`,
+        },
+      });
+      setSuccessMessage("Flat guardado con éxito.");
+      setTimeout(() => setSuccessMessage(""), 3000);
+      setFormValues({
+        city: "",
+        streetName: "",
+        streetNumber: "",
+        areaSize: "",
+        hasAc: false,
+        yearBuilt: "",
+        rentPrice: "",
+        dateAvailable: "",
+      });
+    } catch (error) {
+      console.error("Error al guardar el flat:", error.response?.data?.message);
+      setFormErrors({
+        general: "Error al guardar el flat. Intenta de nuevo.",
+      });
+    }
+  };
+
+  const handleReset = () => {
+    setFormValues({
+      city: "",
+      streetName: "",
+      streetNumber: "",
+      areaSize: "",
+      hasAc: false,
+      yearBuilt: "",
+      rentPrice: "",
+      dateAvailable: "",
+    });
+    setFormErrors({});
+  };
+
+  return (
+    <Box sx={{ p: 3 }}>
+      <Paper elevation={3} sx={{ p: 3, maxWidth: 600, mx: "auto" }}>
+        <Typography variant="h4" align="center" gutterBottom>
+          Añadir Nuevo Flat
+        </Typography>
+        {successMessage && (
+          <Typography sx={{ color: "green", textAlign: "center", mb: 2 }}>
+            {successMessage}
+          </Typography>
+        )}
+        {formErrors.general && (
+          <Typography sx={{ color: "red", textAlign: "center", mb: 2 }}>
+            {formErrors.general}
+          </Typography>
+        )}
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              label="Ciudad"
+              name="city"
+              fullWidth
+              value={formValues.city}
+              onChange={handleInputChange}
+              error={!!formErrors.city}
+              helperText={formErrors.city}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Nombre de la Calle"
+              name="streetName"
+              fullWidth
+              value={formValues.streetName}
+              onChange={handleInputChange}
+              error={!!formErrors.streetName}
+              helperText={formErrors.streetName}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Número de Calle"
+              name="streetNumber"
+              fullWidth
+              value={formValues.streetNumber}
+              onChange={handleInputChange}
+              error={!!formErrors.streetNumber}
+              helperText={formErrors.streetNumber}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Área de Construcción (m²)"
+              name="areaSize"
+              fullWidth
+              value={formValues.areaSize}
+              onChange={handleInputChange}
+              error={!!formErrors.areaSize}
+              helperText={formErrors.areaSize}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <FormControl component="fieldset">
+              <Typography>¿Tiene Aire Acondicionado?</Typography>
+              <RadioGroup
+                row
+                name="hasAc"
+                value={String(formValues.hasAc)}
+                onChange={(e) =>
+                  setFormValues({
+                    ...formValues,
+                    hasAc: e.target.value === "true",
+                  })
+                }
+              >
+                <FormControlLabel value="true" control={<Radio />} label="Sí" />
+                <FormControlLabel
+                  value="false"
+                  control={<Radio />}
+                  label="No"
+                />
+              </RadioGroup>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Año de Construcción"
+              name="yearBuilt"
+              type="number"
+              fullWidth
+              value={formValues.yearBuilt}
+              onChange={handleInputChange}
+              error={!!formErrors.yearBuilt}
+              helperText={formErrors.yearBuilt}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Precio de Renta"
+              name="rentPrice"
+              fullWidth
+              value={formValues.rentPrice}
+              onChange={handleInputChange}
+              error={!!formErrors.rentPrice}
+              helperText={formErrors.rentPrice}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Fecha Disponible"
+              name="dateAvailable"
+              type="date"
+              fullWidth
+              InputLabelProps={{ shrink: true }}
+              value={formValues.dateAvailable}
+              onChange={handleInputChange}
+              error={!!formErrors.dateAvailable}
+              helperText={formErrors.dateAvailable}
+            />
+          </Grid>
+          <Grid item xs={12} sx={{ textAlign: "center", mt: 2 }}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSave}
+              sx={{ mx: 1 }}
+            >
+              Guardar
+            </Button>
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={handleReset}
+              sx={{ mx: 1 }}
+            >
+              Limpiar
+            </Button>
+          </Grid>
+        </Grid>
+      </Paper>
+    </Box>
+  );
+};
 
 export default NewFlat;
