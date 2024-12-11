@@ -24,10 +24,9 @@ function App() {
         <Route path="/Register" element={<RegisterPage />} />
         <Route path="/FlatsList" element={<FlatListPage />} />
         <Route path="/Edit-Users" element={<EditUsersPage />} />
-        <Route path="/My-Profile" element={<ProfilePage />} />
+        <Route path="/MyProfile" element={<ProfilePage />} />
         <Route path="/NewFlatPage" element={<NewFlatPage />} />
-        <Route path="/FavouritesPage" element={<FavouritesPage />} />
-        <Route path="/MyFlatsPage" element={<MyFlatsPage />} />
+        <Route path="/MyFlats" element={<MyFlatsPage />} />
         <Route path="/ProfilePage" element={<ProfilePage />} />
         <Route path="/RegistrerPage" element={<RegisterPage />} />
         <Route path="/MessagePage" element={<MessagePage />} />

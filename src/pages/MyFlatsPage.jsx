@@ -1,15 +1,15 @@
 //Pagina para ver el listado de flats del usuario
 
-import NavbarContainer from "../components/Commons/Navbar";
-import MyFlats from "../components/Flats/FlatView";
+import HeaderContainer from "../components/Commons/Header";
+import FlatsOwner from "../components/Flats/MyFlatsForm";
 
 function MyFlatsPage() {
   return (
     <>
       <div>
-        <NavbarContainer />
+        <HeaderContainer />
 
-        <MyFlats></MyFlats>
+        <FlatsOwner></FlatsOwner>
       </div>
     </>
   );
