@@ -483,6 +483,7 @@ const Flats = () => {
   const [flats, setFlats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [favourites, setFavourites] = useState([]); // Lista de IDs de flats favoritos
+  const [selectedUser, setSelectedUser] = useState(null);
 
   // Generar una URL de imagen aleatoria para casas y departamentos
   const getRandomHouseImage = async () => {
@@ -527,6 +528,12 @@ const Flats = () => {
 
   const handleAddToFavourites = async (flatId) => {
     try {
+      // Verificar si el flat ya está en favoritos
+      if (favourites.includes(flatId)) {
+        // Si ya está, mostrar un mensaje o no hacer nada
+        alert("Este flat ya está en tus favoritos.");
+        return;
+      }
       // Actualizar el usuario en el backend
       await axios.patch(
         `http://localhost:8080/users/addFavourite`,
