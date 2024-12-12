@@ -17,6 +17,16 @@ const Flats = () => {
   const [flats, setFlats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState(null);
+  const [message, setMessage] = useState(null);
+  const [messageColor, setMessageColor] = useState("black");
+
+  const showMessage = (text, color) => {
+    setMessage(text);
+    setMessageColor(color);
+    setTimeout(() => {
+      setMessage(null); // Oculta el mensaje después de 3 segundos
+    }, 3000);
+  };
 
   // Generar una URL de imagen aleatoria para casas y departamentos
   const getRandomHouseImage = async () => {
@@ -69,12 +79,12 @@ const Flats = () => {
     const selectedFlat = flats.find((flat) => flat._id === flatId);
     // Comprobar si el flat ya está marcado como favorito
     if (selectedFlat?.isFavourite) {
-      alert("Este flat ya está en tus favoritos.");
+      showMessage("Este flat ya está en tus favoritos.", "red");
       return;
     }
     try {
       if (!userId) {
-        alert("Usuario no identificado.");
+        showMessage("Usuario no identificado.", "red");
         return;
       }
 
@@ -96,17 +106,17 @@ const Flats = () => {
         )
       );
 
-      alert("Flat agregado a favoritos exitosamente.");
+      showMessage("Flat agregado a favoritos exitosamente.", "green");
     } catch (error) {
       console.error("Error al agregar a favoritos:", error);
-      alert("Ocurrió un error al agregar el flat a favoritos.");
+      showMessage("Ocurrió un error al agregar el flat a favoritos.", "red");
     }
   };
   //eliminar flat de favoritos
   const handleRemoveFromFavourites = async (flatId) => {
     try {
       if (!userId) {
-        alert("Usuario no identificado.");
+        showMessage("Usuario no identificado.", "red");
         return;
       }
 
@@ -128,10 +138,10 @@ const Flats = () => {
         )
       );
 
-      alert("Flat eliminado de favoritos exitosamente.");
+      showMessage("Flat eliminado de favoritos exitosamente.", "red");
     } catch (error) {
       console.error("Error al eliminar de favoritos:", error);
-      alert("Ocurrió un error al eliminar el flat de favoritos.");
+      showMessage("Ocurrió un error al eliminar el flat de favoritos.", "red");
     }
   };
 
@@ -148,6 +158,13 @@ const Flats = () => {
   return (
     <div>
       <h1>Flats Disponibles</h1>
+      {message && (
+        <div
+          style={{ color: messageColor, textAlign: "center", margin: "10px 0" }}
+        >
+          {message}
+        </div>
+      )}
       <Grid container spacing={3}>
         {flats.map((flat) => (
           <Grid item xs={12} sm={6} md={4} key={flat._id}>
