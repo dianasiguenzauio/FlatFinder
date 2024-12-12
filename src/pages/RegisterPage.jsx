@@ -9,7 +9,7 @@ const RegisterPage = () => {
     <>
       <div>
         <NavbarContainer></NavbarContainer>
-        <h1> Nuevo Usuario </h1>
+
         <RegisterForm />
       </div>
     </>

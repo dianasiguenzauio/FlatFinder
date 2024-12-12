@@ -66,10 +66,50 @@ const Login = () => {
     }
   };
 
+  const formStyle = {
+    flexDirection: "column",
+    backgroundColor: "#ffffff",
+    padding: "2rem",
+    borderRadius: "8px",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19)",
+    textAlign: "center",
+    color: "black",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "600px",
+    marginTop: "5rem",
+  };
+
+  const inputLogin = {
+    width: "350px",
+    padding: "10px",
+    color: "black",
+    backgroundColor: "#e6fafe",
+    border: "3px solid #690dab",
+    borderRadius: "8px",
+    marginBottom: "10px",
+    boxShadow: "0px 4px 8px #00aaff)",
+  };
+
+  const buttonLogin = {
+    width: "350px",
+    padding: "10px",
+    color: "white",
+    backgroundColor: "#179fba",
+    border: "3px solid #004f9e",
+    borderRadius: "8px",
+    marginBottom: "10px",
+    boxShadow: "0px 4px 8px #00aaff)",
+  };
+
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h1 style={styles.title}>Iniciar Sesión</h1>
+    <div style={formStyle}>
+      <div>
+        <h2
+          style={{ textAlign: "center", marginTop: "2rem", color: "#001f3d" }}
+        >
+          Iniciar Sesión
+        </h2>
         <form onSubmit={handleLogin}>
           <div style={styles.field}>
             <label style={styles.label}>Correo Electrónico</label>
@@ -78,7 +118,7 @@ const Login = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Ingresa tu email"
-              style={styles.input}
+              style={inputLogin}
               required
             />
           </div>
@@ -89,12 +129,12 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Ingresa tu contraseña"
-              style={styles.input}
+              style={inputLogin}
               required
             />
           </div>
           {errorMessage && <p style={styles.error}>{errorMessage}</p>}
-          <button type="submit" style={styles.button}>
+          <button type="submit" style={buttonLogin}>
             Login
           </button>
         </form>
@@ -138,6 +178,7 @@ const styles = {
   },
   field: {
     marginBottom: "15px",
+    color: "#001f3d",
   },
   label: {
     display: "block",
