@@ -74,7 +74,7 @@ const EditUsers = () => {
     // Validar fecha de nacimiento (mínimo 18 años)
     const birthDate = new Date(selectedUser.birthdate);
     const today = new Date();
-    const age = today.getFullYear() - birthDate.getFullYear();
+    let age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
     if (
       monthDiff < 0 ||
