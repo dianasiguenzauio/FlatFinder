@@ -10,6 +10,7 @@ import {
   DialogContentText,
   DialogTitle,
   Button,
+  textFieldClasses,
 } from "@mui/material";
 
 const RegistrationForm = () => {
@@ -96,29 +97,86 @@ const RegistrationForm = () => {
     navigate("/login"); // Redirigir a la ruta de inicio de sesión
   };
 
+  const formStyle = {
+    flexDirection: "column",
+    backgroundColor: "#ffffff",
+    padding: "2rem",
+    borderRadius: "8px",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19)",
+    textAlign: "center",
+    color: "black",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "600px",
+    marginTop: "2rem",
+    marginLeft: "auto",
+    marginRight: "auto",
+    position: "relative",
+  };
+
+  const divStyle = {
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100vh",
+    marginTop: "12rem",
+    marginBottom: "4rem",
+  };
+  const inputRegister = {
+    width: "350px",
+    padding: "10px",
+    color: "black",
+    backgroundColor: "#e6fafe",
+    border: "3px solid #690dab",
+    borderRadius: "8px",
+    marginBottom: "10px",
+    boxShadow: "0px 4px 8px #00aaff)",
+  };
+
+  const buttonRegister = {
+    width: "350px",
+    padding: "10px",
+    color: "white",
+    backgroundColor: "#179fba",
+    border: "3px solid #004f9e",
+    borderRadius: "8px",
+    marginBottom: "10px",
+    boxShadow: "0px 4px 8px #00aaff)",
+  };
+
   return (
-    <div>
-      <h2>Formulario de Registro</h2>
+    <div style={divStyle}>
+      <h2 style={{ textAlign: "center", marginTop: "2rem", color: "#001f3d" }}>
+        Registrar Nuevo Usuario
+      </h2>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
         {({ isSubmitting }) => (
-          <Form>
+          <Form style={formStyle}>
             <div>
-              <label>Nombre:</label>
-              <Field type="text" name="firstname" />
+              <Field
+                type="text"
+                name="firstname"
+                style={inputRegister}
+                placeholder="Ingresa tu nombre"
+              />
               <ErrorMessage
                 name="firstname"
                 component="p"
                 style={{ color: "red" }}
+                className="inputRegister"
               />
             </div>
 
             <div>
-              <label>Apellido:</label>
-              <Field type="text" name="lastname" />
+              <Field
+                type="text"
+                name="lastname"
+                style={inputRegister}
+                placeholder="Ingresa tu apellido"
+              />
               <ErrorMessage
                 name="lastname"
                 component="p"
@@ -127,8 +185,12 @@ const RegistrationForm = () => {
             </div>
 
             <div>
-              <label>Correo Electrónico:</label>
-              <Field type="email" name="email" />
+              <Field
+                type="email"
+                name="email"
+                style={inputRegister}
+                placeholder="Ingresa tu correo electrónico"
+              />
               <ErrorMessage
                 name="email"
                 component="p"
@@ -137,8 +199,12 @@ const RegistrationForm = () => {
             </div>
 
             <div>
-              <label>Contraseña:</label>
-              <Field type="password" name="password" />
+              <Field
+                type="password"
+                name="password"
+                style={inputRegister}
+                placeholder="Ingresa tu contraseña"
+              />
               <ErrorMessage
                 name="password"
                 component="p"
@@ -147,7 +213,7 @@ const RegistrationForm = () => {
             </div>
 
             <div>
-              <label>Fecha de Nacimiento:</label>
+              <label>Fecha de Nacimiento </label>
               <Field type="date" name="birthdate" />
               <ErrorMessage
                 name="birthdate"
@@ -155,8 +221,12 @@ const RegistrationForm = () => {
                 style={{ color: "red" }}
               />
             </div>
-
-            <button type="submit" disabled={isSubmitting}>
+            <br />
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              style={buttonRegister}
+            >
               {isSubmitting ? "Enviando..." : "Crear Cuenta"}
             </button>
           </Form>
