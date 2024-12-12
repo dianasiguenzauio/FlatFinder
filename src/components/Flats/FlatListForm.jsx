@@ -682,6 +682,12 @@ const Flats = () => {
   }, [auth]);
 
   const handleAddToFavourites = async (flatId) => {
+    const selectedFlat = flats.find((flat) => flat._id === flatId);
+    // Comprobar si el flat ya está marcado como favorito
+    if (selectedFlat?.isFavourite) {
+      alert("Este flat ya está en tus favoritos.");
+      return;
+    }
     try {
       if (!userId) {
         alert("Usuario no identificado.");
@@ -760,6 +766,7 @@ const Flats = () => {
                   color: flat.isFavourite ? "white" : "black",
                 }}
                 onClick={() => handleAddToFavourites(flat._id)}
+                disabled={flat.isFavourite} // Deshabilita el botón si ya es favorito
               >
                 {flat.isFavourite ? "❤️ Marcado" : "🤍 Marcar"}
               </Button>
