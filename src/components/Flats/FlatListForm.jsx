@@ -22,6 +22,23 @@ const Flats = () => {
   const [selectedFlat, setSelectedFlat] = useState(null); // Para el flat seleccionado
   const [messageContent, setMessageContent] = useState(""); // Para el contenido del mensaje
 
+  // Variable para controlar si se usa Unsplash o imágenes predeterminadas
+  const useUnsplash = false; // Cambia a `true` si deseas habilitar Unsplash
+
+  // Conjunto de imágenes predeterminadas
+  const fallbackImages = [
+    "https://via.placeholder.com/300x300?text=Flat+1",
+    "https://via.placeholder.com/300x300?text=Flat+2",
+    "https://via.placeholder.com/300x300?text=Flat+3",
+    "https://via.placeholder.com/300x300?text=Flat+4",
+    "https://via.placeholder.com/300x300?text=Flat+5",
+    "https://via.placeholder.com/300x300?text=Flat+1",
+    "https://via.placeholder.com/300x300?text=Flat+2",
+    "https://via.placeholder.com/300x300?text=Flat+3",
+    "https://via.placeholder.com/300x300?text=Flat+4",
+    "https://via.placeholder.com/300x300?text=Flat+5",
+  ];
+
   const handleOpenMessageForm = (flatId) => {
     setSelectedFlat(flatId);
     setMessageContent(""); // Limpia el contenido del mensaje
@@ -37,6 +54,10 @@ const Flats = () => {
 
   // Generar una URL de imagen aleatoria para casas y departamentos
   const getRandomHouseImage = async () => {
+    if (!useUnsplash) {
+      const randomIndex = Math.floor(Math.random() * fallbackImages.length);
+      return fallbackImages[randomIndex];
+    }
     const response = await axios.get("https://api.unsplash.com/photos/random", {
       params: {
         query: "house",
