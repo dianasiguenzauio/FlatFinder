@@ -3,7 +3,14 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/authContext";
 import jwtDecode from "jwt-decode";
-import { TextField, Button, Typography, Box, Alert } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Typography,
+  Box,
+  Alert,
+  Paper,
+} from "@mui/material";
 
 const EditProfile = () => {
   const { auth } = useContext(AuthContext);
@@ -143,70 +150,133 @@ const EditProfile = () => {
   };
 
   return (
-    <Box sx={{ maxWidth: 600, margin: "0 auto", padding: 3 }}>
-      <Typography variant="h4" gutterBottom>
-        Editar Perfil
-      </Typography>
-      {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
-      {successMessage && <Alert severity="success">{successMessage}</Alert>}
-      <form>
-        <TextField
-          label="Nombre"
-          name="firstname"
-          value={formData.firstname}
-          onChange={handleInputChange}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="Apellido"
-          name="lastname"
-          value={formData.lastname}
-          onChange={handleInputChange}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="Fecha de Nacimiento"
-          type="date"
-          name="birthdate"
-          value={formData.birthdate}
-          onChange={handleInputChange}
-          fullWidth
-          margin="normal"
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-        <TextField
-          label="Nueva Contraseña"
-          name="password"
-          type="password"
-          value={formData.password}
-          onChange={handleInputChange}
-          fullWidth
-          margin="normal"
-          helperText="Deja este campo vacío si no deseas cambiar la contraseña."
-        />
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginTop: 3,
-          }}
-        >
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleSaveChanges}
+    <Box sx={{ maxWidth: 600, mt: 20, padding: 3 }}>
+      <Paper elevation={3} sx={{ p: 3, maxWidth: 600, mx: "auto" }}>
+        <Typography variant="h4" gutterBottom sx={{ color: "#001f3d" }}>
+          Editar Perfil
+        </Typography>
+        {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+        {successMessage && <Alert severity="success">{successMessage}</Alert>}
+        <form>
+          <TextField
+            label="Nombre"
+            name="firstname"
+            value={formData.firstname}
+            onChange={handleInputChange}
+            fullWidth
+            margin="normal"
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderWidth: "2px", // Grosor del borde
+                  borderColor: "purple", // Color del borde
+                },
+                "&:hover fieldset": {
+                  borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "purple", // Color del borde cuando está enfocado
+                },
+              },
+            }}
+          />
+          <TextField
+            label="Apellido"
+            name="lastname"
+            value={formData.lastname}
+            onChange={handleInputChange}
+            fullWidth
+            margin="normal"
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderWidth: "2px", // Grosor del borde
+                  borderColor: "purple", // Color del borde
+                },
+                "&:hover fieldset": {
+                  borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "purple", // Color del borde cuando está enfocado
+                },
+              },
+            }}
+          />
+          <TextField
+            label="Fecha de Nacimiento"
+            type="date"
+            name="birthdate"
+            value={formData.birthdate}
+            onChange={handleInputChange}
+            fullWidth
+            margin="normal"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderWidth: "2px", // Grosor del borde
+                  borderColor: "purple", // Color del borde
+                },
+                "&:hover fieldset": {
+                  borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "purple", // Color del borde cuando está enfocado
+                },
+              },
+            }}
+          />
+          <TextField
+            label="Nueva Contraseña"
+            name="password"
+            type="password"
+            value={formData.password}
+            onChange={handleInputChange}
+            fullWidth
+            margin="normal"
+            helperText="Deja este campo vacío si no deseas cambiar la contraseña."
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderWidth: "2px", // Grosor del borde
+                  borderColor: "purple", // Color del borde
+                },
+                "&:hover fieldset": {
+                  borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "purple", // Color del borde cuando está enfocado
+                },
+              },
+            }}
+          />
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginTop: 3,
+            }}
           >
-            Guardar Cambios
-          </Button>
-          <Button variant="outlined" color="secondary" onClick={handleCancel}>
-            Cancelar
-          </Button>
-        </Box>
-      </form>
+            <Button
+              variant="contained"
+              onClick={handleSaveChanges}
+              sx={{
+                backgroundColor: "#179fba",
+                "&:hover": {
+                  backgroundColor: "#137d94", // Color ligeramente más oscuro al pasar el mouse
+                },
+              }}
+            >
+              Guardar Cambios
+            </Button>
+            <Button variant="outlined" color="secondary" onClick={handleCancel}>
+              Cancelar
+            </Button>
+          </Box>
+        </form>
+      </Paper>
     </Box>
   );
 };
