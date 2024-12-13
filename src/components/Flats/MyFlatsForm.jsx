@@ -158,8 +158,13 @@ const FlatsOwner = () => {
   };
 
   return (
-    <Box sx={{ p: 3 }}>
-      <Typography variant="h4" align="center" gutterBottom>
+    <Box sx={{ p: 3, mt: 20 }}>
+      <Typography
+        variant="h4"
+        align="center"
+        gutterBottom
+        sx={{ color: "#001f3d" }}
+      >
         Mis Flats
       </Typography>
       {successMessage && (
@@ -169,7 +174,7 @@ const FlatsOwner = () => {
       )}
       <Grid container spacing={3}>
         {flats.map((flat) => (
-          <Grid item xs={12} sm={6} md={4} key={flat._id}>
+          <Grid item xs={12} sm={6} md={15} key={flat._id}>
             <Card>
               <CardContent>
                 <Typography variant="h6">Ciudad: {flat.city}</Typography>
@@ -179,8 +184,13 @@ const FlatsOwner = () => {
               <CardActions>
                 <Button
                   variant="contained"
-                  color="primary"
                   onClick={() => handleEditClick(flat)}
+                  sx={{
+                    backgroundColor: "#179fba",
+                    "&:hover": {
+                      backgroundColor: "#137d94", // Color ligeramente más oscuro al pasar el mouse
+                    },
+                  }}
                 >
                   Editar
                 </Button>
@@ -209,6 +219,19 @@ const FlatsOwner = () => {
             helperText={formErrors.city}
             fullWidth
             margin="normal"
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  border: "2px solid purple", // Aplica el borde morado correctamente
+                },
+                "&:hover fieldset": {
+                  borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "purple", // Borde morado al enfocar
+                },
+              },
+            }}
           />
           <TextField
             label="Calle"
@@ -219,6 +242,19 @@ const FlatsOwner = () => {
             helperText={formErrors.streetName}
             fullWidth
             margin="normal"
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  border: "2px solid purple", // Aplica el borde morado correctamente
+                },
+                "&:hover fieldset": {
+                  borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "purple", // Borde morado al enfocar
+                },
+              },
+            }}
           />
           <TextField
             label="Número de Calle"
@@ -229,6 +265,19 @@ const FlatsOwner = () => {
             helperText={formErrors.streetNumber}
             fullWidth
             margin="normal"
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  border: "2px solid purple", // Aplica el borde morado correctamente
+                },
+                "&:hover fieldset": {
+                  borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "purple", // Borde morado al enfocar
+                },
+              },
+            }}
           />
           <TextField
             label="Área (m²)"
@@ -240,6 +289,19 @@ const FlatsOwner = () => {
             helperText={formErrors.areaSize}
             fullWidth
             margin="normal"
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  border: "2px solid purple", // Aplica el borde morado correctamente
+                },
+                "&:hover fieldset": {
+                  borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "purple", // Borde morado al enfocar
+                },
+              },
+            }}
           />
           <RadioGroup
             row
@@ -264,6 +326,19 @@ const FlatsOwner = () => {
             helperText={formErrors.rentPrice}
             fullWidth
             margin="normal"
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  border: "2px solid purple", // Aplica el borde morado correctamente
+                },
+                "&:hover fieldset": {
+                  borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "purple", // Borde morado al enfocar
+                },
+              },
+            }}
           />
           <TextField
             label="Año de Construcción"
@@ -275,6 +350,19 @@ const FlatsOwner = () => {
             helperText={formErrors.yearBuilt}
             fullWidth
             margin="normal"
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  border: "2px solid purple", // Aplica el borde morado correctamente
+                },
+                "&:hover fieldset": {
+                  borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "purple", // Borde morado al enfocar
+                },
+              },
+            }}
           />
           <TextField
             label="Fecha de Disponibilidad"
@@ -285,9 +373,31 @@ const FlatsOwner = () => {
             fullWidth
             margin="normal"
             InputLabelProps={{ shrink: true }}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  border: "2px solid purple", // Aplica el borde morado correctamente
+                },
+                "&:hover fieldset": {
+                  borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "purple", // Borde morado al enfocar
+                },
+              },
+            }}
           />
           <Box sx={{ mt: 2 }}>
-            <Button variant="contained" color="primary" onClick={handleSave}>
+            <Button
+              variant="contained"
+              onClick={handleSave}
+              sx={{
+                backgroundColor: "#179fba",
+                "&:hover": {
+                  backgroundColor: "#137d94", // Color ligeramente más oscuro al pasar el mouse
+                },
+              }}
+            >
               Guardar
             </Button>
             <Button

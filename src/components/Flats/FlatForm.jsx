@@ -132,9 +132,14 @@ const NewFlat = () => {
   };
 
   return (
-    <Box sx={{ p: 3 }}>
+    <Box sx={{ p: 3, mt: 8 }}>
       <Paper elevation={3} sx={{ p: 3, maxWidth: 600, mx: "auto" }}>
-        <Typography variant="h4" align="center" gutterBottom>
+        <Typography
+          variant="h4"
+          align="center"
+          gutterBottom
+          sx={{ color: "#001f3d" }}
+        >
           Añadir Nuevo Flat
         </Typography>
         {successMessage && (
@@ -157,6 +162,20 @@ const NewFlat = () => {
               onChange={handleInputChange}
               error={!!formErrors.city}
               helperText={formErrors.city}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderWidth: "2px", // Grosor del borde
+                    borderColor: "purple", // Color del borde
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "purple", // Color del borde cuando está enfocado
+                  },
+                },
+              }}
             />
           </Grid>
           <Grid item xs={12}>
@@ -168,6 +187,20 @@ const NewFlat = () => {
               onChange={handleInputChange}
               error={!!formErrors.streetName}
               helperText={formErrors.streetName}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderWidth: "2px", // Grosor del borde
+                    borderColor: "purple", // Color del borde
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "purple", // Color del borde cuando está enfocado
+                  },
+                },
+              }}
             />
           </Grid>
           <Grid item xs={12}>
@@ -179,6 +212,20 @@ const NewFlat = () => {
               onChange={handleInputChange}
               error={!!formErrors.streetNumber}
               helperText={formErrors.streetNumber}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderWidth: "2px", // Grosor del borde
+                    borderColor: "purple", // Color del borde
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "purple", // Color del borde cuando está enfocado
+                  },
+                },
+              }}
             />
           </Grid>
           <Grid item xs={12}>
@@ -190,6 +237,20 @@ const NewFlat = () => {
               onChange={handleInputChange}
               error={!!formErrors.areaSize}
               helperText={formErrors.areaSize}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderWidth: "2px", // Grosor del borde
+                    borderColor: "purple", // Color del borde
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "purple", // Color del borde cuando está enfocado
+                  },
+                },
+              }}
             />
           </Grid>
           <Grid item xs={12}>
@@ -225,6 +286,20 @@ const NewFlat = () => {
               onChange={handleInputChange}
               error={!!formErrors.yearBuilt}
               helperText={formErrors.yearBuilt}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderWidth: "2px", // Grosor del borde
+                    borderColor: "purple", // Color del borde
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "purple", // Color del borde cuando está enfocado
+                  },
+                },
+              }}
             />
           </Grid>
           <Grid item xs={12}>
@@ -236,6 +311,20 @@ const NewFlat = () => {
               onChange={handleInputChange}
               error={!!formErrors.rentPrice}
               helperText={formErrors.rentPrice}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderWidth: "2px", // Grosor del borde
+                    borderColor: "purple", // Color del borde
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "purple", // Color del borde cuando está enfocado
+                  },
+                },
+              }}
             />
           </Grid>
           <Grid item xs={12}>
@@ -244,19 +333,38 @@ const NewFlat = () => {
               name="dateAvailable"
               type="date"
               fullWidth
-              InputLabelProps={{ shrink: true }}
+              InputLabelProps={{
+                shrink: true, // Asegura que el label permanezca sobre el input
+              }}
               value={formValues.dateAvailable}
               onChange={handleInputChange}
               error={!!formErrors.dateAvailable}
               helperText={formErrors.dateAvailable}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    border: "2px solid purple", // Aplica el borde morado correctamente
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "purple", // Borde morado al enfocar
+                  },
+                },
+              }}
             />
           </Grid>
           <Grid item xs={12} sx={{ textAlign: "center", mt: 2 }}>
             <Button
               variant="contained"
-              color="primary"
               onClick={handleSave}
-              sx={{ mx: 1 }}
+              sx={{
+                backgroundColor: "#179fba",
+                "&:hover": {
+                  backgroundColor: "#137d94", // Color ligeramente más oscuro al pasar el mouse
+                },
+              }}
             >
               Guardar
             </Button>
@@ -264,7 +372,7 @@ const NewFlat = () => {
               variant="outlined"
               color="secondary"
               onClick={handleReset}
-              sx={{ mx: 1 }}
+              sx={{ ml: 2 }}
             >
               Limpiar
             </Button>
