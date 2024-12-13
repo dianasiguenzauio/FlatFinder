@@ -9,14 +9,14 @@ const HeaderContainer = styled.nav`
   top: 0;
   left: 0;
   right: 0;
-  background-color: #1e1e1e;
-  color: #b6d5bf;
+  background-color: #001f3d;
+  color: #f3f3f1;
   padding: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 999;
-  max-width: 1400px;
+  width: 99%;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -48,7 +48,7 @@ const NavLinks = styled.div`
 
 const NavLink = styled(Link)`
   text-decoration: none;
-  color: #b6d5bf;
+  color: #f3f3f1;
   margin: 0 1rem;
   font-weight: bold;
 
@@ -65,6 +65,7 @@ const UserSection = styled.div`
   display: flex;
   align-items: center;
   margin-right: 1rem;
+  color: #f3f3f1;
 
   @media (max-width: 768px) {
     margin-bottom: 1rem;
