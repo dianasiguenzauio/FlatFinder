@@ -29,7 +29,7 @@ function App() {
         <Route path="/MyFlats" element={<MyFlatsPage />} />
         <Route path="/ProfilePage" element={<ProfilePage />} />
         <Route path="/RegistrerPage" element={<RegisterPage />} />
-        <Route path="/MessagePage" element={<MessagePage />} />
+        <Route path="/Messages" element={<MessagePage />} />
         <Route path="/FlatDetailsPage/:flatId" element={<FlatDetailsPage />} />
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<HomePage />} />
