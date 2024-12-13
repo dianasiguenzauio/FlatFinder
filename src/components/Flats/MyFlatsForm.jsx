@@ -24,6 +24,8 @@ const FlatsOwner = () => {
   const [formValues, setFormValues] = useState({});
   const [formErrors, setFormErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
+  const [messages, setMessages] = useState([]); // Almacena los mensajes
+  const [isMessageViewOpen, setIsMessageViewOpen] = useState(false); // Controla la vista de mensajes
 
   useEffect(() => {
     const fetchFlats = async () => {
@@ -157,6 +159,28 @@ const FlatsOwner = () => {
     setFormValues({});
   };
 
+  //obtener los sms del flat seleccionado
+  const handleViewMessages = async (flatId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/flats/${flatId}/messages`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.token}`,
+          },
+        }
+      );
+
+      setMessages(response.data); // Actualizar mensajes
+      setIsMessageViewOpen(true); // Mostrar lista de mensajes
+    } catch (error) {
+      console.error(
+        "Error al cargar los mensajes:",
+        error.response?.data?.message || error.message
+      );
+    }
+  };
+
   return (
     <Box sx={{ p: 3 }}>
       <Typography variant="h4" align="center" gutterBottom>
@@ -191,11 +215,61 @@ const FlatsOwner = () => {
                 >
                   Eliminar
                 </Button>
+                <Button
+                  variant="contained"
+                  color="info"
+                  onClick={() => handleViewMessages(flat._id)}
+                >
+                  Ver Mensajes
+                </Button>
               </CardActions>
             </Card>
           </Grid>
         ))}
       </Grid>
+      {isMessageViewOpen && (
+        <Paper sx={{ p: 3, mt: 3 }}>
+          <Typography variant="h6">Mensajes Recibidos</Typography>
+          {messages.length > 0 ? (
+            <ul>
+              {messages.map((message) => (
+                <li key={message.messageId}>
+                  <Typography variant="body1">
+                    <strong>Remitente:</strong> {message.senderEmail}
+                  </Typography>
+                  <Typography variant="body2">
+                    <strong>Contenido:</strong> {message.content}
+                  </Typography>
+                  <Typography variant="caption">
+                    <strong>Fecha:</strong>{" "}
+                    {message.created &&
+                    !isNaN(new Date(message.created).getTime())
+                      ? new Date(message.created).toLocaleString("es-ES", {
+                          day: "2-digit",
+                          month: "2-digit",
+                          year: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          second: "2-digit",
+                        })
+                      : "Fecha no disponible"}
+                  </Typography>
+                  <hr />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <Typography>No hay mensajes para este flat.</Typography>
+          )}
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => setIsMessageViewOpen(false)}
+          >
+            Cerrar
+          </Button>
+        </Paper>
+      )}
 
       {selectedFlat && (
         <Paper sx={{ p: 3, mt: 3 }}>
