@@ -19,6 +19,13 @@ const Flats = () => {
   const [userId, setUserId] = useState(null);
   const [message, setMessage] = useState(null);
   const [messageColor, setMessageColor] = useState("black");
+  const [selectedFlat, setSelectedFlat] = useState(null); // Para el flat seleccionado
+  const [messageContent, setMessageContent] = useState(""); // Para el contenido del mensaje
+
+  const handleOpenMessageForm = (flatId) => {
+    setSelectedFlat(flatId);
+    setMessageContent(""); // Limpia el contenido del mensaje
+  };
 
   const showMessage = (text, color) => {
     setMessage(text);
@@ -145,6 +152,32 @@ const Flats = () => {
     }
   };
 
+  //agregar mensaje en flat
+  const handleSendMessage = async () => {
+    if (!messageContent.trim()) {
+      showMessage("El contenido del mensaje no puede estar vacío.", "red");
+      return;
+    }
+
+    try {
+      await axios.post(
+        `http://localhost:8080/flats/${selectedFlat}/messages`,
+        { content: messageContent },
+        {
+          headers: {
+            Authorization: `Bearer ${auth.token}`,
+          },
+        }
+      );
+
+      showMessage("Mensaje enviado exitosamente.", "green");
+      setSelectedFlat(null); // Cierra el formulario
+    } catch (error) {
+      console.error("Error al enviar el mensaje:", error);
+      showMessage("Ocurrió un error al enviar el mensaje.", "red");
+    }
+  };
+
   if (loading) {
     return (
       <div
@@ -165,6 +198,7 @@ const Flats = () => {
           {message}
         </div>
       )}
+
       <Grid container spacing={3}>
         {flats.map((flat) => (
           <Grid item xs={12} sm={6} md={4} key={flat._id}>
@@ -197,6 +231,9 @@ const Flats = () => {
                 style={{
                   backgroundColor: flat.isFavourite ? "white" : "white",
                   color: "white",
+                  marginTop: "10px",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
                 onClick={() =>
                   flat.isFavourite
@@ -206,10 +243,62 @@ const Flats = () => {
               >
                 {flat.isFavourite ? "❤️" : " 🖤"}
               </Button>
+
+              <Button
+                variant="contained"
+                style={{
+                  backgroundColor: "white",
+                  color: "white",
+                  marginTop: "10px",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                onClick={() => handleOpenMessageForm(flat._id)}
+              >
+                🗨️
+              </Button>
             </Card>
           </Grid>
         ))}
       </Grid>
+      {/*formulario de sms*/}
+      {selectedFlat && (
+        <div
+          style={{
+            border: "1px solid #ccc",
+            padding: "15px",
+            margin: "10px 0",
+          }}
+        >
+          <h3>Enviar Mensaje</h3>
+          <textarea
+            style={{ width: "100%", minHeight: "100px", marginBottom: "10px" }}
+            value={messageContent}
+            onChange={(e) => setMessageContent(e.target.value)}
+            placeholder="Escribe tu mensaje aquí..."
+          ></textarea>
+          <div style={{ textAlign: "right" }}>
+            <Button
+              variant="contained"
+              style={{
+                backgroundColor: "green",
+                color: "white",
+                marginRight: "10px",
+              }}
+              onClick={handleSendMessage}
+            >
+              Enviar Mensaje
+            </Button>
+            <Button
+              variant="outlined"
+              style={{ color: "red" }}
+              onClick={() => setSelectedFlat(null)}
+            >
+              Cancelar
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
