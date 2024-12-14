@@ -1,14 +1,12 @@
-import HeaderContainer from "../components/Commons/Navbar";
-import MessagePage from "../components/Messages/MessageForm";
-import MisMessages from "../components/Messages/MessageList";
+import HeaderContainer from "../components/Commons/Header";
+import UserMessages from "../components/Messages/MessageForm";
 
 function FlatDetailsPage() {
   return (
     <>
       <div>
         <HeaderContainer />
-        <MessagePage></MessagePage>
-        <MisMessages></MisMessages>
+        <UserMessages></UserMessages>
       </div>
     </>
   );

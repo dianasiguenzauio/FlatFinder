@@ -1,254 +1,291 @@
-//Componente para enviar el mensaje
+/*
+import React, { useEffect, useState, useContext } from "react";
+import axios from "axios";
+import jwtDecode from "jwt-decode";
+import AuthContext from "../../context/authContext";
+import {
+  Card,
+  CardContent,
+  Typography,
+  CircularProgress,
+  Grid,
+} from "@mui/material";
 
-import { useEffect, useState, useRef } from "react";
-
-function MessagePage() {
-  const [flats, setFlats] = useState([]);
+const UserMessages = () => {
+  const { auth } = useContext(AuthContext);
+  const [messagesData, setMessagesData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [showMessageForm, setShowMessageForm] = useState(false);
-  const [selectedFlat, setSelectedFlat] = useState(null); // Almacena el flat seleccionado
-  const [messageContent, setMessageContent] = useState("");
-  const messageFormRef = useRef(null); // Referencia para el formulario de mensajes
+  const [error, setError] = useState(null);
 
-  const styles = {
-    gridContainer: {
-      color: "black",
-      maxWidth: "1400px",
-      display: "grid",
-      gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-      gap: "20px",
-      padding: "20px",
-      justifyContent: "center", // Centrar las cards
-      backgroundColor: "#ffffff",
-    },
-    card: {
-      backgroundColor: "white",
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        if (!auth.token) {
+          setError("Usuario no autenticado.");
+          return;
+        }
 
-      borderRadius: "10px",
-      padding: "20px",
-      boxShadow: "0 4px 8px rgba(10, 10, 10, 0.1)",
-      transition: "transform 0.3s ease",
-      textAlign: "left",
-    },
-    messageForm: {
-      maxWidth: "500px",
-      margin: "20px auto",
-      padding: "20px",
+        // Obtener el ID del usuario desde el token
+        const decodedToken = jwtDecode(auth.token);
+        const userId = decodedToken.user_id;
+        if (!flatId || !userId) {
+          setError("Faltan parámetros requeridos para la consulta.");
+          return;
+        }
+        // Consumir el servicio para obtener los mensajes del usuario logueado
 
-      borderRadius: "10px",
-      backgroundColor: "#d7d7d7",
+        const response = await axios.get(
+          `http://localhost:8080/flats/${flatId}/messages/${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${auth.token}`,
+            },
+          }
+        );
 
-      textAlign: "left", // Alinea el texto y los elementos a la izquierda
-    },
-    label: {
-      display: "block",
-      marginBottom: "8px",
-      fontWeight: "bold",
-    },
-    textarea: {
-      backgroundColor: "white",
-      color: "black",
-      width: "100%",
-      height: "100px",
-      padding: "5px",
-      borderRadius: "5px",
-      border: "1px solid #ccc",
-    },
+        setMessagesData(response.data);
+      } catch (err) {
+        console.error("Error al obtener los mensajes:", err);
+        setError("No se pudieron cargar los mensajes. Inténtalo de nuevo.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    sendMessageButton: {
-      backgroundColor: "#5e17a9", // Verde para el botón "Enviar Mensaje"
-      color: "white",
-      padding: "10px 20px",
-      border: "none",
-      borderRadius: "5px",
-      cursor: "pointer",
-      marginTop: "10px",
-    },
+    fetchMessages();
+  }, [auth.token, flatId]);
 
-    submitButton: {
-      backgroundColor: "#5e17a9",
-      color: "white",
-      padding: "10px 20px",
-      border: "none",
-      borderRadius: "5px",
-      cursor: "pointer",
-      marginTop: "10px",
-    },
-  };
+  if (loading) {
+    return (
+      <div
+        style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}
+      >
+        <CircularProgress />
+      </div>
+    );
+  }
 
-  // Obtener usuario almacenado en el localStorage
-  const storedUser = JSON.parse(localStorage.getItem("authToken"));
+  if (error) {
+    return (
+      <div style={{ color: "red", textAlign: "center", marginTop: "20px" }}>
+        {error}
+      </div>
+    );
+  }
+
+  if (messagesData.length === 0) {
+    return (
+      <div style={{ textAlign: "center", marginTop: "20px" }}>
+        <Typography variant="h6">No has enviado ningún mensaje.</Typography>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <h1>Mensajes para el Flat</h1>
+      <Card>
+        <CardContent>
+          <Typography variant="h6" component="div">
+            Flat en {messagesData.flatDetails.city}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Dirección: {messagesData.flatDetails.streetName}{" "}
+            {messagesData.flatDetails.streetNumber}
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            color="text.primary"
+            style={{ marginTop: "10px" }}
+          >
+            Mensajes Enviados:
+          </Typography>
+          {messagesData.messages.map((message, idx) => (
+            <Typography
+              key={idx}
+              variant="body2"
+              style={{ marginBottom: "5px" }}
+            >
+              - {message.content}
+            </Typography>
+          ))}
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+export default UserMessages;
+*/
+import React, { useEffect, useState, useContext } from "react";
+import axios from "axios";
+import jwtDecode from "jwt-decode";
+import AuthContext from "../../context/authContext";
+import {
+  Card,
+  CardContent,
+  Typography,
+  CircularProgress,
+  Grid,
+  Button,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
+} from "@mui/material";
+
+const UserMessages = () => {
+  const { auth } = useContext(AuthContext);
+  const [flats, setFlats] = useState([]);
+  const [selectedFlat, setSelectedFlat] = useState(null);
+  const [messagesData, setMessagesData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchFlats = async () => {
       try {
-        if (!storedUser || !storedUser.email) {
-          setError("Usuario no autenticado");
-          setLoading(false);
+        if (!auth.token) {
+          setError("Usuario no autenticado.");
           return;
         }
 
-        // Consulta para obtener los flats que no son del usuario logueado
-        const flatsQuery = query(
-          collection(db, "flats"),
-          where("userEmail", "!=", storedUser.email)
+        // Obtener todos los flats disponibles
+        const response = await axios.get(
+          "http://localhost:8080/flats/getAllFlats",
+          {
+            headers: {
+              Authorization: `Bearer ${auth.token}`,
+            },
+          }
         );
 
-        const querySnapshot = await getDocs(flatsQuery);
-        const flatsData = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-
-        setFlats(flatsData);
-        setLoading(false);
+        setFlats(response.data);
       } catch (err) {
-        console.error("Error al recuperar los flats: ", err);
-        setError("Error al cargar los flats. Por favor, intenta nuevamente.");
+        console.error("Error al obtener los flats:", err);
+        setError("No se pudieron cargar los flats. Inténtalo de nuevo.");
+      } finally {
         setLoading(false);
       }
     };
 
     fetchFlats();
-  }, []);
+  }, [auth.token]);
 
-  const handleSendMessageClick = (flat) => {
-    setSelectedFlat(flat); // Guardamos toda la información del flat seleccionado
-    setShowMessageForm(true);
+  const fetchMessages = async (flatId) => {
+    try {
+      setLoading(true);
+      setError(null);
 
-    // Mover el foco al formulario
-    setTimeout(() => {
-      if (messageFormRef.current) {
-        messageFormRef.current.scrollIntoView({ behavior: "smooth" });
-        messageFormRef.current.focus(); // Mover el foco al formulario
+      if (!auth.token) {
+        setError("Usuario no autenticado.");
+        return;
       }
-    }, 100);
+
+      // Decodificar el token para obtener el ID del usuario logueado
+      const decodedToken = jwtDecode(auth.token);
+      const userId = decodedToken.user_id;
+
+      // Obtener mensajes del flat seleccionado
+      const response = await axios.get(
+        `http://localhost:8080/flats/${flatId}/messages/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.token}`,
+          },
+        }
+      );
+
+      setMessagesData(response.data);
+    } catch (err) {
+      console.error("Error al obtener los mensajes:", err);
+      setError("No se pudieron cargar los mensajes. Inténtalo de nuevo.");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleSendMessage = async (e) => {
-    e.preventDefault();
-
-    if (!selectedFlat) {
-      setError("No hay un flat seleccionado");
-      return;
-    }
-
-    try {
-      const timestamp = new Date();
-      const messageData = {
-        email: storedUser.email, // Email del usuario logueado
-        idflat: selectedFlat.id, // ID del flat
-        userEmail: selectedFlat.userEmail, // Email del propietario del flat
-        city: selectedFlat.city, // Ciudad del flat
-        streetname: selectedFlat.streetname,
-        streetnumber: selectedFlat.streetnumber,
-        areasize: selectedFlat.areasize, // Tamaño del área del flat
-        dateavaliable: selectedFlat.dateavaliable, // Fecha de disponibilidad del flat
-        marcatiempo: timestamp, // Timestamp actual
-        message: messageContent, // Contenido del mensaje
-      };
-
-      // Insertar el mensaje en la colección "mesagges"
-      await addDoc(collection(db, "mesagges"), messageData);
-
-      setShowMessageForm(false);
-      setMessageContent("");
-      alert("Mensaje enviado correctamente");
-    } catch (err) {
-      console.error("Error al enviar el mensaje: ", err);
-      setError("Error al enviar el mensaje. Por favor, intenta nuevamente.");
-    }
+  const handleFlatSelect = (flatId) => {
+    setSelectedFlat(flatId);
+    fetchMessages(flatId);
   };
 
   if (loading) {
-    return <p>Cargando...</p>;
+    return (
+      <div
+        style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}
+      >
+        <CircularProgress />
+      </div>
+    );
   }
 
   if (error) {
-    return <p style={{ color: "red" }}>{error}</p>;
+    return (
+      <div style={{ color: "red", textAlign: "center", marginTop: "20px" }}>
+        {error}
+      </div>
+    );
   }
 
   return (
-    <div style={{ textAlign: "center" }}>
-      <h2>Flats de usuarios</h2>
-      {flats.length > 0 ? (
-        <div style={styles.gridContainer}>
-          {flats.map((flat) => (
-            <div key={flat.id} style={styles.card}>
-              <h3>{flat.city}</h3>
-              <p>
-                <strong>Calle:</strong> {flat.streetname}
-              </p>
-              <p>
-                <strong>Número:</strong> {flat.streetnumber}
-              </p>
-              <p>
-                <strong>Área:</strong> {flat.areasize} m²
-              </p>
-              <p>
-                <strong>Aire Acondicionado:</strong> {flat.hasac ? "Sí" : "No"}
-              </p>
-              <p>
-                <strong>Año de Construcción:</strong> {flat.yearbuilt}
-              </p>
-              <p>
-                <strong>Precio de Renta:</strong> {flat.rentprice}
-              </p>
-              <p>
-                <strong>Fecha Disponible:</strong> {flat.dateavaliable}
-              </p>
-              <p>
-                <strong>Propietario:</strong> {flat.userEmail}
-              </p>
-              <button
-                onClick={() => handleSendMessageClick(flat)}
-                style={styles.sendMessageButton} // Aplicar el estilo verde aquí
-              >
-                Enviar Mensaje
-              </button>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p>No hay flats registrados.</p>
-      )}
+    <div>
+      <h1>Mensajes por Flat</h1>
 
-      {showMessageForm && selectedFlat && (
-        <form
-          onSubmit={handleSendMessage}
-          ref={messageFormRef} // Asignamos la referencia
-          style={styles.messageForm}
+      <FormControl fullWidth style={{ marginBottom: "20px" }}>
+        <InputLabel id="flat-select-label">Selecciona un Flat</InputLabel>
+        <Select
+          labelId="flat-select-label"
+          value={selectedFlat || ""}
+          onChange={(e) => handleFlatSelect(e.target.value)}
         >
-          <h3>Enviar Mensaje</h3>
-          <label style={styles.label}>
-            Fecha del Mensaje:
-            <input
-              type="text"
-              value={new Date().toLocaleDateString()}
-              disabled
-            />
-          </label>
-          <label style={styles.label}>
-            Email:
-            <input type="text" value={storedUser.email} disabled />
-          </label>
-          <label style={styles.label}>
-            Contenido del Mensaje:
-            <textarea
-              value={messageContent}
-              onChange={(e) => setMessageContent(e.target.value)}
-              required
-              style={styles.textarea}
-            />
-          </label>
-          <button type="submit" style={styles.submitButton}>
-            Enviar
-          </button>
-        </form>
+          {flats.map((flat) => (
+            <MenuItem key={flat._id} value={flat._id}>
+              {flat.city}, {flat.streetName} {flat.streetNumber}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      {messagesData ? (
+        <Card>
+          <CardContent>
+            <Typography variant="h6" component="div">
+              Flat en {messagesData.flatDetails.city}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Dirección: {messagesData.flatDetails.streetName}{" "}
+              {messagesData.flatDetails.streetNumber}
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              color="text.primary"
+              style={{ marginTop: "10px" }}
+            >
+              Mensajes Enviados:
+            </Typography>
+            {messagesData.messages.map((messages, idx) => (
+              <Typography
+                key={idx}
+                variant="body2"
+                style={{ marginBottom: "5px" }}
+              >
+                - {messages.content}
+              </Typography>
+            ))}
+          </CardContent>
+        </Card>
+      ) : (
+        <Typography
+          variant="body1"
+          color="text.secondary"
+          style={{ textAlign: "center" }}
+        >
+          Selecciona un flat para ver los mensajes.
+        </Typography>
       )}
     </div>
   );
-}
+};
 
-export default MessagePage;
+export default UserMessages;
