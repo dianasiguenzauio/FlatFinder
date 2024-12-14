@@ -55,20 +55,18 @@ const EditUsers = () => {
   // Validar el formulario
   const validateForm = () => {
     const errors = {};
-    const nameRegex = /^[a-zA-Z]{1,20}$/;
+    const nameRegex = /^[a-zA-Z]{2,20}$/;
     const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*.])[A-Za-z\d!@#$%^&*.]{8,}$/;
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*.])[A-Za-z\d!@#$%^&*.]{6,}$/;
 
     // Validar nombre
     if (!selectedUser.firstname || !nameRegex.test(selectedUser.firstname)) {
-      errors.firstname =
-        "Nombre debe tener solo letras y máximo 20 caracteres.";
+      errors.firstname = "Nombre debe tener minimo 2 letras";
     }
 
     // Validar apellido
     if (!selectedUser.lastname || !nameRegex.test(selectedUser.lastname)) {
-      errors.lastname =
-        "Apellido debe tener solo letras y máximo 20 caracteres.";
+      errors.lastname = "Nombre debe tener minimo 2 letras";
     }
 
     // Validar fecha de nacimiento (mínimo 18 años)
@@ -82,14 +80,14 @@ const EditUsers = () => {
     ) {
       age--;
     }
-    if (!selectedUser.birthdate || age < 18) {
-      errors.birthdate = "El usuario debe tener al menos 18 años.";
+    if (!selectedUser.birthdate || (age < 18 && age > 120)) {
+      errors.birthdate = "El usuario debe tener al menos 18 años y maximo 120.";
     }
 
     // Validar contraseña si se modifica
     if (selectedUser.password && !passwordRegex.test(selectedUser.password)) {
       errors.password =
-        "La contraseña debe tener al menos 8 caracteres, incluyendo una letra mayúscula, una minúscula, un número y un carácter especial.";
+        "La contraseña debe tener al menos 6 caracteres, incluyendo una letra mayúscula, una minúscula, un número y un carácter especial.";
     }
 
     setFormErrors(errors);
@@ -357,6 +355,7 @@ const EditUsers = () => {
                 <TableCell style={styles.cells}>Nombre</TableCell>
                 <TableCell style={styles.cells}>Apellido</TableCell>
                 <TableCell style={styles.cells}>Email</TableCell>
+                <TableCell style={styles.cells}>Admin</TableCell>
                 <TableCell style={styles.cells}>Acciones</TableCell>
               </TableRow>
             </TableHead>
@@ -366,6 +365,7 @@ const EditUsers = () => {
                   <TableCell>{user.firstname}</TableCell>
                   <TableCell>{user.lastname}</TableCell>
                   <TableCell>{user.email}</TableCell>
+                  <TableCell>{user.isAdmin ? "Sí" : "No"}</TableCell>
                   <TableCell>
                     <Button
                       variant="contained"
