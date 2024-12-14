@@ -2,11 +2,11 @@ import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/authContext"; // Envuelve tu app con el proveedor de autenticación
 
 import LoginPage from "./pages/LoginPage";
-import ProtectedPage from "./pages/ProtectedPage";
+
 import PrivateRoute from "./components/PrivateRoute";
 import HomePage from "./pages/HomePage";
 import NewFlatPage from "./pages/NewFlatPage";
-import FavouritesPage from "./pages/FavouritesPage";
+
 import MyFlatsPage from "./pages/MyFlatsPage";
 import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";

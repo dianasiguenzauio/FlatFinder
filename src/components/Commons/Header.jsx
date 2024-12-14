@@ -1,8 +1,10 @@
-import React, { useContext } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import LogoImage from "../../assets/Logotipo.svg";
 import AuthContext from "../../context/authContext";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 
 const HeaderContainer = styled.nav`
   position: fixed;
@@ -77,21 +79,16 @@ const UserSection = styled.div`
 `;
 
 const Header = () => {
-  const { auth } = useContext(AuthContext);
+  const { auth, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    logout(); // Limpia el contexto de autenticación
+    navigate("/login"); // Redirige al login
+  };
 
   return (
     <HeaderContainer>
       <Logo src={LogoImage} alt="Tu Logotipo" />
-
-      {auth.firstname && (
-        <UserSection>
-          <span
-            style={{ marginRight: "10px", color: "#f3f3f1", fontSize: "25px" }}
-          >
-            Hello, {auth.firstname}
-          </span>
-        </UserSection>
-      )}
 
       <NavLinks>
         <NavLink to="/FlatsList">All Flats</NavLink>
@@ -101,6 +98,27 @@ const Header = () => {
         <NavLink to="/Messages">Messages</NavLink>
 
         {auth.isAdmin && <NavLink to="/Edit-Users">Edit Users</NavLink>}
+        {auth.firstname && (
+          <UserSection>
+            <span
+              style={{
+                marginRight: "10px",
+                color: "#f3f3f1",
+                fontSize: "25px",
+              }}
+            >
+              Hello, {auth.firstname}
+            </span>
+            <Button
+              variant="contained"
+              color="secondary"
+              size="small"
+              onClick={handleLogout}
+            >
+              Logout
+            </Button>
+          </UserSection>
+        )}
       </NavLinks>
     </HeaderContainer>
   );

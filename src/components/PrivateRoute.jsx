@@ -5,7 +5,7 @@ import AuthContext from "../context/authContext";
 
 function PrivateRoute({}) {
   const { auth } = useContext(AuthContext);
-  console.log(JSON.stringify(auth));
+  // console.log(JSON.stringify(auth));
   return auth?.token ? <Outlet /> : <Navigate to="/login" />;
 }
 
