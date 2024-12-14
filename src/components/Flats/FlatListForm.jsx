@@ -28,6 +28,8 @@ const Flats = () => {
   const [selectedFlat, setSelectedFlat] = useState(null); // Para el flat seleccionado
   const [messageContent, setMessageContent] = useState(""); // Para el contenido del mensaje
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [flatDetails, setFlatDetails] = useState(null); // Detalles del flat
+  const [detailsDialogOpen, setDetailsDialogOpen] = useState(false); // Controla la tarjeta emergente
 
   // Variable para controlar si se usa Unsplash o imágenes predeterminadas
   const useUnsplash = false; // Cambia a `true` si deseas habilitar Unsplash
@@ -216,6 +218,35 @@ const Flats = () => {
     }
   };
 
+  const handleViewDetails = async (flatId) => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `http://localhost:8080/flats/getFlatById/${flatId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${auth.token}`,
+          },
+        }
+      );
+      //console.log(flatId);
+      // console.log("Detalles del flat:", response.data);
+      setFlatDetails(response.data); // Establece los detalles del flat
+      setDetailsDialogOpen(true); // Abre la tarjeta emergente
+      //console.log(data);
+    } catch (error) {
+      console.error("Error al obtener los detalles del flat:", error);
+      showMessage("Error al obtener los detalles del flat.", "red");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCloseDetailsDialog = () => {
+    setDetailsDialogOpen(false);
+    setFlatDetails(null);
+  };
+
   if (loading) {
     return (
       <div
@@ -305,7 +336,18 @@ const Flats = () => {
                 }}
                 onClick={() => handleOpenMessageForm(flat._id)}
               >
-                🗨️
+                💬
+              </Button>
+              <Button
+                variant="contained"
+                style={{
+                  marginTop: "10px",
+                  backgroundColor: "#001f3d",
+                  color: "white",
+                }}
+                onClick={() => handleViewDetails(flat._id)}
+              >
+                Ver más
               </Button>
             </Card>
           </Grid>
@@ -371,6 +413,51 @@ const Flats = () => {
           </Button>
         </DialogActions>
       </Dialog>
+      {/* Dialog para mostrar detalles del flat */}
+
+      {flatDetails && (
+        <Dialog
+          open={detailsDialogOpen}
+          onClose={handleCloseDetailsDialog}
+          maxWidth="md"
+          fullWidth
+        >
+          <DialogTitle>Detalles del Flat</DialogTitle>
+          <DialogContent>
+            <Typography variant="body1" color="text.secondary">
+              Ubicación: {flatDetails.flatDetails.city},{" "}
+              {flatDetails.flatDetails.streetName},{" "}
+              {flatDetails.flatDetails.streetNumber}
+            </Typography>
+            <Typography variant="body1" color="text.secondary">
+              Area De Construccion:{flatDetails.flatDetails.areaSize} m2
+            </Typography>
+            <Typography variant="body1" color="text.secondary">
+              Aire Acondicionado:{flatDetails.flatDetails.hasAc}
+            </Typography>
+            <Typography variant="body1" color="text.secondary">
+              Precio de renta: ${flatDetails.flatDetails.rentPrice}
+            </Typography>
+            <Typography variant="body1" color="text.secondary">
+              Año de Construccion:{flatDetails.flatDetails.yearBuilt}
+            </Typography>
+            <Typography variant="body1" color="text.secondary">
+              Fecha de disponibilidad:{flatDetails.flatDetails.dateAvailable}
+            </Typography>
+            <Typography variant="body1" color="text.secondary">
+              Informacion Actualizada:{flatDetails.flatDetails.updated}
+            </Typography>
+            <Typography variant="body1" color="text.secondary">
+              Email de dueño:{flatDetails.ownerEmail}
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDetailsDialog} color="primary">
+              Cerrar
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )}
     </div>
   );
 };
