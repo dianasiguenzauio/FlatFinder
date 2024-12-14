@@ -9,7 +9,6 @@ function NewFlatPage() {
     <>
       <div>
         <HeaderContainer></HeaderContainer>
-        <h1>NewFlatPage</h1>
       </div>
       <NewFlat>Componente NewFlat</NewFlat>
     </>

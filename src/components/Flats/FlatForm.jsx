@@ -132,7 +132,7 @@ const NewFlat = () => {
   };
 
   return (
-    <Box sx={{ p: 3, mt: 8 }}>
+    <Box sx={{ p: 3, mt: 20 }}>
       <Paper elevation={3} sx={{ p: 3, maxWidth: 600, mx: "auto" }}>
         <Typography
           variant="h4"

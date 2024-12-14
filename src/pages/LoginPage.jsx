@@ -9,7 +9,7 @@ const LoginPage = () => {
     <>
       <div>
         <NavbarContainer></NavbarContainer>
-        <h1> Nuevo Usuario </h1>
+
         <LoginForm />
       </div>
     </>

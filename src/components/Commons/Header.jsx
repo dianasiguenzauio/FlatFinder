@@ -17,9 +17,13 @@ const HeaderContainer = styled.nav`
   align-items: center;
   z-index: 999;
   width: 99%;
+  height: 100px;
+  position: absolute;
 
   @media (max-width: 768px) {
     flex-direction: column;
+    height: auto;
+    position: static;
     padding: 1rem 0;
   }
 `;

@@ -229,15 +229,56 @@ const UserMessages = () => {
   }
 
   return (
-    <div>
-      <h1>Mensajes por Flat</h1>
+    <div
+      style={{
+        marginTop: "200px",
+        backgroundColor: "white",
+        maxWidth: "600px",
+        padding: "20px",
+        borderRadius: "10px",
+        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+      }}
+    >
+      <h1 style={{ textAlign: "center", color: "#001f3d" }}>
+        Mensajes por Flat
+      </h1>
 
-      <FormControl fullWidth style={{ marginBottom: "20px" }}>
-        <InputLabel id="flat-select-label">Selecciona un Flat</InputLabel>
+      <FormControl
+        fullWidth
+        id="flat-select-label"
+        margin="normal"
+        sx={{
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+              border: "2px solid purple", // Aplica el borde morado correctamente
+            },
+            "&:hover fieldset": {
+              borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+            },
+            "&.Mui-focused fieldset": {
+              borderColor: "purple", // Borde morado al enfocar
+            },
+          },
+        }}
+      >
+        <InputLabel
+          sx={{
+            backgroundColor: "white", // Evita que el texto se tape
+            paddingX: "4px", // Espaciado horizontal para mejor apariencia
+            transform: "translate(14px, -6px) scale(0.75)", // Ajusta la posición de la etiqueta
+          }}
+        >
+          Selecciona un Flat
+        </InputLabel>
         <Select
           labelId="flat-select-label"
           value={selectedFlat || ""}
           onChange={(e) => handleFlatSelect(e.target.value)}
+          sx={{
+            "& .MuiSelect-select": {
+              padding: "12px", // Ajusta el padding para el contenido
+            },
+          }}
         >
           {flats.map((flat) => (
             <MenuItem key={flat._id} value={flat._id}>

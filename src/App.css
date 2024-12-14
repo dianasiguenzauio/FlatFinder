@@ -26,10 +26,14 @@
   }
 }
 
-.card {
-  padding: 2em;
-}
-
 .read-the-docs {
   color: #888;
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  padding-top: 200px; /* Ajusta esto según el tamaño real del header */
 }

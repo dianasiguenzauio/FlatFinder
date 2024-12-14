@@ -98,27 +98,24 @@ const RegistrationForm = () => {
   };
 
   const formStyle = {
-    flexDirection: "column",
     backgroundColor: "#ffffff",
-    padding: "2rem",
-    borderRadius: "8px",
+    borderRadius: "10px",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19)",
     textAlign: "center",
     color: "black",
     justifyContent: "center",
     alignItems: "center",
-    width: "600px",
-    marginTop: "2rem",
-    marginLeft: "auto",
-    marginRight: "auto",
-    position: "relative",
+    height: window.innerWidth <= 768 ? "100vh" : "auto",
+    width: window.innerWidth <= 768 ? "50%" : "100%",
+    marginTop: window.innerWidth <= 768 ? "6rem" : "11rem",
+    marginBottom: window.innerWidth <= 768 ? "2rem" : "4rem",
   };
 
   const divStyle = {
     justifyContent: "center",
     alignItems: "center",
     height: "100vh",
-    marginTop: "12rem",
+    marginTop: "11rem",
     marginBottom: "4rem",
   };
   const inputRegister = {
@@ -145,9 +142,6 @@ const RegistrationForm = () => {
 
   return (
     <div style={divStyle}>
-      <h2 style={{ textAlign: "center", marginTop: "2rem", color: "#001f3d" }}>
-        Registrar Nuevo Usuario
-      </h2>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -156,11 +150,34 @@ const RegistrationForm = () => {
         {({ isSubmitting }) => (
           <Form style={formStyle}>
             <div>
+              <h1
+                style={{
+                  textAlign: "center",
+                  marginTop: "1rem",
+                  color: "#001f3d",
+                }}
+              >
+                Registrar Nuevo Usuario
+              </h1>
               <Field
                 type="text"
                 name="firstname"
                 style={inputRegister}
                 placeholder="Ingresa tu nombre"
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderWidth: "2px", // Grosor del borde
+                      borderColor: "purple", // Color del borde
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "purple", // Color del borde cuando está enfocado
+                    },
+                  },
+                }}
               />
               <ErrorMessage
                 name="firstname"

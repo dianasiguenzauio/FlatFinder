@@ -67,17 +67,18 @@ const Login = () => {
   };
 
   const formStyle = {
-    flexDirection: "column",
     backgroundColor: "#ffffff",
-    padding: "2rem",
-    borderRadius: "8px",
+    padding: "1rem",
+    borderRadius: "10px",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19)",
     textAlign: "center",
     color: "black",
     justifyContent: "center",
     alignItems: "center",
-    width: "600px",
-    marginTop: "5rem",
+    height: window.innerWidth <= 768 ? "100vh" : "auto",
+    width: window.innerWidth <= 768 ? "50%" : "100%",
+    marginTop: window.innerWidth <= 768 ? "6rem" : "11rem",
+    marginBottom: window.innerWidth <= 768 ? "2rem" : "4rem",
   };
 
   const inputLogin = {
@@ -105,11 +106,11 @@ const Login = () => {
   return (
     <div style={formStyle}>
       <div>
-        <h2
+        <h1
           style={{ textAlign: "center", marginTop: "2rem", color: "#001f3d" }}
         >
           Iniciar Sesión
-        </h2>
+        </h1>
         <form onSubmit={handleLogin}>
           <div style={styles.field}>
             <label style={styles.label}>Correo Electrónico</label>
