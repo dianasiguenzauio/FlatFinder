@@ -433,7 +433,7 @@ const Flats = () => {
               Area De Construccion:{flatDetails.flatDetails.areaSize} m2
             </Typography>
             <Typography variant="body1" color="text.secondary">
-              Aire Acondicionado:{flatDetails.flatDetails.hasAc}
+              Aire Acondicionado: {flatDetails.flatDetails.hasAc ? "Sí" : "No"}
             </Typography>
             <Typography variant="body1" color="text.secondary">
               Precio de renta: ${flatDetails.flatDetails.rentPrice}

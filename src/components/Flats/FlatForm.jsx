@@ -1,5 +1,6 @@
 //Componente para crear flat
 import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   TextField,
   Button,
@@ -16,6 +17,7 @@ import axios from "axios";
 import AuthContext from "../../context/authContext";
 
 const NewFlat = () => {
+  const navigate = useNavigate();
   const { auth } = useContext(AuthContext); // Contexto de autenticación
   const [formValues, setFormValues] = useState({
     city: "",
@@ -97,18 +99,21 @@ const NewFlat = () => {
           Authorization: `Bearer ${auth.token}`,
         },
       });
-      setSuccessMessage("Flat guardado con éxito.");
-      setTimeout(() => setSuccessMessage(""), 3000);
-      setFormValues({
-        city: "",
-        streetName: "",
-        streetNumber: "",
-        areaSize: "",
-        hasAc: false,
-        yearBuilt: "",
-        rentPrice: "",
-        dateAvailable: "",
-      });
+
+      setTimeout(() => {
+        setSuccessMessage("Flat creado con éxito.");
+        setFormValues({
+          city: "",
+          streetName: "",
+          streetNumber: "",
+          areaSize: "",
+          hasAc: false,
+          yearBuilt: "",
+          rentPrice: "",
+          dateAvailable: "",
+        });
+        navigate("/MyFlats");
+      }, 5000);
     } catch (error) {
       console.error("Error al guardar el flat:", error.response?.data?.message);
       setFormErrors({
