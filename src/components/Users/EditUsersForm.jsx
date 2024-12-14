@@ -184,14 +184,16 @@ const EditUsers = () => {
 
   return (
     <div style={styles.container}>
-      <h1 style={styles.title}>Administrador - Editar Usuarios</h1>
+      <h1 style={{ color: "#001f3d", textAlign: "center" }}>
+        Administrador - Editar Usuarios
+      </h1>
       {errorMessage && <p style={styles.error}>{errorMessage}</p>}
       {successMessage && <p style={styles.success}>{successMessage}</p>}
 
       {/* Mostrar tabla o formulario según el estado */}
       {editFormVisible ? (
         <div style={styles.formContainer}>
-          <h2>Editar Usuario</h2>
+          <h2 style={{ color: "#001f3d" }}>Editar Usuario</h2>
           <form>
             <TextField
               label="Nombre"
@@ -204,6 +206,19 @@ const EditUsers = () => {
               helperText={formErrors.firstname}
               fullWidth
               margin="normal"
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    border: "2px solid purple", // Aplica el borde morado correctamente
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "purple", // Borde morado al enfocar
+                  },
+                },
+              }}
             />
             <TextField
               label="Apellido"
@@ -216,6 +231,19 @@ const EditUsers = () => {
               helperText={formErrors.lastname}
               fullWidth
               margin="normal"
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    border: "2px solid purple", // Aplica el borde morado correctamente
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "purple", // Borde morado al enfocar
+                  },
+                },
+              }}
             />
             <TextField
               label="Email"
@@ -227,6 +255,19 @@ const EditUsers = () => {
               disabled // El email no se puede editar
               fullWidth
               margin="normal"
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    border: "2px solid purple", // Aplica el borde morado correctamente
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "purple", // Borde morado al enfocar
+                  },
+                },
+              }}
             />
             <TextField
               label="Fecha de Nacimiento"
@@ -243,6 +284,19 @@ const EditUsers = () => {
               InputLabelProps={{
                 shrink: true,
               }}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    border: "2px solid purple", // Aplica el borde morado correctamente
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "purple", // Borde morado al enfocar
+                  },
+                },
+              }}
             />
             <TextField
               label="Contraseña (Deja este campo vacio su no requieres actualizar la contraseña)"
@@ -256,13 +310,31 @@ const EditUsers = () => {
               helperText={formErrors.password}
               fullWidth
               margin="normal"
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    border: "2px solid purple", // Aplica el borde morado correctamente
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "purple", // Borde morado al enfocar
+                  },
+                },
+              }}
             />
             <div style={styles.buttonContainer}>
               <Button
                 variant="contained"
-                color="primary"
                 onClick={handleSaveChanges}
                 style={styles.button}
+                sx={{
+                  backgroundColor: "#179fba",
+                  "&:hover": {
+                    backgroundColor: "#137d94", // Color ligeramente más oscuro al pasar el mouse
+                  },
+                }}
               >
                 Guardar Cambios
               </Button>
@@ -282,10 +354,10 @@ const EditUsers = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell style={styles.header}>Nombre</TableCell>
-                <TableCell style={styles.header}>Apellido</TableCell>
-                <TableCell style={styles.header}>Email</TableCell>
-                <TableCell style={styles.header}>Acciones</TableCell>
+                <TableCell style={styles.cells}>Nombre</TableCell>
+                <TableCell style={styles.cells}>Apellido</TableCell>
+                <TableCell style={styles.cells}>Email</TableCell>
+                <TableCell style={styles.cells}>Acciones</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -297,9 +369,14 @@ const EditUsers = () => {
                   <TableCell>
                     <Button
                       variant="contained"
-                      color="primary"
                       onClick={() => handleEdit(user._id)}
                       style={styles.button}
+                      sx={{
+                        backgroundColor: "#179fba",
+                        "&:hover": {
+                          backgroundColor: "#137d94", // Color ligeramente más oscuro al pasar el mouse
+                        },
+                      }}
                     >
                       Editar
                     </Button>
@@ -347,12 +424,16 @@ const EditUsers = () => {
 const styles = {
   formContainer: {
     maxWidth: "600px",
-    margin: "0 auto",
     padding: "20px",
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "white",
     borderRadius: "10px",
     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
   },
+
+  container: {
+    marginTop: "200px",
+  },
+
   buttonContainer: {
     display: "flex",
     justifyContent: "space-between",
@@ -360,6 +441,12 @@ const styles = {
   },
   button: {
     margin: "0 5px",
+  },
+
+  cells: {
+    color: "#001f3d",
+    fontWeight: "bold",
+    fontSize: "15px",
   },
 };
 

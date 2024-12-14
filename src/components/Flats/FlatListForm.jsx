@@ -210,8 +210,12 @@ const Flats = () => {
   }
 
   return (
-    <div>
-      <h1>Flats Disponibles</h1>
+    <div style={{ marginTop: "200px" }}>
+      <h1
+        style={{ textAlign: "center", color: "#001f3d", position: "initial" }}
+      >
+        Flats Disponibles
+      </h1>
       {message && (
         <div
           style={{ color: messageColor, textAlign: "center", margin: "10px 0" }}
@@ -220,10 +224,18 @@ const Flats = () => {
         </div>
       )}
 
-      <Grid container spacing={3}>
+      <Grid container spacing={2} style={{ padding: "0 40px" }}>
         {flats.map((flat) => (
-          <Grid item xs={12} sm={6} md={4} key={flat._id}>
-            <Card>
+          <Grid item xs={12} sm={6} md={3} key={flat._id}>
+            <Card
+              style={{
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                borderRadius: "10px",
+              }}
+            >
               <CardMedia
                 component="img"
                 height="140"
@@ -268,7 +280,7 @@ const Flats = () => {
               <Button
                 variant="contained"
                 style={{
-                  backgroundColor: "white",
+                  backgroundColor: "purple",
                   color: "white",
                   marginTop: "10px",
                   alignItems: "center",
@@ -288,12 +300,21 @@ const Flats = () => {
           style={{
             border: "1px solid #ccc",
             padding: "15px",
-            margin: "10px 0",
+            margin: "20px 40px",
+            backgroundColor: "white",
+            borderRadius: "10px",
           }}
         >
-          <h3>Enviar Mensaje</h3>
+          <h3 style={{ color: "#001f3d" }}>Enviar Mensaje</h3>
           <textarea
-            style={{ width: "100%", minHeight: "100px", marginBottom: "10px" }}
+            style={{
+              width: "100%",
+              minHeight: "100px",
+              marginBottom: "10px",
+              backgroundColor: "white",
+              color: "black",
+              border: "2px solid purple",
+            }}
             value={messageContent}
             onChange={(e) => setMessageContent(e.target.value)}
             placeholder="Escribe tu mensaje aquí..."
@@ -302,7 +323,7 @@ const Flats = () => {
             <Button
               variant="contained"
               style={{
-                backgroundColor: "green",
+                backgroundColor: "#179fba",
                 color: "white",
                 marginRight: "10px",
               }}
@@ -312,7 +333,7 @@ const Flats = () => {
             </Button>
             <Button
               variant="outlined"
-              style={{ color: "red" }}
+              style={{ color: "purple", borderColor: "purple" }}
               onClick={() => setSelectedFlat(null)}
             >
               Cancelar

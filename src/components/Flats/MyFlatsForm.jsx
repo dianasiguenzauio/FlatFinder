@@ -184,8 +184,8 @@ const FlatsOwner = () => {
   return (
     <Box sx={{ p: 3, mt: 20 }}>
       <Typography
-        variant="h4"
-        align="center"
+        variant="h3"
+        textAlign="center"
         gutterBottom
         sx={{ color: "#001f3d" }}
       >
@@ -198,8 +198,16 @@ const FlatsOwner = () => {
       )}
       <Grid container spacing={3}>
         {flats.map((flat) => (
-          <Grid item xs={12} sm={6} md={15} key={flat._id}>
-            <Card>
+          <Grid item xs={12} sm={6} md={4} key={flat._id}>
+            <Card
+              style={{
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                borderRadius: "10px",
+              }}
+            >
               <CardContent>
                 <Typography variant="h6">Ciudad: {flat.city}</Typography>
                 <Typography>Calle: {flat.streetName}</Typography>
@@ -227,7 +235,7 @@ const FlatsOwner = () => {
                 </Button>
                 <Button
                   variant="contained"
-                  color="info"
+                  color="secondary"
                   onClick={() => handleViewMessages(flat._id)}
                 >
                   Ver Mensajes

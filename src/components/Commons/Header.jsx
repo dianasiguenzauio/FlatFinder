@@ -79,6 +79,16 @@ const Header = () => {
     <HeaderContainer>
       <Logo src={LogoImage} alt="Tu Logotipo" />
 
+      {auth.firstname && (
+        <UserSection>
+          <span
+            style={{ marginRight: "10px", color: "#f3f3f1", fontSize: "25px" }}
+          >
+            Hello, {auth.firstname}
+          </span>
+        </UserSection>
+      )}
+
       <NavLinks>
         <NavLink to="/FlatsList">All Flats</NavLink>
         <NavLink to="/MyFlats">My Flats</NavLink>
@@ -88,12 +98,6 @@ const Header = () => {
 
         {auth.isAdmin && <NavLink to="/Edit-Users">Edit Users</NavLink>}
       </NavLinks>
-
-      {auth.firstname && (
-        <UserSection>
-          <span>Hello, {auth.firstname}</span>
-        </UserSection>
-      )}
     </HeaderContainer>
   );
 };
