@@ -432,6 +432,7 @@ const styles = {
 
   container: {
     marginTop: "200px",
+    borderRadius: "10px",
   },
 
   buttonContainer: {

@@ -90,7 +90,7 @@ const NewFlat = () => {
     });
   };
 
-  const handleSave = async () => {
+  /*const handleSave = async () => {
     if (!validateForm()) return;
 
     try {
@@ -116,6 +116,45 @@ const NewFlat = () => {
       }, 5000);
     } catch (error) {
       console.error("Error al guardar el flat:", error.response?.data?.message);
+      setFormErrors({
+        general: "Error al guardar el flat. Intenta de nuevo.",
+      });
+    }
+  };*/
+
+  const handleSave = async () => {
+    if (!validateForm()) return;
+
+    try {
+      await axios.post("http://localhost:8080/flats/addFlat", formValues, {
+        headers: {
+          Authorization: `Bearer ${auth.token}`,
+        },
+      });
+
+      // Mostrar el mensaje de éxito
+      setSuccessMessage("Flat creado con éxito.");
+
+      // Restablecer el formulario
+      setFormValues({
+        city: "",
+        streetName: "",
+        streetNumber: "",
+        areaSize: "",
+        hasAc: false,
+        yearBuilt: "",
+        rentPrice: "",
+        dateAvailable: "",
+      });
+
+      // Redirigir después de un breve retraso, si es necesario
+      setTimeout(() => {
+        navigate("/MyFlats");
+      }, 3000); // Esperar 3 segundos para que el usuario vea el mensaje
+    } catch (error) {
+      console.error("Error al guardar el flat:", error.response?.data?.message);
+
+      // Mostrar mensaje de error
       setFormErrors({
         general: "Error al guardar el flat. Intenta de nuevo.",
       });

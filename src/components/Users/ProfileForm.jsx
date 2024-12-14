@@ -489,6 +489,19 @@ const EditProfile = () => {
             margin="normal"
             error={!!errors.firstname}
             helperText={errors.firstname || ""}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  border: "2px solid purple", // Aplica el borde morado correctamente
+                },
+                "&:hover fieldset": {
+                  borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "purple", // Borde morado al enfocar
+                },
+              },
+            }}
           />
           <TextField
             label="Apellido"
@@ -499,6 +512,19 @@ const EditProfile = () => {
             margin="normal"
             error={!!errors.lastname}
             helperText={errors.lastname || ""}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  border: "2px solid purple", // Aplica el borde morado correctamente
+                },
+                "&:hover fieldset": {
+                  borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "purple", // Borde morado al enfocar
+                },
+              },
+            }}
           />
           <TextField
             label="Fecha de Nacimiento"
@@ -512,6 +538,19 @@ const EditProfile = () => {
             helperText={errors.birthdate || ""}
             InputLabelProps={{
               shrink: true,
+            }}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  border: "2px solid purple", // Aplica el borde morado correctamente
+                },
+                "&:hover fieldset": {
+                  borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "purple", // Borde morado al enfocar
+                },
+              },
             }}
           />
           <TextField
@@ -527,6 +566,19 @@ const EditProfile = () => {
               errors.password ||
               "Deja este campo vacío si no deseas cambiar la contraseña."
             }
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  border: "2px solid purple", // Aplica el borde morado correctamente
+                },
+                "&:hover fieldset": {
+                  borderColor: "darkviolet", // Cambia el borde al pasar el mouse
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "purple", // Borde morado al enfocar
+                },
+              },
+            }}
           />
           <Box
             sx={{

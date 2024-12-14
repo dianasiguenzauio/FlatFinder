@@ -90,6 +90,28 @@ const Header = () => {
     <HeaderContainer>
       <Logo src={LogoImage} alt="Tu Logotipo" />
 
+      {auth.firstname && (
+        <UserSection>
+          <span
+            style={{
+              marginRight: "10px",
+              color: "#f3f3f1",
+              fontSize: "25px",
+            }}
+          >
+            Hello, {auth.firstname}
+          </span>
+          <Button
+            variant="contained"
+            color="secondary"
+            size="small"
+            onClick={handleLogout}
+          >
+            Logout
+          </Button>
+        </UserSection>
+      )}
+
       <NavLinks>
         <NavLink to="/FlatsList">All Flats</NavLink>
         <NavLink to="/MyFlats">My Flats</NavLink>
@@ -98,27 +120,6 @@ const Header = () => {
         <NavLink to="/Messages">Messages</NavLink>
 
         {auth.isAdmin && <NavLink to="/Edit-Users">Edit Users</NavLink>}
-        {auth.firstname && (
-          <UserSection>
-            <span
-              style={{
-                marginRight: "10px",
-                color: "#f3f3f1",
-                fontSize: "25px",
-              }}
-            >
-              Hello, {auth.firstname}
-            </span>
-            <Button
-              variant="contained"
-              color="secondary"
-              size="small"
-              onClick={handleLogout}
-            >
-              Logout
-            </Button>
-          </UserSection>
-        )}
       </NavLinks>
     </HeaderContainer>
   );
