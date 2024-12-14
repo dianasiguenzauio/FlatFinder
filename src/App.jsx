@@ -22,17 +22,16 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/Login" element={<LoginPage />} />
         <Route path="/Register" element={<RegisterPage />} />
-        <Route path="/FlatsList" element={<FlatListPage />} />
-        <Route path="/Edit-Users" element={<EditUsersPage />} />
-        <Route path="/MyProfile" element={<ProfilePage />} />
-        <Route path="/NewFlatPage" element={<NewFlatPage />} />
-        <Route path="/MyFlats" element={<MyFlatsPage />} />
-        <Route path="/ProfilePage" element={<ProfilePage />} />
-        <Route path="/RegistrerPage" element={<RegisterPage />} />
-        <Route path="/Messages" element={<MessagePage />} />
+
         <Route path="/FlatDetailsPage/:flatId" element={<FlatDetailsPage />} />
         <Route element={<PrivateRoute />}>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/FlatsList" element={<FlatListPage />} />
+          <Route path="/MyFlats" element={<MyFlatsPage />} />
+          <Route path="/NewFlatPage" element={<NewFlatPage />} />
+          <Route path="/Edit-Users" element={<EditUsersPage />} />
+          <Route path="/MyProfile" element={<ProfilePage />} />
+          <Route path="/Messages" element={<MessagePage />} />
+          <Route path="/ProfilePage" element={<ProfilePage />} />
         </Route>
       </Routes>
     </AuthProvider>

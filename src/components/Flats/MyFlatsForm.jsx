@@ -1,7 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import jwtDecode from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 import {
   Card,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  DialogContent,
   CardContent,
   CardActions,
   Typography,
@@ -18,7 +23,8 @@ import axios from "axios";
 import AuthContext from "../../context/authContext";
 
 const FlatsOwner = () => {
-  const { auth } = useContext(AuthContext); // Contexto para el token y usuario logueado
+  const navigate = useNavigate();
+  const { auth, logout } = useContext(AuthContext); // Contexto para el token y usuario logueado
   const [flats, setFlats] = useState([]);
   const [selectedFlat, setSelectedFlat] = useState(null);
   const [formValues, setFormValues] = useState({});
@@ -26,7 +32,8 @@ const FlatsOwner = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [messages, setMessages] = useState([]); // Almacena los mensajes
   const [isMessageViewOpen, setIsMessageViewOpen] = useState(false); // Controla la vista de mensajes
-
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchFlats = async () => {
       try {
@@ -47,15 +54,23 @@ const FlatsOwner = () => {
         );
         setFlats(userFlats);
       } catch (error) {
-        console.error(
-          "Error al cargar los flats:",
-          error.response?.data?.message || error.message
-        );
+        if (error.response && error.response.status === 401) {
+          // Si es un error 401 (No autenticado), mostrar el dialog
+          setDialogOpen(true);
+        } else {
+          console.error("Error al obtener los flats:", error);
+        }
+      } finally {
+        setLoading(false);
       }
     };
-
     fetchFlats();
   }, [auth]);
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+    logout(); // Limpia el contexto si es necesario
+    navigate("/login"); // Redirige al login
+  };
 
   const handleEditClick = (flat) => {
     setSelectedFlat(flat);
@@ -493,6 +508,19 @@ const FlatsOwner = () => {
           </Box>
         </Paper>
       )}
+      {/* Dialog para error 401 */}
+      <Dialog open={dialogOpen} onClose={handleDialogClose}>
+        <DialogTitle>Usuario no autenticado</DialogTitle>
+        <DialogContent>
+          Tu sesión ha expirado o no tienes acceso. Por favor, inicia sesión
+          nuevamente.
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} color="primary">
+            Ir a Login
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

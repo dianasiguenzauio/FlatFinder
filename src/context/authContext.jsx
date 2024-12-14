@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
     setAuth({
       token: null,
       firstname: null,
-      isAdmin: false,
+      isAdmin: null,
     });
   };
 
