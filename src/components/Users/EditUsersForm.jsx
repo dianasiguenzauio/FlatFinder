@@ -3,6 +3,10 @@ import axios from "axios";
 import AuthContext from "../../context/authContext";
 import {
   Table,
+  FormLabel,
+  RadioGroup,
+  Radio,
+  FormControlLabel,
   TableBody,
   TableCell,
   TableContainer,
@@ -102,7 +106,7 @@ const EditUsers = () => {
     if (!userDataToSend.password) {
       delete userDataToSend.password; // No enviar contraseña si no se modificó
     }
-
+    console.log("Datos enviados al servidor:", userDataToSend);
     try {
       await axios.patch(
         `http://localhost:8080/users/updateUser/${selectedUser._id}`,
@@ -322,6 +326,24 @@ const EditUsers = () => {
                 },
               }}
             />
+            <FormLabel component="legend" style={{ marginTop: "20px" }}>
+              ¿Es Administrador?
+            </FormLabel>
+            <RadioGroup
+              name="isAdmin"
+              value={String(selectedUser.isAdmin)} // Convertir el valor booleano a string para el manejo de RadioGroup
+              onChange={(e) =>
+                setSelectedUser({
+                  ...selectedUser,
+                  isAdmin: e.target.value === "true", // Convertir de string a boolean
+                })
+              }
+              row
+            >
+              <FormControlLabel value="true" control={<Radio />} label="Sí" />
+              <FormControlLabel value="false" control={<Radio />} label="No" />
+            </RadioGroup>
+
             <div style={styles.buttonContainer}>
               <Button
                 variant="contained"
