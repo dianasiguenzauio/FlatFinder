@@ -1,8 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import AuthContext from "../../context/authContext";
 import {
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  DialogContent,
   Card,
   CardContent,
   CardMedia,
@@ -13,7 +18,8 @@ import {
 } from "@mui/material";
 
 const Flats = () => {
-  const { auth } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const { auth, logout } = useContext(AuthContext);
   const [flats, setFlats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState(null);
@@ -21,6 +27,7 @@ const Flats = () => {
   const [messageColor, setMessageColor] = useState("black");
   const [selectedFlat, setSelectedFlat] = useState(null); // Para el flat seleccionado
   const [messageContent, setMessageContent] = useState(""); // Para el contenido del mensaje
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   // Variable para controlar si se usa Unsplash o imágenes predeterminadas
   const useUnsplash = false; // Cambia a `true` si deseas habilitar Unsplash
@@ -95,13 +102,23 @@ const Flats = () => {
         );
         setFlats(flatsWithImages);
       } catch (error) {
-        console.error("Error al obtener los flats:", error);
+        if (error.response && error.response.status === 401) {
+          // Si es un error 401 (No autenticado), mostrar el dialog
+          setDialogOpen(true);
+        } else {
+          console.error("Error al obtener los flats:", error);
+        }
       } finally {
         setLoading(false);
       }
     };
     fetchFlats();
   }, [auth]);
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+    logout(); // Limpia el contexto si es necesario
+    navigate("/login"); // Redirige al login
+  };
 
   const handleAddToFavourites = async (flatId) => {
     const selectedFlat = flats.find((flat) => flat._id === flatId);
@@ -320,6 +337,19 @@ const Flats = () => {
           </div>
         </div>
       )}
+      {/* Dialog para error 401 */}
+      <Dialog open={dialogOpen} onClose={handleDialogClose}>
+        <DialogTitle>Usuario no autenticado</DialogTitle>
+        <DialogContent>
+          Tu sesión ha expirado o no tienes acceso. Por favor, inicia sesión
+          nuevamente.
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} color="primary">
+            Ir a Login
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
