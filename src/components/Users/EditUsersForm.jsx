@@ -377,6 +377,7 @@ const EditUsers = () => {
                 <TableCell style={styles.cells}>Nombre</TableCell>
                 <TableCell style={styles.cells}>Apellido</TableCell>
                 <TableCell style={styles.cells}>Email</TableCell>
+                <TableCell style={styles.cells}>#Flats</TableCell>
                 <TableCell style={styles.cells}>Admin</TableCell>
                 <TableCell style={styles.cells}>Acciones</TableCell>
               </TableRow>
@@ -387,6 +388,7 @@ const EditUsers = () => {
                   <TableCell>{user.firstname}</TableCell>
                   <TableCell>{user.lastname}</TableCell>
                   <TableCell>{user.email}</TableCell>
+                  <TableCell>{user.numeroflats}</TableCell>
                   <TableCell>{user.isAdmin ? "Sí" : "No"}</TableCell>
                   <TableCell>
                     <Button
