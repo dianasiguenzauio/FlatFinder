@@ -118,6 +118,7 @@ const EditUsers = () => {
         }
       );
       setSuccessMessage("Datos actualizados correctamente.");
+
       setTimeout(() => setSuccessMessage(""), 3000);
       setEditFormVisible(false);
       setUsers((prevUsers) =>
@@ -144,14 +145,14 @@ const EditUsers = () => {
           },
         }
       );
-      setSuccessMessage("Usuario eliminado correctamente.");
+      setSuccessMessage("Usuario eliminado correctamente");
       setUsers(users.filter((user) => user._id !== userToDelete));
       setDeleteDialogOpen(false);
       setTimeout(() => setSuccessMessage(""), 3000);
     } catch (error) {
       setErrorMessage(
         error.response?.data?.message ||
-          "Error al eliminar el usuario. Intenta de nuevo."
+          "Error al eliminar el usuario. Intenta de nuevo"
       );
     }
   };
@@ -340,8 +341,18 @@ const EditUsers = () => {
               }
               row
             >
-              <FormControlLabel value="true" control={<Radio />} label="Sí" />
-              <FormControlLabel value="false" control={<Radio />} label="No" />
+              <FormControlLabel
+                value="true"
+                control={<Radio />}
+                label="Sí"
+                style={{ color: "#179fba" }}
+              />
+              <FormControlLabel
+                value="false"
+                control={<Radio />}
+                label="No"
+                style={{ color: "#179fba" }}
+              />
             </RadioGroup>
 
             <div style={styles.buttonContainer}>
@@ -358,6 +369,7 @@ const EditUsers = () => {
               >
                 Guardar Cambios
               </Button>
+
               <Button
                 variant="contained"
                 color="secondary"
@@ -470,6 +482,13 @@ const styles = {
     color: "#001f3d",
     fontWeight: "bold",
     fontSize: "15px",
+  },
+
+  success: {
+    color: "green",
+    textAlign: "center",
+    padding: "10px",
+    marginBottom: "10px",
   },
 };
 
