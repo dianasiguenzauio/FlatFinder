@@ -457,8 +457,13 @@ const EditProfile = () => {
         }
       );
 
-      setSuccessMessage("Datos actualizados correctamente.");
-      setErrorMessage("");
+      setSuccessMessage(
+        "Datos actualizados correctamente, vuelva a iniciar sesion."
+      );
+      setTimeout(() => {
+        setSuccessMessage("");
+        navigate("/Login");
+      }, 3000);
     } catch (error) {
       setErrorMessage(
         error.response?.data?.message ||

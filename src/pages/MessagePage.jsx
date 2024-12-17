@@ -1,3 +1,4 @@
+import Footer from "../components/Commons/Footer";
 import HeaderContainer from "../components/Commons/Header";
 import UserMessages from "../components/Messages/MessageForm";
 
@@ -7,6 +8,7 @@ function FlatDetailsPage() {
       <div>
         <HeaderContainer />
         <UserMessages></UserMessages>
+        <Footer></Footer>
       </div>
     </>
   );

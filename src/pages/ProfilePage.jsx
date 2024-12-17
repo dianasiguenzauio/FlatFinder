@@ -3,6 +3,7 @@
 import React from "react";
 import EditProfile from "../components/Users/ProfileForm";
 import Header from "../components/Commons/Header";
+import Footer from "../components/Commons/Footer";
 
 function ProfilePage() {
   return (
@@ -11,6 +12,7 @@ function ProfilePage() {
         <Header />
 
         <EditProfile> </EditProfile>
+        <Footer></Footer>
       </div>
     </>
   );

@@ -2,6 +2,7 @@
 
 import React from "react";
 import NavbarContainer from "../components/Commons/Navbar";
+import Footer from "../components/Commons/Footer";
 
 function UpdateProfilePage() {
   return (
@@ -9,6 +10,7 @@ function UpdateProfilePage() {
       <div>
         <NavbarContainer />
         <h1>UpdateProfilePage</h1>
+        <Footer></Footer>
       </div>
     </>
   );

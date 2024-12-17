@@ -90,6 +90,15 @@ const Header = () => {
     <HeaderContainer>
       <Logo src={LogoImage} alt="Tu Logotipo" />
 
+      <NavLinks>
+        <NavLink to="/FlatsList">All Flats</NavLink>
+        <NavLink to="/MyFlats">My Flats</NavLink>
+        <NavLink to="/NewFlatPage">New Flat</NavLink>
+        <NavLink to="/MyProfile">My Profile</NavLink>
+        <NavLink to="/Messages">Messages</NavLink>
+
+        {auth.isAdmin && <NavLink to="/Edit-Users">Edit Users</NavLink>}
+      </NavLinks>
       {auth.firstname && (
         <UserSection>
           <span
@@ -111,16 +120,6 @@ const Header = () => {
           </Button>
         </UserSection>
       )}
-
-      <NavLinks>
-        <NavLink to="/FlatsList">All Flats</NavLink>
-        <NavLink to="/MyFlats">My Flats</NavLink>
-        <NavLink to="/NewFlatPage">New Flat</NavLink>
-        <NavLink to="/MyProfile">My Profile</NavLink>
-        <NavLink to="/Messages">Messages</NavLink>
-
-        {auth.isAdmin && <NavLink to="/Edit-Users">Edit Users</NavLink>}
-      </NavLinks>
     </HeaderContainer>
   );
 };

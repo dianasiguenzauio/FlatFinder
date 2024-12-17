@@ -3,6 +3,7 @@
 import React from "react";
 import HeaderContainer from "../components/Commons/Header";
 import NewFlat from "../components/Flats/FlatForm";
+import Footer from "../components/Commons/Footer";
 
 function NewFlatPage() {
   return (
@@ -12,6 +13,7 @@ function NewFlatPage() {
       </div>
 
       <NewFlat>Componente NewFlat</NewFlat>
+      <Footer></Footer>
     </>
   );
 }

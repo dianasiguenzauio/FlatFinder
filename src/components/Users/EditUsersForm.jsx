@@ -126,8 +126,10 @@ const EditUsers = () => {
         }
       );
       setSuccessMessage("Datos actualizados correctamente.");
-      setTimeout(() => setSuccessMessage(""), 3000);
-      setEditFormVisible(false);
+      setTimeout(() => {
+        setSuccessMessage("");
+        setEditFormVisible(false);
+      }, 3000);
       setUsers((prevUsers) =>
         prevUsers.map((user) =>
           user._id === selectedUser._id ? { ...user, ...userDataToSend } : user
@@ -266,8 +268,11 @@ const EditUsers = () => {
           SelectProps={{
             native: true,
           }}
+          fullWidth // Ajusta el ancho automáticamente
         >
-          <option value="">Todos</option>
+          <option aria-label="Todos" value="">
+            Todos
+          </option>
           <option value="true">Sí</option>
           <option value="false">No</option>
         </TextField>
@@ -281,7 +286,11 @@ const EditUsers = () => {
         Limpiar Filtros
       </Button>
       {errorMessage && <p style={styles.error}>{errorMessage}</p>}
-      {successMessage && <p style={styles.success}>{successMessage}</p>}
+      {successMessage && (
+        <div style={{ color: "green", marginTop: "10px" }}>
+          {successMessage}
+        </div>
+      )}
 
       {/* Mostrar tabla o formulario según el estado */}
       {editFormVisible ? (
@@ -431,8 +440,18 @@ const EditUsers = () => {
               }
               row
             >
-              <FormControlLabel value="true" control={<Radio />} label="Sí" />
-              <FormControlLabel value="false" control={<Radio />} label="No" />
+              <FormControlLabel
+                value="true"
+                control={<Radio />}
+                label="Sí"
+                sx={{ color: "black" }} // Estilo inline para letras negras
+              />
+              <FormControlLabel
+                value="false"
+                control={<Radio />}
+                label="No"
+                sx={{ color: "black" }} // Estilo inline para letras negras
+              />
             </RadioGroup>
 
             <div style={styles.buttonContainer}>
