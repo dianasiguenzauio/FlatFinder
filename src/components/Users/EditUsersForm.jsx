@@ -33,6 +33,14 @@ const EditUsers = () => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false); // Diálogo de confirmación de eliminación
   const [userToDelete, setUserToDelete] = useState(null); // Usuario a eliminar
 
+  //estados para manejar los valores de los filtros
+  const [filters, setFilters] = useState({
+    firstname: "",
+    lastname: "",
+    isAdmin: "",
+    numeroflats: "",
+  });
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -184,11 +192,94 @@ const EditUsers = () => {
     setFormErrors({});
   };
 
+  //funcion para actuualizar el estado de los filtros al modificar los input
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilters((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Función para limpiar los filtros
+  const handleClearFilters = () => {
+    setFilters({
+      firstname: "",
+      lastname: "",
+      isAdmin: "",
+      numeroflats: "",
+    });
+  };
+
+  const filteredUsers = users.filter((user) => {
+    return (
+      (filters.firstname
+        ? user.firstname.toLowerCase().includes(filters.firstname.toLowerCase())
+        : true) &&
+      (filters.lastname
+        ? user.lastname.toLowerCase().includes(filters.lastname.toLowerCase())
+        : true) &&
+      (filters.isAdmin ? String(user.isAdmin) === filters.isAdmin : true) &&
+      (filters.numeroflats
+        ? user.numeroflats === Number(filters.numeroflats)
+        : true)
+    );
+  });
+
   return (
     <div style={styles.container}>
       <h1 style={{ color: "#001f3d", textAlign: "center" }}>
         Administrador - Editar Usuarios
       </h1>
+      {/* Inputs de filtro */}
+      <div style={{ marginBottom: "20px", display: "flex", gap: "10px" }}>
+        <TextField
+          label="Nombre"
+          name="firstname"
+          value={filters.firstname}
+          onChange={handleFilterChange}
+          variant="outlined"
+          size="small"
+        />
+        <TextField
+          label="Apellido"
+          name="lastname"
+          value={filters.lastname}
+          onChange={handleFilterChange}
+          variant="outlined"
+          size="small"
+        />
+        <TextField
+          label="# Flats"
+          name="numeroflats"
+          value={filters.numeroflats}
+          onChange={handleFilterChange}
+          variant="outlined"
+          size="small"
+          type="number"
+        />
+        <TextField
+          label="Admin (Sí/No)"
+          name="isAdmin"
+          value={filters.isAdmin}
+          onChange={handleFilterChange}
+          variant="outlined"
+          size="small"
+          select
+          SelectProps={{
+            native: true,
+          }}
+        >
+          <option value="">Todos</option>
+          <option value="true">Sí</option>
+          <option value="false">No</option>
+        </TextField>
+      </div>
+
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={handleClearFilters}
+      >
+        Limpiar Filtros
+      </Button>
       {errorMessage && <p style={styles.error}>{errorMessage}</p>}
       {successMessage && <p style={styles.success}>{successMessage}</p>}
 
@@ -376,19 +467,19 @@ const EditUsers = () => {
               <TableRow>
                 <TableCell style={styles.cells}>Nombre</TableCell>
                 <TableCell style={styles.cells}>Apellido</TableCell>
-                <TableCell style={styles.cells}>Email</TableCell>
                 <TableCell style={styles.cells}>#Flats</TableCell>
+                <TableCell style={styles.cells}>Email</TableCell>
                 <TableCell style={styles.cells}>Admin</TableCell>
                 <TableCell style={styles.cells}>Acciones</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {users.map((user) => (
+              {filteredUsers.map((user) => (
                 <TableRow key={user._id}>
                   <TableCell>{user.firstname}</TableCell>
                   <TableCell>{user.lastname}</TableCell>
-                  <TableCell>{user.email}</TableCell>
                   <TableCell>{user.numeroflats}</TableCell>
+                  <TableCell>{user.email}</TableCell>
                   <TableCell>{user.isAdmin ? "Sí" : "No"}</TableCell>
                   <TableCell>
                     <Button
