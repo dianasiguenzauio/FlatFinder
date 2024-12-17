@@ -86,7 +86,7 @@ const Navbar = () => {
       <Logo src={LogoImage} alt="Tu Logotipo" />
 
       <NavLinks>
-        <NavLink to="/">Home</NavLink>
+        <NavLink to="/start">Home</NavLink>
         <NavLink to="/Register">Register</NavLink>
         <NavLink to="/Login">Sign In</NavLink>
       </NavLinks>

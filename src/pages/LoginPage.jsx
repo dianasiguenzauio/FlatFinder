@@ -1,5 +1,6 @@
 import LoginForm from "../components/Users/LoginForm";
 import NavbarContainer from "../components/Commons/Navbar";
+import Footer from "../components/Commons/Footer";
 
 const LoginPage = () => {
   // Aquí puedes enviar los datos a un servidor para crear la cuenta
@@ -11,6 +12,7 @@ const LoginPage = () => {
         <NavbarContainer></NavbarContainer>
 
         <LoginForm />
+        <Footer></Footer>
       </div>
     </>
   );

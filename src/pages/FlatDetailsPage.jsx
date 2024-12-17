@@ -1,7 +1,7 @@
 //Pagina para ver la informacion detallada de un flat
 
+import Footer from "../components/Commons/Footer";
 import NavbarContainer from "../components/Commons/Navbar";
-import VerDetallePage from "../components/Flats/FlatItem";
 
 function FlatDetailsPage() {
   return (
@@ -10,6 +10,7 @@ function FlatDetailsPage() {
         <NavbarContainer />
         <h1>Flat</h1>
         <VerDetallePage></VerDetallePage>
+        <Footer></Footer>
       </div>
     </>
   );

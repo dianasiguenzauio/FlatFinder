@@ -13,8 +13,10 @@ import {
   CardMedia,
   Typography,
   Grid,
-  CircularProgress,
+  FormControlLabel,
+  Checkbox,
   Button,
+  TextField,
 } from "@mui/material";
 
 const Flats = () => {
@@ -247,16 +249,57 @@ const Flats = () => {
     setFlatDetails(null);
   };
 
-  if (loading) {
-    return (
-      <div
-        style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}
-      >
-        <CircularProgress />
-      </div>
-    );
-  }
+  // Estados de filtros
+  const [cityFilter, setCityFilter] = useState("");
+  const [priceRange, setPriceRange] = useState({ min: "", max: "" });
+  const [areaRange, setAreaRange] = useState({ min: "", max: "" });
+  const [favouriteFilter, setFavouriteFilter] = useState(false);
 
+  // Filtros aplicados en tiempo real
+  const getFilteredFlats = () => {
+    let result = flats;
+
+    if (cityFilter) {
+      result = result.filter((flat) =>
+        flat.city.toLowerCase().includes(cityFilter.toLowerCase())
+      );
+    }
+
+    if (priceRange.min || priceRange.max) {
+      result = result.filter((flat) => {
+        const price = flat.rentPrice;
+        return (
+          (priceRange.min === "" || price >= parseFloat(priceRange.min)) &&
+          (priceRange.max === "" || price <= parseFloat(priceRange.max))
+        );
+      });
+    }
+
+    if (areaRange.min || areaRange.max) {
+      result = result.filter((flat) => {
+        const area = flat.areaSize;
+        return (
+          (areaRange.min === "" || area >= parseFloat(areaRange.min)) &&
+          (areaRange.max === "" || area <= parseFloat(areaRange.max))
+        );
+      });
+    }
+
+    if (favouriteFilter) {
+      result = result.filter((flat) => flat.isFavourite);
+    }
+
+    return result;
+  };
+
+  const filteredFlats = getFilteredFlats();
+
+  const handleClearFilters = () => {
+    setCityFilter("");
+    setPriceRange({ min: "", max: "" });
+    setAreaRange({ min: "", max: "" });
+    setFavouriteFilter(false);
+  };
   return (
     <div style={{ marginTop: "200px" }}>
       <h1
@@ -271,9 +314,109 @@ const Flats = () => {
           {message}
         </div>
       )}
+      {/* Sección de filtros */}
+      <div
+        style={{
+          margin: "20px 40px",
+          padding: "15px",
+          border: "1px solid #ccc",
+          borderRadius: "10px",
+        }}
+      >
+        <h3>Filtros</h3>
+        <Grid container spacing={2}>
+          {/* Ciudad */}
+          <Grid item xs={12} md={3}>
+            <TextField
+              fullWidth
+              label="Ciudad"
+              variant="outlined"
+              value={cityFilter}
+              onChange={(e) => setCityFilter(e.target.value)}
+            />
+          </Grid>
 
+          {/* Rango de Precios */}
+          <Grid item xs={12} md={3}>
+            <TextField
+              fullWidth
+              label="Precio Mínimo"
+              variant="outlined"
+              value={priceRange.min}
+              onChange={(e) =>
+                setPriceRange({ ...priceRange, min: e.target.value })
+              }
+              type="number"
+            />
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <TextField
+              fullWidth
+              label="Precio Máximo"
+              variant="outlined"
+              value={priceRange.max}
+              onChange={(e) =>
+                setPriceRange({ ...priceRange, max: e.target.value })
+              }
+              type="number"
+            />
+          </Grid>
+
+          {/* Rango de Área */}
+          <Grid item xs={12} md={3}>
+            <TextField
+              fullWidth
+              label="Área Mínima (m2)"
+              variant="outlined"
+              value={areaRange.min}
+              onChange={(e) =>
+                setAreaRange({ ...areaRange, min: e.target.value })
+              }
+              type="number"
+            />
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <TextField
+              fullWidth
+              label="Área Máxima (m2)"
+              variant="outlined"
+              value={areaRange.max}
+              onChange={(e) =>
+                setAreaRange({ ...areaRange, max: e.target.value })
+              }
+              type="number"
+            />
+          </Grid>
+
+          {/* Favoritos */}
+          <Grid item xs={12} md={3}>
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={() => setFavouriteFilter(!favouriteFilter)}
+              style={{
+                backgroundColor: favouriteFilter ? "#f0f0f0" : "transparent",
+                fontWeight: favouriteFilter ? "bold" : "normal",
+              }}
+            >
+              {favouriteFilter ? "✓ Solo Favoritos" : "Solo Favoritos"}
+            </Button>
+          </Grid>
+
+          {/* Botón de Limpiar Filtros */}
+          <Grid item xs={12} md={6} style={{ display: "flex", gap: "10px" }}>
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={handleClearFilters}
+            >
+              Limpiar Filtros
+            </Button>
+          </Grid>
+        </Grid>
+      </div>
       <Grid container spacing={2} style={{ padding: "0 40px" }}>
-        {flats.map((flat) => (
+        {filteredFlats.map((flat) => (
           <Grid item xs={12} sm={6} md={3} key={flat._id}>
             <Card
               style={{
