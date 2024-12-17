@@ -2,7 +2,6 @@
 
 import Footer from "../components/Commons/Footer";
 import NavbarContainer from "../components/Commons/Navbar";
-import VerDetallePage from "../components/Flats/FlatItem";
 
 function FlatDetailsPage() {
   return (

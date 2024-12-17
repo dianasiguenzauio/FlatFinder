@@ -19,10 +19,9 @@ function App() {
   return (
     <AuthProvider>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/start" element={<HomePage />} />
         <Route path="/Login" element={<LoginPage />} />
         <Route path="/Register" element={<RegisterPage />} />
-
         <Route path="/FlatDetailsPage/:flatId" element={<FlatDetailsPage />} />
         <Route element={<PrivateRoute />}>
           <Route path="/FlatsList" element={<FlatListPage />} />
