@@ -179,7 +179,15 @@ const EditProfile = () => {
   };
 
   return (
-    <Box sx={{ maxWidth: 600, mt: 20, padding: 3 }}>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center", // Centra horizontalmente
+        alignItems: "center", // Centra verticalmente
+        height: "100vh", // Ocupa toda la altura de la pantalla
+        backgroundColor: "#f5f5f5", // Fondo opcional para mejor visualización
+      }}
+    >
       <Paper elevation={3} sx={{ p: 3, maxWidth: 600, mx: "auto" }}>
         <Typography variant="h4" gutterBottom sx={{ color: "#001f3d" }}>
           Editar Perfil

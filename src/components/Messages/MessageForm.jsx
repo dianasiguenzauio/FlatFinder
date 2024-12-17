@@ -231,100 +231,110 @@ const UserMessages = () => {
   return (
     <div
       style={{
-        marginTop: "200px",
-        backgroundColor: "white",
-        maxWidth: "600px",
-        padding: "20px",
-        borderRadius: "10px",
-        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+        display: "flex",
+        justifyContent: "center", // Centra horizontalmente
+        alignItems: "center", // Centra verticalmente
+        height: "100vh", // Ocupa toda la altura de la pantalla
+        backgroundColor: "#f5f5f5", // Fondo gris claro opcional
       }}
     >
-      <h1 style={{ textAlign: "center", color: "#001f3d" }}>
-        Mensajes por Flat
-      </h1>
-
-      <FormControl
-        fullWidth
-        id="flat-select-label"
-        margin="normal"
-        sx={{
-          "& .MuiOutlinedInput-root": {
-            "& fieldset": {
-              border: "2px solid purple", // Aplica el borde morado correctamente
-            },
-            "&:hover fieldset": {
-              borderColor: "darkviolet", // Cambia el borde al pasar el mouse
-            },
-            "&.Mui-focused fieldset": {
-              borderColor: "purple", // Borde morado al enfocar
-            },
-          },
+      <div
+        style={{
+          backgroundColor: "white",
+          maxWidth: "600px",
+          width: "100%", // Asegura que no exceda el ancho permitido
+          padding: "20px",
+          borderRadius: "10px",
+          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
         }}
       >
-        <InputLabel
+        <h1 style={{ textAlign: "center", color: "#001f3d" }}>
+          Mensajes por Flat
+        </h1>
+
+        <FormControl
+          fullWidth
+          id="flat-select-label"
+          margin="normal"
           sx={{
-            backgroundColor: "white", // Evita que el texto se tape
-            paddingX: "4px", // Espaciado horizontal para mejor apariencia
-            transform: "translate(14px, -6px) scale(0.75)", // Ajusta la posición de la etiqueta
-          }}
-        >
-          Selecciona un Flat
-        </InputLabel>
-        <Select
-          labelId="flat-select-label"
-          value={selectedFlat || ""}
-          onChange={(e) => handleFlatSelect(e.target.value)}
-          sx={{
-            "& .MuiSelect-select": {
-              padding: "12px", // Ajusta el padding para el contenido
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": {
+                border: "2px solid purple",
+              },
+              "&:hover fieldset": {
+                borderColor: "darkviolet",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "purple",
+              },
             },
           }}
         >
-          {flats.map((flat) => (
-            <MenuItem key={flat._id} value={flat._id}>
-              {flat.city}, {flat.streetName} {flat.streetNumber}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-
-      {messagesData ? (
-        <Card>
-          <CardContent>
-            <Typography variant="h6" component="div">
-              Flat en {messagesData.flatDetails.city}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Dirección: {messagesData.flatDetails.streetName}{" "}
-              {messagesData.flatDetails.streetNumber}
-            </Typography>
-            <Typography
-              variant="subtitle1"
-              color="text.primary"
-              style={{ marginTop: "10px" }}
-            >
-              Mensajes Enviados:
-            </Typography>
-            {messagesData.messages.map((messages, idx) => (
-              <Typography
-                key={idx}
-                variant="body2"
-                style={{ marginBottom: "5px" }}
-              >
-                - {messages.content}
-              </Typography>
+          <InputLabel
+            sx={{
+              backgroundColor: "white",
+              paddingX: "4px",
+              transform: "translate(14px, -6px) scale(0.75)",
+            }}
+          >
+            Selecciona un Flat
+          </InputLabel>
+          <Select
+            labelId="flat-select-label"
+            value={selectedFlat || ""}
+            onChange={(e) => handleFlatSelect(e.target.value)}
+            sx={{
+              "& .MuiSelect-select": {
+                padding: "12px",
+              },
+            }}
+          >
+            {flats.map((flat) => (
+              <MenuItem key={flat._id} value={flat._id}>
+                {flat.city}, {flat.streetName} {flat.streetNumber}
+              </MenuItem>
             ))}
-          </CardContent>
-        </Card>
-      ) : (
-        <Typography
-          variant="body1"
-          color="text.secondary"
-          style={{ textAlign: "center" }}
-        >
-          Selecciona un flat para ver los mensajes.
-        </Typography>
-      )}
+          </Select>
+        </FormControl>
+
+        {messagesData ? (
+          <Card>
+            <CardContent>
+              <Typography variant="h6" component="div">
+                Flat en {messagesData.flatDetails.city}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Dirección: {messagesData.flatDetails.streetName}{" "}
+                {messagesData.flatDetails.streetNumber}
+              </Typography>
+              <Typography
+                variant="subtitle1"
+                color="text.primary"
+                style={{ marginTop: "10px" }}
+              >
+                Mensajes Enviados:
+              </Typography>
+              {messagesData.messages.map((messages, idx) => (
+                <Typography
+                  key={idx}
+                  variant="body2"
+                  style={{ marginBottom: "5px" }}
+                >
+                  - {messages.content}
+                </Typography>
+              ))}
+            </CardContent>
+          </Card>
+        ) : (
+          <Typography
+            variant="body1"
+            color="text.secondary"
+            style={{ textAlign: "center" }}
+          >
+            Selecciona un flat para ver los mensajes.
+          </Typography>
+        )}
+      </div>
     </div>
   );
 };
