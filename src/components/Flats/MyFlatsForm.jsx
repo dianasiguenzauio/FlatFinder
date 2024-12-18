@@ -204,7 +204,7 @@ const FlatsOwner = () => {
         gutterBottom
         sx={{ color: "#001f3d" }}
       >
-        Mis Flats
+        Mis Propiedades
       </Typography>
       {successMessage && (
         <Typography sx={{ color: "green", textAlign: "center", mb: 2 }}>

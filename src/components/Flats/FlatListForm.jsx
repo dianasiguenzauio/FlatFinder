@@ -306,7 +306,7 @@ const Flats = () => {
         variant="h3"
         style={{ textAlign: "center", color: "#001f3d", position: "initial" }}
       >
-        Flats Disponibles
+        Propiedades Disponibles
       </Typography>
       {message && (
         <div
