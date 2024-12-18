@@ -252,7 +252,7 @@ const UserMessages = () => {
           variant="h3"
           style={{ textAlign: "center", color: "#001f3d" }}
         >
-          Mensajes por Flat
+          Mensajes por Propiedad
         </Typography>
 
         <FormControl
