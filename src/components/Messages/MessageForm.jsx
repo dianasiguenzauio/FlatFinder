@@ -280,7 +280,7 @@ const UserMessages = () => {
               transform: "translate(14px, -6px) scale(0.75)",
             }}
           >
-            Selecciona un Flat
+            Selecciona una Propiedad
           </InputLabel>
           <Select
             labelId="flat-select-label"
