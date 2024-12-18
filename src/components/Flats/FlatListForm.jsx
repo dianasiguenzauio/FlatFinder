@@ -302,11 +302,12 @@ const Flats = () => {
   };
   return (
     <div style={{ marginTop: "200px" }}>
-      <h1
+      <Typography
+        variant="h3"
         style={{ textAlign: "center", color: "#001f3d", position: "initial" }}
       >
         Flats Disponibles
-      </h1>
+      </Typography>
       {message && (
         <div
           style={{ color: messageColor, textAlign: "center", margin: "10px 0" }}

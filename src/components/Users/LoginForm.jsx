@@ -9,6 +9,7 @@ import {
   DialogContent,
   DialogActions,
   Button,
+  Typography,
 } from "@mui/material";
 
 const Login = () => {
@@ -85,8 +86,8 @@ const Login = () => {
     width: "350px",
     padding: "10px",
     color: "black",
-    backgroundColor: "#e6fafe",
-    border: "3px solid #690dab",
+    backgroundColor: "#f3f3f1",
+    border: "2px solid #690dab",
     borderRadius: "8px",
     marginBottom: "10px",
     boxShadow: "0px 4px 8px #00aaff)",
@@ -106,11 +107,13 @@ const Login = () => {
   return (
     <div style={formStyle}>
       <div>
-        <h1
+        <Typography
+          variant="h3"
           style={{ textAlign: "center", marginTop: "2rem", color: "#001f3d" }}
         >
           Iniciar Sesión
-        </h1>
+        </Typography>
+        <br />
         <form onSubmit={handleLogin}>
           <div style={styles.field}>
             <label style={styles.label}>Correo Electrónico</label>

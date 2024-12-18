@@ -19,6 +19,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  Typography,
 } from "@mui/material";
 
 const EditUsers = () => {
@@ -227,9 +228,12 @@ const EditUsers = () => {
 
   return (
     <div style={styles.container}>
-      <h1 style={{ color: "#001f3d", textAlign: "center" }}>
+      <Typography
+        variant="h3"
+        style={{ color: "#001f3d", textAlign: "center" }}
+      >
         Administrador - Editar Usuarios
-      </h1>
+      </Typography>
       {/* Inputs de filtro */}
       <div style={{ marginBottom: "20px", display: "flex", gap: "10px" }}>
         <TextField

@@ -12,6 +12,7 @@ import {
   DialogContentText,
   DialogTitle,
   Button,
+  Typography,
 } from "@mui/material";
 
 const RegistrationForm = () => {
@@ -149,8 +150,8 @@ const RegistrationForm = () => {
     width: "350px",
     padding: "10px",
     color: "black",
-    backgroundColor: "#e6fafe",
-    border: "3px solid #690dab",
+    backgroundColor: "#f3f3f1",
+    border: "2px solid #690dab",
     borderRadius: "8px",
     marginBottom: "10px",
     boxShadow: "0px 4px 8px #00aaff)",
@@ -169,9 +170,12 @@ const RegistrationForm = () => {
 
   return (
     <div style={divStyle}>
-      <h2 style={{ textAlign: "center", marginTop: "2rem", color: "#001f3d" }}>
+      <Typography
+        variant="h3"
+        style={{ textAlign: "center", marginTop: "2rem", color: "#001f3d" }}
+      >
         Registrar Nuevo Usuario
-      </h2>
+      </Typography>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}

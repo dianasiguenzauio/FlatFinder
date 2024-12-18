@@ -12,6 +12,8 @@ const Footer = () => {
         bottom: 0,
         width: "100%",
         fontSize: "14px",
+        left: 0,
+        right: 0,
       }}
     >
       <p style={{ margin: 0 }}>

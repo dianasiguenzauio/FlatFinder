@@ -90,15 +90,6 @@ const Header = () => {
     <HeaderContainer>
       <Logo src={LogoImage} alt="Tu Logotipo" />
 
-      <NavLinks>
-        <NavLink to="/FlatsList">All Flats</NavLink>
-        <NavLink to="/MyFlats">My Flats</NavLink>
-        <NavLink to="/NewFlatPage">New Flat</NavLink>
-        <NavLink to="/MyProfile">My Profile</NavLink>
-        <NavLink to="/Messages">Messages</NavLink>
-
-        {auth.isAdmin && <NavLink to="/Edit-Users">Edit Users</NavLink>}
-      </NavLinks>
       {auth.firstname && (
         <UserSection>
           <span
@@ -108,18 +99,29 @@ const Header = () => {
               fontSize: "25px",
             }}
           >
-            Hello, {auth.firstname}
+            Hola, {auth.firstname}
           </span>
-          <Button
-            variant="contained"
-            color="secondary"
-            size="small"
-            onClick={handleLogout}
-          >
-            Logout
-          </Button>
         </UserSection>
       )}
+
+      <NavLinks>
+        <NavLink to="/FlatsList">Todas las Propiedades</NavLink>
+        <NavLink to="/MyFlats">Mis Propiedades</NavLink>
+        <NavLink to="/NewFlatPage">Nueva Propiedad</NavLink>
+        <NavLink to="/MyProfile">Mi Perfil</NavLink>
+        <NavLink to="/Messages">Mensajes</NavLink>
+
+        {auth.isAdmin && <NavLink to="/Edit-Users">Editar Usuarios</NavLink>}
+      </NavLinks>
+
+      <Button
+        variant="contained"
+        color="secondary"
+        size="small"
+        onClick={handleLogout}
+      >
+        Cerrar Sesión
+      </Button>
     </HeaderContainer>
   );
 };

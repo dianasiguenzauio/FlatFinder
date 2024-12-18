@@ -248,9 +248,12 @@ const UserMessages = () => {
           boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
         }}
       >
-        <h1 style={{ textAlign: "center", color: "#001f3d" }}>
+        <Typography
+          variant="h3"
+          style={{ textAlign: "center", color: "#001f3d" }}
+        >
           Mensajes por Flat
-        </h1>
+        </Typography>
 
         <FormControl
           fullWidth
