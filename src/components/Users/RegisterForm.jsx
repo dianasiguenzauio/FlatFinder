@@ -121,7 +121,7 @@ const RegistrationForm = () => {
   };
 
   // Estilos personalizados
-  const formStyle = {
+  /*const formStyle = {
     flexDirection: "column",
     backgroundColor: "#ffffff",
     padding: "2rem",
@@ -136,6 +136,22 @@ const RegistrationForm = () => {
     marginLeft: "auto",
     marginRight: "auto",
     position: "relative",
+  };*/
+
+  const formStyle = {
+    display: "flex",
+    flexDirection: "column",
+    backgroundColor: "#ffffff",
+    padding: "2rem",
+    borderRadius: "8px",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+    textAlign: "center",
+    color: "black",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "90%", // Cambiar de un tamaño fijo a relativo
+    maxWidth: "600px", // Limitar ancho máximo
+    margin: "2rem auto", // Centrar el formulario
   };
 
   const divStyle = {
@@ -166,6 +182,19 @@ const RegistrationForm = () => {
     borderRadius: "8px",
     marginBottom: "10px",
     boxShadow: "0px 4px 8px #00aaff)",
+  };
+
+  const datePickerStyle = {
+    width: "100%", // Ocupa todo el ancho disponible
+    maxWidth: "350px",
+    padding: "10px",
+    backgroundColor: "#f3f3f1",
+    color: "#001f3d", // Texto interno
+    border: "2px solid #690dab",
+    borderRadius: "8px",
+    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+    fontSize: "16px",
+    colorScheme: "light",
   };
 
   return (
@@ -255,7 +284,7 @@ const RegistrationForm = () => {
 
             <div>
               <label>Fecha de Nacimiento </label>
-              <Field type="date" name="birthdate" />
+              <Field type="date" name="birthdate" style={datePickerStyle} />
               <ErrorMessage
                 name="birthdate"
                 component="p"
