@@ -184,7 +184,7 @@ const NewFlat = () => {
           gutterBottom
           sx={{ color: "#001f3d" }}
         >
-          Añadir Nuevo Flat
+          Añadir Nueva Propiedad
         </Typography>
         {successMessage && (
           <Typography sx={{ color: "green", textAlign: "center", mb: 2 }}>
